@@ -1,0 +1,22 @@
+{
+  "name": "desource-labs-web",
+  "version": "0.1.0",
+  "description": "Desource Labs Web",
+  "private": true,
+  "type": "module",
+  "author": "Desource Labs",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/image": "^1.8.1",
+    "nuxt": "^3.14.1592",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  }
+}
