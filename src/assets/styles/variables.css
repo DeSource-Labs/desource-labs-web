@@ -1,0 +1,7 @@
+:root {
+  --gradient-bg: linear-gradient(180deg, rgba(217, 217, 217, 0.12) 0%, rgba(115, 115, 115, 0) 100%);
+  --color-primary: #fff;
+  --background-color: #000;
+  --color-secondary: rgba(255, 255, 255, 0.4);
+  --color-tertiary: rgba(255, 255, 255, 0.6);
+}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+html {
+  scroll-behavior: smooth;
+  background-color: #060606;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: #060606;
+  color: #FFF;
+  font-size: 16px;
+
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 200;
+  letter-spacing: 0.25em;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+}
+
+h4 {
+  font-size: 1.75em;
+  font-weight: 600;
+}
+
+section {
+  height: calc(100dvh - 1rem);
+  width: 100%;
+  padding: 1rem;
+}
+
+.secondary {
+  color: var(--color-secondary);
+}
+
+.image {
+  transition: transform .7s 0.7s ease, opacity .7s 0.7s ease;
+}
+
+.image.preload {
+  transform: translateY(2rem);
+  opacity: 0;
+}
