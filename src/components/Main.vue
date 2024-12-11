@@ -1,24 +1,32 @@
 <template>
   <section class="main">
-    <NuxtImg
-      class="main__img"
-      src="/ds_pic1.png"
-      alt="Main"
-      format="webp"
-      loading="lazy"
-    />
-    <div class="main__content">
-      <h4 class="main__title">Innovation, Engineered for Scale</h4>
-      <p class="main__description">
-        We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
-      </p>
-      <p class="main__description">
-        Our team
-        <strong>merges deep technical expertise with design precision</strong>,
-        delivering systems that inspire. From blockchain ecosystems to enterprise-grade infrastructure, every line of code, every pixel, and every strategy is built with purpose.
-      </p>
-      <Button type="secondary">Schedule a call</Button>
-    </div>
+    <video
+      class="main__visual"
+      autoplay
+      loop
+      muted
+      playsinline
+    >
+      <source src="/video/cubic.webm" type="video/webm">
+      <source src="/video/cubic.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <h4 class="main__title">Innovation, Engineered for Scale</h4>
+    <p class="main__description desc1 p1">
+      We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
+    </p>
+    <p class="main__description desc2 p1">
+      Our team
+      <strong>merges deep technical expertise with design precision</strong>,
+      delivering systems that inspire. From blockchain ecosystems to enterprise-grade infrastructure, every line of code, every pixel, and every strategy is built with purpose.
+    </p>
+    <Button
+      class="main__button"
+      type="secondary"
+      href="https://calendly.com/hello-desource-labs/30min"
+    >
+      Schedule a call
+    </Button>
   </section>
 </template>
 
@@ -26,26 +34,84 @@
 
 <style scoped>
 .main {
-  display: flex;
+  display: grid;
+  grid-template-areas: 
+    "visual title"
+    "visual desc1"
+    "visual desc2"
+    "visual button";
+  grid-template-columns: 1fr 2fr;
+  gap: 2px;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  padding: 10rem 6vw;
 }
-.main__img {
-  flex: 2;
+.main__visual {
+  grid-area: visual;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
-.main__content {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-right: 3rem;
-  font-size: 1.5rem;
+.main__title {
+  grid-area: title;
+}
+.desc1 {
+  grid-area: desc1;
+}
+.desc2 {
+  grid-area: desc2;
+}
+.main__button {
+  grid-area: button;
 }
 .main__description {
+  line-height: 1.5;
   color: var(--color-secondary);
 }
 .main__description > strong {
   color: var(--color-primary);
+}
+@media (max-width: 1024px) {
+  .main {
+    padding: 6rem 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 10vw;
+  }
+  .main__visual {
+    order: 3;
+    max-width: 60vw;
+  }
+  .main__title {
+    order: 1;
+    text-align: center;
+  }
+  .main__description.desc1 {
+    order: 2;
+    text-align: center;
+  }
+  .main__description.desc2 {
+    order: 4;
+    text-align: center;
+  }
+  .main__button {
+    order: 5;
+    align-self: center;
+  }
+}
+@media (max-width: 640px) {
+  .main__visual {
+    max-width: 80vw;
+  }
+}
+@media (max-width: 320px) {
+  .main {
+    padding: 2rem 1.4rem;
+  }
 }
 </style>

@@ -1,55 +1,35 @@
 <template>
   <footer class="footer">
-    <div class="container">
-      <p>&copy; 2024 DeSource Labs. All rights reserved.</p>
-      <nav>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+    <h3>DESOURCE LABS</h3>
+    <div class="legal-links" v-if="false">
+      <a class="p4" href="#" rel="nofollow noopener">Privacy Policy</a>
+      <a class="p4" href="#" rel="nofollow noopener">Terms of Service</a>
     </div>
+    <p class="p4">2024, DESOURCE LABS LTD</p>
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'Footer'
-}
-</script>
-
 <style scoped>
 .footer {
-  background-color: #333;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-}
-
-.footer .container {
+  background-color: #000;
+  padding: 1.5rem 2rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
-
-.footer nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.legal-links {
   display: flex;
+  gap: 1rem;
 }
-
-.footer nav ul li {
-  margin: 0 10px;
+a, p {
+  color: var(--color-secondary);
+  letter-spacing: 0.03em;
 }
-
-.footer nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.footer nav ul li a:hover {
-  text-decoration: underline;
+@media (max-width: 640px) {
+  .footer {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
 }
 </style>

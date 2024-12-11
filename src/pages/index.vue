@@ -1,8 +1,8 @@
 <template>
   <Main />
   <Stack />
-  <Portfolio />
-  <Team />
+  <Portfolio v-if="false" />
+  <Team v-if="false" />
   <Contact />
 </template>
 

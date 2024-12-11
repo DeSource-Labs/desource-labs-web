@@ -20,7 +20,7 @@ const handleError = () => clearError({ redirect: '/' })
       <h1>Error {{ error.statusCode }}<br />
         <span>{{ error.statusMessage }}</span>
       </h1>
-      <Button href="/" @click="handleError">
+      <Button class="error-button" href="/" @click.prevent="handleError">
         Home
       </Button>
     </section>
@@ -40,5 +40,9 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.error-button {
+  margin-top: 2rem;
 }
 </style>

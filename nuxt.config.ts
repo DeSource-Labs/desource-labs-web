@@ -18,18 +18,22 @@ export default defineNuxtConfig({
       title: meta.title,
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
+        { rel: 'icon', href: '/logo/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+        { rel: 'icon', href: '/logo/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+        { rel: 'apple-touch-icon', href: '/logo/apple-touch-icon.png', sizes: '180x180' },
+        { rel: 'manifest', href: '/site.webmanifest' },
       ],
-      // TODO: Add Plausible analytics later
+      // TODO: Add analytics later
       // script: [
       //   {
       //     key: 'plausible',
       //     defer: true,
       //     src: 'https://plausible.io/js/script.js',
-      //     'data-domain': 'desource-labs.org',
+      //     'data-domain': meta.domain,
       //   },
       // ],
       meta: [
-        // TODO: add images for social media sharing
+        // TODO: Uncomment fields below when ready
         {
           name: 'description',
           content: meta.description,
@@ -46,6 +50,22 @@ export default defineNuxtConfig({
           name: 'twitter:description',
           content: meta.description,
         },
+        // {
+        //   name: 'twitter:image',
+        //   content: meta.ogImage,
+        // },
+        {
+          name: 'twitter:image:alt',
+          content: meta.title,
+        },
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+        // {
+        //   name: 'twitter:site',
+        //   content: meta.x,
+        // },
         {
           property: 'og:title',
           content: meta.title,
@@ -56,7 +76,31 @@ export default defineNuxtConfig({
         },
         {
           property: 'og:url',
-          content: 'https://desource-labs.org',
+          content: meta.url,
+        },
+        // {
+        //   property: 'og:image',
+        //   content: meta.ogImage,
+        // },
+        // {
+        //   property: 'og:image:secure_url',
+        //   content: meta.ogImage,
+        // },
+        {
+          property: 'og:image:alt',
+          content: meta.title,
+        },
+        // {
+        //   property: 'og:image:width',
+        //   content: meta.ogImageWidth,
+        // },
+        // {
+        //   property: 'og:image:height',
+        //   content: meta.ogImageHeight,
+        // },
+        {
+          property: 'og:url',
+          content: meta.url,
         },
         {
           property: 'og:type',
@@ -65,4 +109,4 @@ export default defineNuxtConfig({
       ],
     },
   },
-})
+});

@@ -3,6 +3,8 @@
 html {
   scroll-behavior: smooth;
   background-color: #060606;
+  font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -11,7 +13,6 @@ body {
 
   background-color: #060606;
   color: #FFF;
-  font-size: 16px;
 
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
@@ -27,25 +28,8 @@ a {
   text-decoration: none;
 }
 
-h1 {
-  font-size: 3em;
-  font-weight: 200;
-  letter-spacing: 0.25em;
-}
-
-h3 {
-  font-size: 1.2em;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-}
-
-h4 {
-  font-size: 1.75em;
-  font-weight: 600;
-}
-
 section {
-  height: calc(100dvh - 1rem);
+  min-height: calc(100dvh - 2rem);
   width: 100%;
   padding: 1rem;
 }
@@ -55,6 +39,7 @@ section {
 }
 
 .image {
+  opacity: 1;
   transition: transform .7s 0.7s ease, opacity .7s 0.7s ease;
 }
 

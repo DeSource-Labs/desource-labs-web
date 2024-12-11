@@ -1,28 +1,31 @@
-import type { SocialMediaItem } from './types';
+import type { SocialMedia, SocialMediaItem } from './types';
 
-export const socialMedia: SocialMediaItem[] = [
+export const socialMediaArray: SocialMediaItem[] = [
   {
     title: 'GitHub',
-    type: 'github',
-    url: '',
-    icon: 'github',
+    url: 'https://github.com/DeSource-Labs',
+    icon: '/img/github.svg',
   },
   {
     title: 'LinkedIn',
-    type: 'linkedin',
-    url: '',
-    icon: 'linkedin',
+    url: 'https://www.linkedin.com/company/desource-labs',
+    icon: '/img/linkedin.svg',
   },
   {
     title: 'Telegram',
-    type: 'telegram',
-    url: '',
-    icon: 'telegram',
+    url: 'https://t.me/de_source_labs',
+    icon: '/img/telegram.svg',
   },
   {
     title: 'X',
-    type: 'x',
-    url: '',
-    icon: 'x',
+    url: 'https://x.com/desource_labs',
+    icon: '/img/x.svg',
   },
 ];
+
+export const socialMedia: SocialMedia = {
+  github: socialMediaArray[0],
+  linkedin: socialMediaArray[1],
+  telegram: socialMediaArray[2],
+  x: socialMediaArray[3],
+};

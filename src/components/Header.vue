@@ -1,16 +1,20 @@
 <template>
   <section class="header">
+    <video
+      ref="video"
+      class="header__background video"
+      autoplay
+      loop
+      muted
+      playsinline
+      @timeupdate="handleTimeUpdate"
+    >
+      <source src="/video/world-planet.webm" type="video/webm">
+      <source src="/video/world-planet.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
     <NuxtImg
-      src="/ds_bg.png"
-      alt="DeSource Labs Background"
-      class="header__background image"
-      quality="75"
-      sizes="100vw md:1100px"
-      format="webp"
-      preload
-    />
-    <NuxtImg
-      src="/ds_bg_shadow.png"
+      src="/img/ds_bg_shadow.png"
       alt="DeSource Labs Shadow"
       class="header__shadow image"
       quality="75"
@@ -21,11 +25,29 @@
     <div class="header__content">
       <h3>DESOURCE LABS</h3>
       <h1>ENGINEERING BEYOND LIMITS.</h1>
-      <p class="secondary">Precision-built solutions tailored to your vision.</p>
-      <Button type="primary">Schedule a call</Button>
+      <p class="secondary p1">Precision-built solutions tailored to your vision.</p>
+      <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const video = ref<HTMLVideoElement | null>(null);
+
+const handleTimeUpdate = () => {
+  const blurDuration = 2; // Duration in seconds
+  if (video.value) {
+    const remainingTime = video.value.duration - video.value.currentTime;
+    if (remainingTime < blurDuration) {
+      video.value.style.opacity = "0.1";
+      video.value.style.filter = `blur(100px)`;
+    } else {
+      video.value.style.opacity = "0.5";
+      video.value.style.filter = `blur(0)`;
+    }
+  }
+};
+</script>
 
 <style scoped>
 .header {
@@ -47,8 +69,11 @@
 }
 .header__background {
   z-index: 0;
-  object-position: calc(50% + 2rem) 0; /* TODO: fix image itself */
-  animation: pulse 5s ease-in-out infinite;
+}
+.header__background.video {
+  opacity: 0.5;
+  filter: blur(0);
+  transition: opacity 2s ease, filter 8s ease;
 }
 .header__shadow {
   filter: blur(10px);
@@ -69,18 +94,6 @@ h3 {
   margin-bottom: 1rem;
 }
 p {
-  font-size: 1.5rem;
   margin-bottom: 1rem;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.02);
-  }
 }
 </style>

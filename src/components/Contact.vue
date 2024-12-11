@@ -1,7 +1,7 @@
 <template>
   <section class="contact">
     <NuxtImg
-      src="/ds_bg_bottom.png"
+      src="/img/ds_bg_bottom.png"
       alt="Contact Background"
       class="contact__background image"
       quality="75"
@@ -10,7 +10,7 @@
       loading="lazy"
     />
     <NuxtImg
-      src="/ds_bg_bottom_shadow.png"
+      src="/img/ds_bg_bottom_shadow.png"
       alt="Contact Shadow"
       class="contact__shadow image"
       quality="75"
@@ -20,12 +20,12 @@
     />
     <div class="contact__content">
       <h1>LET’S BUILD SOMETHING EXCEPTIONAL</h1>
-      <p class="secondary">
+      <p class="secondary p1">
         Your vision deserves more than off-the-shelf solutions.
         <br />
         Let’s create technology that transforms your business.
       </p>
-      <Button type="primary">Schedule a call</Button>
+      <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
     </div>
   </section>
 </template>

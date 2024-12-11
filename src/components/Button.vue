@@ -31,17 +31,17 @@ const { type, href } = defineProps<{ type?: 'primary' | 'secondary'; href?: stri
 
 <style scoped>
 .button {
-  height: 3rem;
-  width: 11rem;
+  height: 56px;
+  width: 230px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
+  padding: 8px 20px;
   border: 1px solid #FFFFFF;
   border-radius: 100vw;
   color: #000000;
   background-color: #FFFFFF;
-  font-size: 1rem;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.005em;
   cursor: pointer;
@@ -63,21 +63,24 @@ const { type, href } = defineProps<{ type?: 'primary' | 'secondary'; href?: stri
 }
 
 .button__arrow {
-  margin-left: 0.2rem;
+  margin-left: 0.3rem;
   width: 1rem;
   height: 1rem;
 }
 
 .button:hover .button__arrow {
-  animation: bounce 0.3s ease-in-out;
+  animation: arrow-move 1s infinite;
 }
 
-@keyframes bounce {
-  0%, 100% {
+@keyframes arrow-move {
+  0% {
     transform: translateX(0);
   }
   50% {
-    transform: translateX(0.25rem);
+    transform: translateX(0.3rem);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 </style>
