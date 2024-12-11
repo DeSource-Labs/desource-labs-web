@@ -4,13 +4,13 @@ h1 {
   letter-spacing: 0.25em;
 }
 
-h3 {
+.h3 {
   font-size: 1.2rem;
   font-weight: 400;
   letter-spacing: 0.25em;
 }
 
-h4 {
+.h4 {
   font-size: 1.75rem;
   font-weight: 600;
 }
@@ -40,11 +40,11 @@ h4 {
     font-size: 1.75rem;
   }
 
-  h3 {
+  .h3 {
     font-size: 1.05rem;
   }
 
-  h4 {
+  .h4 {
     font-size: 1.125rem;
   }
 

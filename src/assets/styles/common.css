@@ -47,3 +47,11 @@ section {
   transform: translateY(2rem);
   opacity: 0;
 }
+
+::cue {
+  display: none !important;
+  visibility: hidden !important;
+  color: transparent !important;
+  background-color: transparent !important;
+  background: none !important;
+}

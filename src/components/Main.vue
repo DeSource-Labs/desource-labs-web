@@ -9,9 +9,10 @@
     >
       <source src="/video/cubic.webm" type="video/webm">
       <source src="/video/cubic.mp4" type="video/mp4">
+      <track src="/video/cubic.vtt" kind="captions" srclang="en" label="English captions" mode="disabled">
       Your browser does not support the video tag.
     </video>
-    <h4 class="main__title">Innovation, Engineered for Scale</h4>
+    <p class="main__title h4">Innovation, Engineered for Scale</p>
     <p class="main__description desc1 p1">
       We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
     </p>

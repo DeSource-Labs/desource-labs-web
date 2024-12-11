@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <h3>DESOURCE LABS</h3>
+    <p class="h3">DESOURCE LABS</p>
     <div class="legal-links" v-if="false">
       <a class="p4" href="#" rel="nofollow noopener">Privacy Policy</a>
       <a class="p4" href="#" rel="nofollow noopener">Terms of Service</a>
@@ -22,7 +22,7 @@
   display: flex;
   gap: 1rem;
 }
-a, p {
+a, .p4 {
   color: var(--color-secondary);
   letter-spacing: 0.03em;
 }

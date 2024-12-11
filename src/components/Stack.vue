@@ -1,31 +1,31 @@
 <template>
   <section class="stack">
     <div class="title__container">
-      <h4 class="title">Precision in Every Detail</h4>
+      <p class="title h4">Precision in Every Detail</p>
       <p class="title__description p1">Expertise that powers your next big move.</p>
       <hr />
     </div>
     <div class="stack__container">
       <div class="stack__item">
-        <h5 class="stack__title p2">Blockchain Ecosystems</h5>
+        <span class="stack__title p2">Blockchain Ecosystems</span>
         <p class="stack__description secondary p3">
           Smart contracts, dApps, cross-chain integrations
         </p>
       </div>
       <div class="stack__item">
-        <h5 class="stack__title p2">Back-End Architecture</h5>
+        <span class="stack__title p2">Back-End Architecture</span>
         <p class="stack__description secondary p3">
           High-performance systems built with Rust and Node.js
         </p>
       </div>
       <div class="stack__item">
-        <h5 class="stack__title p2">Modern Interfaces</h5>
+        <span class="stack__title p2">Modern Interfaces</span>
         <p class="stack__description secondary p3">
           Intuitive, pixel-perfect designs, built with top-notch frontend
         </p>
       </div>
       <div class="stack__item">
-        <h5 class="stack__title p2">Scalable Infrastructure</h5>
+        <span class="stack__title p2">Scalable Infrastructure</span>
         <p class="stack__description secondary p3">
           DevOps workflows that evolve with your business.
         </p>
@@ -40,6 +40,7 @@
     >
       <source src="/video/chips.webm" type="video/webm">
       <source src="/video/chips.mp4" type="video/mp4">
+      <track src="/video/chips.vtt" kind="captions" srclang="en" label="English captions" mode="disabled">
       Your browser does not support the video tag.
     </video>
   </section>
@@ -92,7 +93,7 @@ hr {
 .stack__description {
   flex: 1;
 }
-h5 {
+span {
   margin-block: 0.6rem;
 }
 .stack__visual {

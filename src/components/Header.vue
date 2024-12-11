@@ -11,6 +11,7 @@
     >
       <source src="/video/world-planet.webm" type="video/webm">
       <source src="/video/world-planet.mp4" type="video/mp4">
+      <track src="/video/world-planet.vtt" kind="captions" srclang="en" label="English captions" mode="disabled">
       Your browser does not support the video tag.
     </video>
     <NuxtImg
@@ -23,7 +24,7 @@
       loading="lazy"
     />
     <div class="header__content">
-      <h3>DESOURCE LABS</h3>
+      <h3 class="h3">DESOURCE LABS</h3>
       <h1>ENGINEERING BEYOND LIMITS.</h1>
       <p class="secondary p1">Precision-built solutions tailored to your vision.</p>
       <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
