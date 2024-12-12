@@ -50,10 +50,10 @@ export default defineNuxtConfig({
           name: 'twitter:description',
           content: meta.description,
         },
-        // {
-        //   name: 'twitter:image',
-        //   content: meta.ogImage,
-        // },
+        {
+          name: 'twitter:image',
+          content: meta.ogImage,
+        },
         {
           name: 'twitter:image:alt',
           content: meta.title,
@@ -78,26 +78,26 @@ export default defineNuxtConfig({
           property: 'og:url',
           content: meta.url,
         },
-        // {
-        //   property: 'og:image',
-        //   content: meta.ogImage,
-        // },
-        // {
-        //   property: 'og:image:secure_url',
-        //   content: meta.ogImage,
-        // },
+        {
+          property: 'og:image',
+          content: meta.ogImage,
+        },
+        {
+          property: 'og:image:secure_url',
+          content: meta.ogImage,
+        },
         {
           property: 'og:image:alt',
           content: meta.title,
         },
-        // {
-        //   property: 'og:image:width',
-        //   content: meta.ogImageWidth,
-        // },
-        // {
-        //   property: 'og:image:height',
-        //   content: meta.ogImageHeight,
-        // },
+        {
+          property: 'og:image:width',
+          content: meta.ogImageWidth,
+        },
+        {
+          property: 'og:image:height',
+          content: meta.ogImageHeight,
+        },
         {
           property: 'og:url',
           content: meta.url,
