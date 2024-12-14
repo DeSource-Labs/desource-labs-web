@@ -2,7 +2,7 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #060606;
+  background-color: var(--background-color);
   font-size: 16px;
   overflow-x: hidden;
 }
@@ -11,8 +11,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #060606;
-  color: #FFF;
+  background-color: var(--background-color);
+  color: var(--color-primary);
 
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
@@ -38,6 +38,15 @@ section {
   color: var(--color-secondary);
 }
 
+img {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Firefox */
+  pointer-events: none; /* Prevents interaction like dragging */
+  -webkit-user-drag: none; /* Prevents dragging in WebKit browsers */
+}
+
 .image {
   opacity: 1;
   transition: transform .7s 0.7s ease, opacity .7s 0.7s ease;
@@ -54,4 +63,22 @@ section {
   color: transparent !important;
   background-color: transparent !important;
   background: none !important;
+}
+
+/* Add custom focus styles for better accessibility */
+:focus-visible {
+  outline: 3px dashed var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+  transition: outline-color 0.2s ease-in-out, outline-offset 0.2s ease-in-out;
+}
+
+/* For buttons specifically */
+button:focus-visible {
+  outline: none; /* Remove default browser outline */
+  box-shadow: 0 0 6px 2px var(--color-primary); /* Glowing effect around the button */
+  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: var(--background-color);
+  transition: box-shadow 0.2s ease-in-out, background-color 0.3s ease-in-out;
 }

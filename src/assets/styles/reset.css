@@ -84,3 +84,8 @@ select {
 table {
   border-collapse: collapse;
 }
+
+/* Remove the default focus styles (outline and border changes) */
+:focus {
+  outline: none;
+}
