@@ -1,9 +1,15 @@
-export type SocialMediaKey = 'telegram' | 'x' | 'linkedin' | 'github';
+export type SocialMediaKey = 'email' | 'telegram' | 'x' | 'linkedin' | 'github';
 
 export type SocialMediaItem = {
-  title: string;
-  url: string;
-  icon: string;
+  type: SocialMediaKey;
+  href: string;
 };
 
-export type SocialMedia = Record<SocialMediaKey, SocialMediaItem>;
+export type SocialMedia = Record<SocialMediaKey, string>;
+
+export type TeamMember = {
+  photo: string;
+  title: string;
+  desc: string;
+  socials: { type: SocialMediaKey; href: string }[];
+};
