@@ -3,7 +3,7 @@
   <Stack />
   <Tech />
   <Portfolio v-if="false" />
-  <Team v-if="false" />
+  <Team />
   <Contact />
 </template>
 
