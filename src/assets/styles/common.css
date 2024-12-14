@@ -82,3 +82,28 @@ button:focus-visible {
   color: var(--background-color);
   transition: box-shadow 0.2s ease-in-out, background-color 0.3s ease-in-out;
 }
+
+.animated-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.animated-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.animated-link:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
