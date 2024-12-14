@@ -1,6 +1,7 @@
 <template>
   <Main />
   <Stack />
+  <Tech />
   <Portfolio v-if="false" />
   <Team v-if="false" />
   <Contact />
