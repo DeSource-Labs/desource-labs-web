@@ -46,6 +46,8 @@ const { type, href } = defineProps<{ type?: 'primary' | 'secondary'; href?: stri
   letter-spacing: 0.005em;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-align: center;
+  text-wrap-style: balance;
 }
 
 .button:hover {
