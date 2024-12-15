@@ -10,9 +10,9 @@
       format="webp"
       loading="lazy"
     />
-    <p class="team__name p3">{{ member.title }}</p>
-    <p class="team__role p3">{{ member.desc }}</p>
-    <div v-once class="team__socials">
+    <p class="bolder p3">{{ member.title }}</p>
+    <p class="bolder p3 secondary">{{ member.desc }}</p>
+    <div v-once class="team__socials secondary">
       <Social
         v-for="social in member.socials"
         size="1.2rem"
@@ -43,17 +43,12 @@ defineProps<{
 .team__photo {
   border-radius: 1rem;
 }
-.team__name {
+.bolder {
   font-weight: 500;
-}
-.team__role {
-  font-weight: 500;
-  color: var(--color-secondary);
 }
 .team__socials {
   align-items: center;
   display: inline-flex;
   gap: 0.5rem;
-  color: var(--color-secondary);
 }
 </style>

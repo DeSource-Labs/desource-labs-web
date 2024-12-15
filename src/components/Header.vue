@@ -1,19 +1,6 @@
 <template>
   <section class="header">
-    <video
-      ref="video"
-      class="header__background video"
-      autoplay
-      loop
-      muted
-      playsinline
-      @timeupdate="handleTimeUpdate"
-    >
-      <source src="/video/world-planet.webm" type="video/webm">
-      <source src="/video/world-planet.mp4" type="video/mp4">
-      <track src="/video/world-planet.vtt" kind="captions" srclang="en" label="English captions" mode="disabled">
-      Your browser does not support the video tag.
-    </video>
+    <Video class="header__background" name="world-planet" @timeupdate="handleTimeUpdate" />
     <NuxtImg
       src="/img/ds_bg_shadow.png"
       alt="DeSource Labs Shadow"
@@ -33,18 +20,19 @@
 </template>
 
 <script setup lang="ts">
-const video = ref<HTMLVideoElement | null>(null);
+import type { VideoEvent } from '~/types';
 
-const handleTimeUpdate = () => {
+const handleTimeUpdate = (event: VideoEvent) => {
+  const video = event.target;
   const blurDuration = 2; // Duration in seconds
-  if (video.value) {
-    const remainingTime = video.value.duration - video.value.currentTime;
+  if (video) {
+    const remainingTime = video.duration - video.currentTime;
     if (remainingTime < blurDuration) {
-      video.value.style.opacity = "0.1";
-      video.value.style.filter = `blur(100px)`;
+      video.style.opacity = '0.1';
+      video.style.filter = `blur(100px)`;
     } else {
-      video.value.style.opacity = "0.5";
-      video.value.style.filter = `blur(0)`;
+      video.style.opacity = '0.5';
+      video.style.filter = `blur(0)`;
     }
   }
 };
@@ -70,8 +58,6 @@ const handleTimeUpdate = () => {
 }
 .header__background {
   z-index: 0;
-}
-.header__background.video {
   opacity: 0.5;
   filter: blur(0);
   transition: opacity 2s ease, filter 8s ease;

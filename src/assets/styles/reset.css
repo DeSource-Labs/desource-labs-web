@@ -89,3 +89,22 @@ table {
 :focus {
   outline: none;
 }
+
+/* Hide the default video track */
+::cue {
+  display: none !important;
+  visibility: hidden !important;
+  color: transparent !important;
+  background-color: transparent !important;
+  background: none !important;
+}
+
+/* Prevent text selection */
+img {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Firefox */
+  pointer-events: none; /* Prevents interaction like dragging */
+  -webkit-user-drag: none; /* Prevents dragging in WebKit browsers */
+}

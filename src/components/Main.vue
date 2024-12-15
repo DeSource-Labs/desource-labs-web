@@ -1,17 +1,6 @@
 <template>
   <section class="main">
-    <video
-      class="main__visual"
-      autoplay
-      loop
-      muted
-      playsinline
-    >
-      <source src="/video/cubic.webm" type="video/webm">
-      <source src="/video/cubic.mp4" type="video/mp4">
-      <track src="/video/cubic.vtt" kind="captions" srclang="en" label="English captions" mode="disabled">
-      Your browser does not support the video tag.
-    </video>
+    <Video class="main__visual" name="cubic" />
     <p class="main__title h4">Innovation, Engineered for Scale</p>
     <p class="main__description desc1 p1">
       We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
@@ -30,8 +19,6 @@
     </Button>
   </section>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 .main {

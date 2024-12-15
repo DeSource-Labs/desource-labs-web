@@ -13,3 +13,7 @@ export type TeamMember = {
   desc: string;
   socials: { type: SocialMediaKey; href: string }[];
 };
+
+export interface VideoEvent extends Event {
+  target: HTMLVideoElement | null;
+}

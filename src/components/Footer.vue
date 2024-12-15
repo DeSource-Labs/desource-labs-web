@@ -5,7 +5,6 @@
       <Social
         v-for="social in socials"
         size="1.2rem"
-        color="var(--color-primary)"
         :key="social.type"
         :aria-label="`Visit DeSource Labs ${social.type}`"
         :type="social.type"
@@ -43,7 +42,7 @@ const socials = socialMediaArray;
   display: flex;
   gap: 1rem;
 }
-a, .p4 {
+.p4 {
   color: var(--color-secondary);
   letter-spacing: 0.03em;
 }

@@ -30,8 +30,6 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
-
 <style scoped>
 .contact {
   position: relative;

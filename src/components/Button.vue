@@ -26,7 +26,10 @@
 </template>
 
 <script setup lang="ts">
-const { type, href } = defineProps<{ type?: 'primary' | 'secondary'; href?: string }>();
+defineProps<{
+  type?: 'primary' | 'secondary';
+  href?: string;
+}>();
 </script>
 
 <style scoped>
@@ -37,10 +40,10 @@ const { type, href } = defineProps<{ type?: 'primary' | 'secondary'; href?: stri
   align-items: center;
   justify-content: center;
   padding: 8px 20px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid var(--color-primary);
   border-radius: 100vw;
-  color: #000000;
-  background-color: #FFFFFF;
+  color: var(--color-background);
+  background-color: var(--color-primary);
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.005em;
@@ -55,7 +58,7 @@ const { type, href } = defineProps<{ type?: 'primary' | 'secondary'; href?: stri
 }
 
 .button.secondary {
-  color: #FFFFFF;
+  color: var(--color-primary);
   border: 1px solid #646464;
   background-color: #333333;
 }

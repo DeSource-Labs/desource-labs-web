@@ -1,18 +1,3 @@
-<script setup lang="ts">
-const { error } = defineProps<{
-  error: {
-    url: string
-    statusCode: number
-    statusMessage: string
-    message: string
-    description: string
-    data: any
-  }
-}>()
-
-const handleError = () => clearError({ redirect: '/' })
-</script>
-
 <template>
   <main>
     <Header />
@@ -27,6 +12,21 @@ const handleError = () => clearError({ redirect: '/' })
     <Footer />
   </main>
 </template>
+
+<script setup lang="ts">
+const { error } = defineProps<{
+  error: {
+    url: string
+    statusCode: number
+    statusMessage: string
+    message: string
+    description: string
+    data: any
+  }
+}>();
+
+const handleError = () => clearError({ redirect: '/' });
+</script>
 
 <style scoped>
 main {

@@ -29,7 +29,7 @@ const props = withDefaults(
   {
     size: '1rem',
     color: 'currentColor',
-    background: 'var(--background-color)',
+    background: 'var(--color-background)',
   },
 );
 

@@ -31,22 +31,9 @@
         </p>
       </div>
     </div>
-    <video
-      class="stack__visual"
-      autoplay
-      loop
-      muted
-      playsinline
-    >
-      <source src="/video/chips.webm" type="video/webm">
-      <source src="/video/chips.mp4" type="video/mp4">
-      <track src="/video/chips.vtt" kind="captions" srclang="en" label="English captions" mode="disabled">
-      Your browser does not support the video tag.
-    </video>
+    <Video class="stack__visual" name="chips" />
   </section>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 .stack {

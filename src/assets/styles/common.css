@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap');
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   font-size: 16px;
   overflow-x: hidden;
 }
@@ -11,7 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   color: var(--color-primary);
 
   font-family: "Nunito", sans-serif;
@@ -21,11 +21,6 @@ body {
   font-variation-settings:
     "wdth" 100,
     "YTLC" 500;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 section {
@@ -38,15 +33,7 @@ section {
   color: var(--color-secondary);
 }
 
-img {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Firefox */
-  pointer-events: none; /* Prevents interaction like dragging */
-  -webkit-user-drag: none; /* Prevents dragging in WebKit browsers */
-}
-
+/* #region NuxtImg */
 .image {
   opacity: 1;
   transition: transform .7s 0.7s ease, opacity .7s 0.7s ease;
@@ -56,15 +43,9 @@ img {
   transform: translateY(2rem);
   opacity: 0;
 }
+/* #endregion */
 
-::cue {
-  display: none !important;
-  visibility: hidden !important;
-  color: transparent !important;
-  background-color: transparent !important;
-  background: none !important;
-}
-
+/* #region TABINDEX */
 /* Add custom focus styles for better accessibility */
 :focus-visible {
   outline: 3px dashed var(--color-primary);
@@ -72,15 +53,21 @@ img {
   border-radius: 4px;
   transition: outline-color 0.2s ease-in-out, outline-offset 0.2s ease-in-out;
 }
-
 /* For buttons specifically */
 button:focus-visible {
   outline: none; /* Remove default browser outline */
   box-shadow: 0 0 6px 2px var(--color-primary); /* Glowing effect around the button */
   border-radius: 6px;
   background-color: var(--color-primary);
-  color: var(--background-color);
+  color: var(--color-background);
   transition: box-shadow 0.2s ease-in-out, background-color 0.3s ease-in-out;
+}
+/* #endregion */
+
+/* #region LINKS */
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .animated-link {
@@ -107,3 +94,4 @@ button:focus-visible {
   transform: scaleX(1);
   opacity: 1;
 }
+/* #endregion */
