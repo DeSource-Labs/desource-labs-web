@@ -23,33 +23,26 @@
       <Button
         class="team__button"
         type="secondary"
-        href="https://calendly.com/stefan-desource-labs/30min"
+        :href="telegram"
       >
-        Schedule a call with the CEO
+        Subscribe to our updates
       </Button>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { socialMedia } from '~/consts';
 import type { TeamMember } from '~/types';
 
 const members: TeamMember[] = [
-  {
-    title: 'Stefan',
-    desc: 'CEO',
-    socials: [
-      { type: 'github', href: 'https://github.com/stefashkaa' },
-      { type: 'telegram', href: 'https://t.me/stefanpopov' },
-      { type: 'email', href: 'mailto:stefan@desource-labs.org' },
-      { type: 'linkedin', href: 'https://www.linkedin.com/in/stefan-popov-072932170/' },
-    ],
-    photo: '/img/team/1.png'
-  },
-  { title: 'Design team', desc: '2 members', socials: [], photo: '/img/team/2.png' },
-  { title: 'Front-end team', desc: '4 members', socials: [], photo: '/img/team/3.png' },
-  { title: 'Full-stack team', desc: '7 members', socials: [], photo: '/img/team/4.png' },
+  { title: 'Design team', desc: '2 members', socials: [], photo: '/img/team/1.png' },
+  { title: 'Front-end team', desc: '4 members', socials: [], photo: '/img/team/2.png' },
+  { title: 'Full-stack team', desc: '7 members', socials: [], photo: '/img/team/3.png' },
+  { title: 'Blockchain team', desc: '2 members', socials: [], photo: '/img/team/4.png' },
 ];
+
+const telegram = socialMedia.telegram;
 </script>
 
 <style scoped>
