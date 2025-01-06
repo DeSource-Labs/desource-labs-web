@@ -8,7 +8,7 @@
   >
     <source :src="'/video/' + name + '.webm'" type="video/webm">
     <source :src="'/video/' + name + '.mp4'" type="video/mp4">
-    <track :src="'/video/' + name + '.vtt'" kind="captions" srclang="en" label="English captions" mode="disabled">
+    <track :src="'/video/' + name + '.vtt'" kind="subtitles" srclang="en" label="English subtitles">
     Your browser does not support the video tag.
   </video>
 </template>
