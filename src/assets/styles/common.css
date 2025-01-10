@@ -24,7 +24,7 @@ body {
 }
 
 section {
-  min-height: calc(100dvh - 2rem);
+  min-height: 100svh;
   width: 100%;
   padding: 1rem;
 }
