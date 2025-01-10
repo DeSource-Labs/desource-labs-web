@@ -30,7 +30,7 @@ const handleError = () => clearError({ redirect: '/' });
 
 <style scoped>
 main {
-  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   grid-template-rows: 1fr auto;
 }

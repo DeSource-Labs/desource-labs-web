@@ -23,7 +23,7 @@
 <style scoped>
 .main {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "visual title"
     "visual desc1"
     "visual desc2"
@@ -36,7 +36,7 @@
 .main__visual {
   grid-area: visual;
   width: 100%;
-  height: auto;
+  min-height: 30svh;
   object-fit: cover;
 }
 .main__title {
