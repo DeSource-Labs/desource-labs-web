@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'reset';
-@import 'common';
-@import 'typography';
-@import 'animations';
+@import './variables.css';
+@import './reset.css';
+@import './common.css';
+@import './typography.css';
+@import './animations.css';
