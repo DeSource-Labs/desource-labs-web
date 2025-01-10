@@ -36,7 +36,7 @@
 .main__visual {
   grid-area: visual;
   width: 100%;
-  min-height:30svh;
+  min-height: 30svh;
   object-fit: cover;
 }
 .main__title {
