@@ -14,11 +14,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/image": "^1.8.1",
-    "@nuxtjs/sitemap": "^7.0.0",
-    "nuxt": "^3.14.1592",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "@nuxt/image": "^1.10.0",
+    "@nuxtjs/sitemap": "^7.4.3",
+    "nuxt": "^3.17.6",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1"
   },
   "packageManager": "yarn@1.22.22"
 }
