@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { socialMediaArray } from '~/consts';
-
 const socials = socialMediaArray;
 </script>
 

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TeamMember } from '~/types';
+import type { TeamMember } from '~~/shared/types';
 
 defineProps<{
   member: TeamMember;

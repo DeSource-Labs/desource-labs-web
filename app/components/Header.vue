@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import type { VideoEvent } from '~/types';
-
 const handleTimeUpdate = (event: VideoEvent) => {
   const video = event.target;
   const blurDuration = 2; // Duration in seconds
