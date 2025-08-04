@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import type { VideoEvent } from '~/types';
-
 defineProps<{ name: string }>();
 
 const emit = defineEmits<{

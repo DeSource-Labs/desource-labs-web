@@ -32,9 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { socialMedia } from '~/consts';
-import type { TeamMember } from '~/types';
-
 const members: TeamMember[] = [
   { title: 'Design team', desc: '2 members', socials: [], photo: '/img/team/1.png' },
   { title: 'Front-end team', desc: '4 members', socials: [], photo: '/img/team/2.png' },
