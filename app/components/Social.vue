@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SocialMediaKey } from '~~/shared/types'
+import type { SocialMediaKey } from '~~/shared/types';
 
 const props = withDefaults(
   defineProps<{
