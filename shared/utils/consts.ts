@@ -1,4 +1,4 @@
-import type { SocialMediaItem, SocialMediaKey } from './types';
+import type { SocialMediaItem, SocialMediaKey } from '../types';
 
 export const socialMedia = {
   email: 'mailto:hello@desource-labs.org',
