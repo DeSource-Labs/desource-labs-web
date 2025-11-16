@@ -14,6 +14,16 @@ export type TeamMember = {
   socials: { type: SocialMediaKey; href: string }[];
 };
 
+export type Product = {
+  title: string;
+  desc: string;
+  tags: string[];
+  id: number;
+  logoId?: number;
+  logoHeight?: number;
+  shadowColor?: string;
+};
+
 export interface VideoEvent extends Event {
   target: HTMLVideoElement | null;
 }

@@ -4,7 +4,7 @@ import { meta } from './shared/utils/meta';
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
-  css: ['~/assets/styles/index.css'],
+  css: ['~/assets/styles/index.css', '@splidejs/splide/dist/css/splide.min.css'],
   modules: ['@nuxt/image', '@nuxtjs/sitemap'],
 
   app: {

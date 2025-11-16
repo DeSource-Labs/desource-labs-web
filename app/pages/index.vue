@@ -2,7 +2,7 @@
   <Main />
   <Stack />
   <Tech />
-  <Portfolio v-if="false" />
+  <Portfolio />
   <Team />
   <Contact />
 </template>
