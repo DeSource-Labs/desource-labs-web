@@ -1,7 +1,7 @@
 <template>
   <div
     class="product"
-    :class="[{ 'product--reversed': isReversed }, product.shadowColor ? `product--shadow-${product.shadowColor}` : '']"
+    :class="[{ 'product--reversed': isReversed }, product.shadowColor]"
   >
     <div class="product__info">
       <LazyNuxtImg
@@ -64,54 +64,59 @@ const image = computed(() => `/img/products/${props.product.id}.png`);
   align-items: stretch;
   gap: 1rem;
   border-radius: 1rem;
-  background: linear-gradient(180deg, rgba(34, 34, 34, 0.6) 0%, rgba(26, 26, 26, 0.6) 100%);
-
+  /* Liquid-glass surface */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
   box-shadow:
-    0 0 0.5rem rgba(0, 255, 255, 0.2),
-    0 0 1rem rgba(0, 255, 255, 0.2),
-    0 0 2rem rgba(0, 255, 255, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06), /* rim light */
+    0 12px 30px rgba(0, 0, 0, 0.6),          /* depth */
+    0 0 40px rgba(255, 255, 255, 0.05);      /* ambient on dark bg */
+  transition: transform 0.18s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  isolation: isolate;
+  --glow: rgba(255, 255, 255, 0.22);
+  &.orange { --glow: rgba(255, 165, 0, 0.26); }
+  &.lime { --glow: rgba(50, 205, 50, 0.22); }
+  &.pink { --glow: rgba(255, 20, 147, 0.18); }
+  &.darkblue { --glow: rgba(0, 0, 139, 0.30); }
+  &.purple { --glow: rgba(128, 0, 128, 0.24); }
+  &.white { --glow: rgba(255, 255, 255, 0.24); }
 
-  &--shadow-orange {
-    box-shadow:
-      0 0 0.5rem rgba(255, 165, 0, 0.3),
-      0 0 1rem rgba(255, 165, 0, 0.3),
-      0 0 2rem rgba(255, 165, 0, 0.3);
+  &::before {
+    /* top sheen */
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 24%;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0));
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  &::after {
+    /* centered ring */
+    content: '';
+    position: absolute;
+    inset: -10% -12% -12% -12%;
+    border-radius: inherit;
+    background:
+      radial-gradient(76% 70% at 50% 50%, var(--glow), rgba(0,0,0,0) 60%);
+    filter: blur(26px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: -1;
   }
 
-  &--shadow-lime {
-    box-shadow:
-      0 0 0.5rem rgba(50, 205, 50, 0.2),
-      0 0 1rem rgba(50, 205, 50, 0.2),
-      0 0 2rem rgba(50, 205, 50, 0.2);
-  }
-
-  &--shadow-pink {
-    box-shadow:
-      0 0 0.5rem rgba(255, 20, 147, 0.1),
-      0 0 1rem rgba(255, 20, 147, 0.1),
-      0 0 2rem rgba(255, 20, 147, 0.1);
-  }
-
-  &--shadow-darkblue {
-    box-shadow:
-      0 0 0.5rem rgba(0, 0, 139, 0.4),
-      0 0 1rem rgba(0, 0, 139, 0.4),
-      0 0 2rem rgba(0, 0, 139, 0.4);
-  }
-
-  &--shadow-purple {
-    box-shadow:
-      0 0 0.5rem rgba(128, 0, 128, 0.3),
-      0 0 1rem rgba(128, 0, 128, 0.3),
-      0 0 2rem rgba(128, 0, 128, 0.3);
-  }
-
-  &--shadow-white {
-    box-shadow:
-      0 0 0.5rem rgba(255, 255, 255, 0.2),
-      0 0 1rem rgba(255, 255, 255, 0.2),
-      0 0 2rem rgba(255, 255, 255, 0.2);
-  }
+  // &:hover {
+  //   transform: translateY(-2px);
+  //   box-shadow:
+  //     inset 0 1px 0 rgba(255, 255, 255, 0.08),
+  //     0 16px 42px rgba(0, 0, 0, 0.7),
+  //     0 0 56px rgba(255, 255, 255, 0.06);
+  //   border-color: rgba(255, 255, 255, 0.12);
+  // }
 
   &--reversed {
     flex-direction: row-reverse;
@@ -162,10 +167,11 @@ const image = computed(() => `/img/products/${props.product.id}.png`);
 
   &__tag {
     color: var(--color-primary);
-    background: rgba(51, 51, 51, 0.6);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6px 10px;
     border-radius: 0.9rem;
+    backdrop-filter: blur(4px);
   }
 
   &__image {
