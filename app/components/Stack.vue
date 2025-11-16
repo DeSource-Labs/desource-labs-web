@@ -7,9 +7,15 @@
     </div>
     <div class="stack__container">
       <div class="stack__item">
+        <span class="stack__title p2">AI-based Solutions</span>
+        <p class="stack__description secondary p3">
+          MCP development, AI integrations, custom solutions
+        </p>
+      </div>
+      <div class="stack__item">
         <span class="stack__title p2">Blockchain Ecosystems</span>
         <p class="stack__description secondary p3">
-          Smart contracts, dApps, cross-chain integrations
+          Smart contracts, dApps, DEXes, cross-chain integrations
         </p>
       </div>
       <div class="stack__item">
@@ -62,7 +68,11 @@ hr {
   margin-top: 2rem;
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, #FFFFFF 0%, rgba(153, 153, 153, 0) 100%);
+  background: linear-gradient(90deg, #FFFFFF 0%, rgba(153, 153, 153, 0) 50%);
+  background-size: 200% 100%;
+  background-position-x: 0%;
+  will-change: background-position;
+  animation: hrAmimationBg 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 .stack__container {
   grid-area: stack;
@@ -140,6 +150,14 @@ span {
 @media (max-width: 320px) {
   .stack__visual {
     height: 100vw;
+  }
+}
+@keyframes hrAmimationBg {
+  0%, 100% {
+    background-position-x: 0%;
+  }
+  50% {
+    background-position-x: 100%;
   }
 }
 </style>
