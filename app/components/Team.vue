@@ -33,9 +33,18 @@
 
 <script setup lang="ts">
 const members: TeamMember[] = [
-  { title: 'Design team', desc: '2 members', socials: [], photo: '/img/team/1.png' },
-  { title: 'Front-end team', desc: '4 members', socials: [], photo: '/img/team/2.png' },
-  { title: 'Full-stack team', desc: '7 members', socials: [], photo: '/img/team/3.png' },
+  {
+    title: 'Stefan',
+    desc: 'CEO',
+    socials: [
+      { type: 'telegram', href: 'https://t.me/stefanpopov' },
+      { type: 'github', href: 'https://github.com/stefashkaa' },
+      { type: 'email', href: 'mailto:stefan@desource-labs.org' },
+    ],
+    photo: '/img/team/1.png'
+  },
+  { title: 'Design team', desc: '2 members', socials: [], photo: '/img/team/2.png' },
+  { title: 'Full-stack team', desc: '10 members', socials: [], photo: '/img/team/3.png' },
   { title: 'Blockchain team', desc: '2 members', socials: [], photo: '/img/team/4.png' },
 ];
 
