@@ -6,19 +6,15 @@
     <div class="team__main-content">
       <p class="team__title h4">The Team Behind the Craft</p>
       <p class="team__description p1">
-        We’re a collective of engineers, designers, and strategists obsessed with
-        <strong>pushing the boundaries of what’s possible.</strong>
+        A collective of <strong>14+ engineers, designers, and strategists</strong> with deep expertise across blockchain, AI, and modern web architecture.
       </p>
     </div>
     <div class="team__additional-content">
       <p class="team__description p1">
-        <strong>Our collective experience powers our success.</strong>
+        We've built production systems for ambitious projects—from NFT marketplaces to voice AI launchpads to cross-chain infrastructure. Real solutions, deployed and trusted.
       </p>
       <p class="team__description p1">
-        Together, we bring decades of experience across blockchain, design, and engineering, delivering solutions trusted by some of the most forward-thinking businesses in the world.
-      </p>
-      <p class="team__description p1">
-        Every project benefits from the same passion for excellence and attention to detail that defines our work.
+        Every project benefits from this collective experience, paired with an <strong>obsessive attention to detail</strong> that defines our work.
       </p>
       <Button
         class="team__button"

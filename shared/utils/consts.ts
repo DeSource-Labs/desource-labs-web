@@ -36,21 +36,21 @@ export const Projects: Product[] = [
   {
     id: 1,
     title: 'Alljoined Website',
-    desc: 'A website for a brand new AI which is completely crazy',
+    desc: 'Brand identity and web presence for a next-generation AI platform, built for scale',
     tags: ['Website', 'Design'],
     shadowColor: 'orange',
   },
   {
     id: 2,
     title: 'Trait Service Enhancements',
-    desc: 'Improved trait service for NFT projects with new features, autodocumentation, and enhanced performance',
+    desc: 'Production-ready trait service powering NFT projects, with autodocumentation and performance gains',
     tags: ['NFT', 'Blockchain', 'Back-end'],
     shadowColor: 'white',
   },
   {
     id: 3,
     title: 'NFT Marketplace',
-    desc: 'A cutting-edge NFT marketplace with seamless user experience and robust features',
+    desc: 'Full-stack NFT marketplace trusted by collectors, featuring sub-second load times and seamless trading',
     tags: ['NFT', 'Marketplace', 'Design'],
     logoId: 2,
     shadowColor: 'white',
@@ -58,21 +58,21 @@ export const Projects: Product[] = [
   {
     id: 4,
     title: 'Vocal Fun Website',
-    desc: 'A website for Vocal Fun, voice agent launchpad',
+    desc: 'Marketing site for voice AI launchpad, designed to convert and built for speed',
     tags: ['Website', 'Design'],
     shadowColor: 'lime',
   },
   {
     id: 5,
     title: 'Vocal Fun Launchpad',
-    desc: 'A launchpad for Vocal Fun with AI voice agent tokens',
+    desc: 'End-to-end launchpad for AI voice agent tokens, handling real-time trading and wallet integration',
     tags: ['Blockchain', 'Launchpad', 'Front-end', 'AI'],
     shadowColor: 'lime',
   },
   {
     id: 6,
     title: 'Education Hub',
-    desc: 'A Web3-based platform for educational resources and courses',
+    desc: 'Web3 learning platform delivering courses worldwide with web3-gated access',
     tags: ['Education', 'Front-end', 'Blockchain'],
     logoHeight: 24,
     shadowColor: 'pink',
@@ -80,7 +80,7 @@ export const Projects: Product[] = [
   {
     id: 7,
     title: 'MiniVerse Website',
-    desc: 'A website for MiniVerse, the metaverse for mini DApps and games',
+    desc: 'Web presence for a metaverse platform, designed to showcase mini DApps and drive adoption',
     tags: ['Website', 'Design'],
     logoHeight: 48,
     shadowColor: 'darkblue',
@@ -88,7 +88,7 @@ export const Projects: Product[] = [
   {
     id: 8,
     title: 'MiniVerse Hub',
-    desc: 'An innovative hub where mini DApps, games, and blockchain networks converge',
+    desc: 'Cross-chain hub connecting mini DApps, games, and blockchain networks in one unified interface',
     tags: ['Front-end', 'Back-end', 'Blockchain', 'DeFi'],
     logoId: 7,
     logoHeight: 48,
@@ -97,20 +97,20 @@ export const Projects: Product[] = [
   {
     id: 9,
     title: 'The Flare',
-    desc: 'A finance learning platform that provides a comprehensive and engaging way to learn about finance',
+    desc: 'Mobile-first finance education platform with interactive lessons, deployed on iOS and Android',
     tags: ['Education', 'iOS', 'Android', 'Front-end', 'Design'],
     shadowColor: 'purple',
   },
   {
     id: 10,
     title: 'Mem0 Browser Extension Enhancements',
-    desc: 'Enhancing the Mem0 browser extension with new AI-powered features and improved user experience',
+    desc: 'AI-powered browser extension upgrades with MCP integration and enhanced UX for productivity',
     tags: ['Browser Extension', 'Front-end', 'AI', 'MCP'],
   },
   {
     id: 11,
     title: 'Phone Mask Library',
-    desc: 'A versatile phone mask library supporting multiple formats and easy integration',
+    desc: 'Lightweight open-source library for phone number formatting, supporting 200+ countries with zero dependencies',
     tags: ['Library', 'Front-end', 'Open Source'],
   }
 ];
