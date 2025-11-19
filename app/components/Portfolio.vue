@@ -1,6 +1,9 @@
 <template>
   <section class="portfolio">
-    <h1>OUR WORK IN ACTION</h1>
+    <div class="portfolio__header">
+      <h1>OUR WORK IN ACTION</h1>
+      <p class="portfolio__hint p4">Selected builds, deployed and trusted</p>
+    </div>
     <Splide class="portfolio__slides" v-bind="splideConfig">
       <SplideSlide v-for="(item, index) in firstList" :key="item.id" class="portfolio__slide">
         <Card :product="item" :is-reversed="index % 2 !== 0" />
@@ -90,6 +93,19 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: 2rem;
   padding: 1rem 0;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__hint {
+    color: var(--color-tertiary);
+    font-style: italic;
+    margin-top: -0.5rem;
+  }
 
   &__slide {
     padding: 1rem;

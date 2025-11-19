@@ -11,17 +11,13 @@
     </div>
     <div class="team__additional-content">
       <p class="team__description p1">
-        We've built production systems for ambitious projects—from NFT marketplaces to voice AI launchpads to cross-chain infrastructure. Real solutions, deployed and trusted.
+        We've built production systems for ambitious projects — from NFT marketplaces to voice AI launchpads to cross-chain infrastructure. Real solutions, deployed and trusted.
       </p>
       <p class="team__description p1">
         Every project benefits from this collective experience, paired with an <strong>obsessive attention to detail</strong> that defines our work.
       </p>
-      <Button
-        class="team__button"
-        type="secondary"
-        :href="telegram"
-      >
-        Subscribe to our updates
+      <Button class="team__button" type="ghost" :href="telegram">
+        Stay in the loop
       </Button>
     </div>
   </section>

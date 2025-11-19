@@ -1,8 +1,8 @@
 <template>
   <component
     class="button"
-    target="_blank"
-    rel="nofollow noopener"
+    :target="href ? '_blank' : undefined"
+    :rel="href ? 'nofollow noopener' : undefined"
     :is="href ? 'a' : 'button'"
     :class="type"
     :href="href"
@@ -27,13 +27,14 @@
 
 <script setup lang="ts">
 defineProps<{
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'ghost' | 'link';
   href?: string;
 }>();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .button {
+  position: relative;
   height: 56px;
   width: 230px;
   display: inline-flex;
@@ -48,33 +49,77 @@ defineProps<{
   font-weight: 500;
   letter-spacing: 0.005em;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
   text-align: center;
   text-wrap-style: balance;
-}
 
-.button:hover {
-  background-color: #F5F5F5;
-}
+  &:hover {
+    background-color: #F5F5F5;
 
-.button.secondary {
-  color: var(--color-primary);
-  border: 1px solid #646464;
-  background-color: #333333;
-}
+    > .button__arrow {
+      animation: arrow-move 1s infinite;
+    }
+  }
 
-.button.secondary:hover {
-  background-color: #646464;
-}
+  &.secondary {
+    color: var(--color-primary);
+    border: 1px solid #646464;
+    background-color: #333333;
 
-.button__arrow {
-  margin-left: 0.3rem;
-  width: 1rem;
-  height: 1rem;
-}
+    &:hover {
+      background-color: #646464;
+    }
+  }
 
-.button:hover .button__arrow {
-  animation: arrow-move 1s infinite;
+  &.ghost {
+    color: var(--color-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: transparent;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    &:hover {
+      color: var(--color-primary);
+      border-color: rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+  }
+
+  &.link {
+    height: auto;
+    width: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--color-tertiary);
+    font-weight: 400;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      right: 50%;
+      height: 1px;
+      background: currentColor;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover {
+      color: var(--color-primary);
+
+      &::after {
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+
+  &__arrow {
+    margin-left: 0.3rem;
+    width: 1rem;
+    height: 1rem;
+  }
 }
 
 @keyframes arrow-move {

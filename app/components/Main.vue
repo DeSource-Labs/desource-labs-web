@@ -13,15 +13,26 @@
     <p class="main__trust description p1">
       Trusted by innovative teams building the future of Web3, AI, and decentralized infrastructure.
     </p>
-    <Button
-      class="main__button"
-      type="secondary"
-      href="https://calendly.com/hello-desource-labs/30min"
-    >
-      Schedule a call
-    </Button>
+    <div class="main__actions">
+      <Button type="secondary" href="https://calendly.com/hello-desource-labs/30min">
+        Schedule a call
+      </Button>
+      <Button type="link" @click="scrollToPortfolio">
+        View our work
+      </Button>
+    </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const scrollToPortfolio = () => {
+  const element = document.getElementById('portfolio');
+  if (element) {
+    const targetPosition = element.getBoundingClientRect().top + window.scrollY - 100;
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  }
+};
+</script>
 
 <style scoped lang="scss">
 .main {
@@ -31,7 +42,7 @@
     "visual desc1"
     "visual desc2"
     "visual trust"
-    "visual button";
+    "visual actions";
   grid-template-columns: 1fr 2fr;
   gap: 2px;
   align-items: center;
@@ -61,8 +72,11 @@
     font-style: italic;
   }
 
-  &__button {
-    grid-area: button;
+  &__actions {
+    grid-area: actions;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
 }
 .description {
@@ -111,9 +125,10 @@
       text-align: center;
     }
 
-    &__button {
+    &__actions {
       order: 6;
       align-self: center;
+      flex-direction: column-reverse;
     }
   }
 }
