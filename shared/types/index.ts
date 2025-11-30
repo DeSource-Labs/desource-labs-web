@@ -22,6 +22,10 @@ export type Product = {
   logoId?: number;
   logoHeight?: number;
   shadowColor?: string;
+  status?: 'live' | 'delivered' | 'open-source';
+  impact?: string;
+  url?: string;
+  client?: string;
 };
 
 export interface VideoEvent extends Event {
