@@ -11,7 +11,6 @@
         viewportTag="div"
         cameraTag="div"
         tabindex="-1"
-        :camera-class="''"
         :options="options"
         :plugins="plugins"
         @will-change="onSlideChange"

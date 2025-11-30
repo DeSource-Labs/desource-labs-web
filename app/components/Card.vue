@@ -30,6 +30,7 @@
         <a
           v-if="product.url"
           :href="product.url"
+          tabindex="-1"
           target="_blank"
           rel="noopener noreferrer"
           class="product__link"
@@ -50,7 +51,7 @@
         quality="90"
       />
       <div v-if="product.status" class="product__status">
-        <span :class="`status-badge status-badge--${product.status}`">
+        <span class="status-badge" :class="`status-badge--${product.status}`">
           {{ statusLabel }}
         </span>
       </div>
@@ -79,8 +80,6 @@ const statusLabel = computed(() => {
       return 'Live';
     case 'delivered':
       return 'Delivered';
-    case 'open-source':
-      return 'Open Source';
     default:
       return '';
   }
@@ -109,7 +108,15 @@ const statusLabel = computed(() => {
   transition: transform 0.18s ease, box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   isolation: isolate;
   --glow: rgba(255, 255, 255, 0.22);
-  &.orange { --glow: rgba(255, 165, 0, 0.26); }
+  &.orange {
+    --glow: rgba(255, 165, 0, 0.26);
+    .status-badge--live {
+      color: rgb(34, 197, 94);
+      &::before {
+        background: rgb(34, 197, 94);
+      }
+    }
+  }
   &.lime { --glow: rgba(50, 205, 50, 0.22); }
   &.pink { --glow: rgba(255, 20, 147, 0.18); }
   &.darkblue { --glow: rgba(0, 0, 139, 0.30); }
@@ -332,16 +339,6 @@ const statusLabel = computed(() => {
 
     &::before {
       background: rgb(59, 130, 246);
-    }
-  }
-
-  &--open-source {
-    background: rgba(168, 85, 247, 0.15);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    color: rgb(216, 180, 254);
-
-    &::before {
-      background: rgb(168, 85, 247);
     }
   }
 }
