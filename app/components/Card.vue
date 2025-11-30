@@ -100,13 +100,13 @@ const statusLabel = computed(() => {
   /* Liquid-glass surface */
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06), /* rim light */
     0 12px 30px rgba(0, 0, 0, 0.6),          /* depth */
     0 0 40px rgba(255, 255, 255, 0.05);      /* ambient on dark bg */
-  transition: transform 0.18s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.18s ease, box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   isolation: isolate;
   --glow: rgba(255, 255, 255, 0.22);
   &.orange { --glow: rgba(255, 165, 0, 0.26); }
@@ -138,18 +138,22 @@ const statusLabel = computed(() => {
       radial-gradient(76% 70% at 50% 50%, var(--glow), rgba(0,0,0,0) 60%);
     filter: blur(26px);
     opacity: 0.55;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
     z-index: -1;
   }
 
-  // &:hover {
-  //   transform: translateY(-2px);
-  //   box-shadow:
-  //     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-  //     0 16px 42px rgba(0, 0, 0, 0.7),
-  //     0 0 56px rgba(255, 255, 255, 0.06);
-  //   border-color: rgba(255, 255, 255, 0.12);
-  // }
+  &:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 16px 42px rgba(0, 0, 0, 0.7),
+      0 0 56px rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+
+    &::after {
+      opacity: 0.65;
+    }
+  }
 
   &--reversed {
     flex-direction: row-reverse;
