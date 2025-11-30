@@ -21,6 +21,22 @@
         View our work
       </Button>
     </div>
+    <div class="main__metrics">
+      <div class="metric">
+        <span class="metric__number">50+</span>
+        <span class="metric__label">Projects</span>
+      </div>
+      <div class="metric__divider"></div>
+      <div class="metric">
+        <span class="metric__number">10+</span>
+        <span class="metric__label">Blockchain Networks</span>
+      </div>
+      <div class="metric__divider"></div>
+      <div class="metric">
+        <span class="metric__number">5+</span>
+        <span class="metric__label">Years</span>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -42,11 +58,12 @@ const scrollToPortfolio = () => {
     "visual desc1"
     "visual desc2"
     "visual trust"
-    "visual actions";
+    "visual actions"
+    "visual metrics";
   grid-template-columns: 1fr 2fr;
   gap: 2px;
   align-items: center;
-  padding: 10rem 6vw;
+  padding: 4rem 6vw;
 
   &__visual {
     grid-area: visual;
@@ -77,8 +94,51 @@ const scrollToPortfolio = () => {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  &__metrics {
+    grid-area: metrics;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &__number {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  &__label {
+    font-size: 0.7rem;
+    color: var(--color-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+}
+
 .description {
   line-height: 1.5;
   color: var(--color-secondary);
@@ -89,7 +149,7 @@ const scrollToPortfolio = () => {
 }
 @media (max-width: 1024px) {
   .main {
-    padding: 6rem 2rem;
+    padding: 3rem 2rem;
   }
 }
 @media (max-width: 768px) {
@@ -130,16 +190,67 @@ const scrollToPortfolio = () => {
       align-self: center;
       flex-direction: column-reverse;
     }
+
+    &__metrics {
+      order: 7;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+    }
+  }
+
+  .metric {
+    &__number {
+      font-size: 1.25rem;
+    }
+
+    &__label {
+      font-size: 0.65rem;
+    }
+
+    &__divider {
+      height: 35px;
+    }
   }
 }
 @media (max-width: 640px) {
-  .main__visual {
-    max-width: 80vw;
+  .main {
+    &__visual {
+      max-width: 80vw;
+    }
+
+    &__metrics {
+      gap: 1.25rem;
+    }
+  }
+
+  .metric {
+    &__number {
+      font-size: 1.1rem;
+    }
+
+    &__label {
+      font-size: 0.6rem;
+    }
+
+    &__divider {
+      height: 30px;
+    }
   }
 }
 @media (max-width: 320px) {
   .main {
     padding: 2rem 1.4rem;
+
+    &__metrics {
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+  }
+
+  .metric {
+    align-items: center;
+    text-align: center;
   }
 }
 </style>
