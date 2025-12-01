@@ -26,9 +26,37 @@
         Let’s create technology that transforms your business.
       </p>
       <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
+      <p class="contact__meta p4" aria-label="response time">Under 24h response • NDA on request</p>
+      <button class="contact__peek p3" @click="toggleCalendar" :aria-expanded="showCalendar">
+        <span v-if="!showCalendar">Preview calendar</span>
+        <span v-else>Hide calendar</span>
+      </button>
+      <ClientOnly>
+        <div v-show="showCalendar" class="contact__calendar">
+          <div class="calendly-inline-widget" data-url="https://calendly.com/hello-desource-labs/30min" style="min-width:320px;height:520px;"></div>
+        </div>
+      </ClientOnly>
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const showCalendar = ref(false);
+
+const toggleCalendar = () => {
+  showCalendar.value = !showCalendar.value;
+  if (showCalendar.value && typeof window !== 'undefined') {
+    const existing = document.querySelector('script[data-calendly]');
+    if (!existing) {
+      const s = document.createElement('script');
+      s.src = 'https://assets.calendly.com/assets/external/widget.js';
+      s.async = true;
+      s.setAttribute('data-calendly', 'true');
+      document.body.appendChild(s);
+    }
+  }
+};
+</script>
 
 <style scoped>
 .contact {
@@ -57,5 +85,29 @@
   text-align: center;
   color: var(--color-primary);
   gap: 2rem;
+}
+
+.contact__meta {
+  color: var(--color-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.contact__peek {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.contact__calendar {
+  width: min(980px, 92vw);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
 }
 </style>
