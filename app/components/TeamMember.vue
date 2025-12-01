@@ -11,7 +11,7 @@
       loading="lazy"
     />
     <p class="bolder p3">{{ member.title }}</p>
-    <p class="bolder p3 secondary">{{ member.desc }}</p>
+    <p class="team__role bolder secondary">{{ member.desc }}</p>
     <div v-once class="team__socials secondary">
       <Social
         v-for="social in member.socials"
@@ -50,5 +50,11 @@ defineProps<{
   align-items: center;
   display: inline-flex;
   gap: 0.5rem;
+}
+.team__role {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 </style>

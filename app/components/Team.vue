@@ -27,7 +27,7 @@
 const members: TeamMember[] = [
   {
     title: 'Stefan',
-    desc: 'CEO',
+    desc: 'Founder & Builder',
     socials: [
       { type: 'telegram', href: 'https://t.me/stefanpopov' },
       { type: 'github', href: 'https://github.com/stefashkaa' },
@@ -35,9 +35,30 @@ const members: TeamMember[] = [
     ],
     photo: '/img/team/1.png'
   },
-  { title: 'Design team', desc: '2 members', socials: [], photo: '/img/team/2.png' },
-  { title: 'Full-stack team', desc: '10 members', socials: [], photo: '/img/team/3.png' },
-  { title: 'Blockchain team', desc: '2 members', socials: [], photo: '/img/team/4.png' },
+  {
+    title: 'Design team',
+    desc: 'Interface & Brand',
+    socials: [
+      { type: 'telegram', href: 'https://t.me/desource_design' },
+    ],
+    photo: '/img/team/2.png'
+  },
+  {
+    title: 'Full-stack team',
+    desc: 'Systems & Product',
+    socials: [
+      { type: 'telegram', href: 'https://t.me/desource_dev' },
+    ],
+    photo: '/img/team/3.png'
+  },
+  {
+    title: 'Blockchain team',
+    desc: 'Protocol & Contracts',
+    socials: [
+      { type: 'telegram', href: 'https://t.me/desource_web3' },
+    ],
+    photo: '/img/team/4.png'
+  },
 ];
 
 const telegram = socialMedia.telegram;
