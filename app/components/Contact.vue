@@ -101,6 +101,7 @@ const onCloseCalendar = () => {
   align-items: center;
   justify-content: space-evenly;
   gap: 2rem;
+  min-height: calc(100svh - 72px);
 
   &__background,
   &__shadow {
@@ -152,6 +153,7 @@ const onCloseCalendar = () => {
 @media (max-width: 768px) {
   .contact {
     justify-content: center;
+    min-height: calc(100svh - 163px);
 
     &__content {
       margin-top: 10rem;
