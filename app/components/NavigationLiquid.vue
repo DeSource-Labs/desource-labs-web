@@ -1,8 +1,7 @@
 <template>
-  <nav class="nav" :class="{ 'nav--visible': showNav }">
+  <LiquidGlass tag="nav" class="nav" :class="{ 'nav--visible': showNav }">
     <div class="nav__container">
-      <a href="#" class="nav__logo" @click.prevent="scrollToTop">DESOURCE</a>
-
+      <a href="#" class="nav__logo" @click.prevent="scrollToTop">DESOURCE LABS</a>
       <div class="nav__links">
         <a
           v-for="item in links"
@@ -16,7 +15,6 @@
           {{ item.name }}
         </a>
       </div>
-
       <Button
         class="nav__cta"
         type="primary"
@@ -24,7 +22,6 @@
       >
         Let's Talk
       </Button>
-
       <button class="nav__hamburger" @click="toggleMobileMenu" aria-label="Toggle menu">
         <span></span>
         <span></span>
@@ -33,36 +30,41 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile" :class="{ 'nav__mobile--open': mobileMenuOpen }">
-      <button class="nav__mobile-close" @click="toggleMobileMenu" aria-label="Close menu">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-
-      <div class="nav__mobile-content">
-        <a
-          v-for="(item, index) in links"
-          :key="index"
-          class="nav__mobile-link"
-          rel="nofollow noopener"
-          :href="item.target"
-          @click.prevent="handleMobileClick(item.target)"
-        >
-          {{ item.name }}
-        </a>
-
-        <Button
-          class="nav__mobile-cta"
-          type="primary"
-          href="https://calendly.com/hello-desource-labs/30min"
-        >
-          Schedule a call
-        </Button>
-      </div>
-    </div>
-  </nav>
+    <Teleport to="body">
+      <LiquidGlass
+        class="nav__mobile" :class="{ 'nav__mobile--open': mobileMenuOpen }"
+        :border-radius="32"
+        :background-opacity="0.9"
+        @click="toggleMobileMenu"
+      >
+        <button class="nav__mobile-close" @click="toggleMobileMenu" aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="nav__mobile-content">
+          <a
+            v-for="(item, index) in links"
+            :key="index"
+            class="nav__mobile-link"
+            rel="nofollow noopener"
+            :href="item.target"
+            @click.prevent="handleMobileClick(item.target)"
+          >
+            {{ item.name }}
+          </a>
+          <Button
+            class="nav__mobile-cta"
+            type="primary"
+            href="https://calendly.com/hello-desource-labs/30min"
+          >
+            Schedule a call
+          </Button>
+        </div>
+      </LiquidGlass>
+    </Teleport>
+  </LiquidGlass>
 </template>
 
 <script setup lang="ts">
@@ -127,9 +129,9 @@ const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
   // Prevent body scroll when menu is open
   if (mobileMenuOpen.value) {
-    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
   } else {
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   }
 };
 
@@ -151,10 +153,10 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .nav {
   position: fixed;
-  top: 10rem;
+  top: 1rem;
   left: 50%;
   transform: translateX(-50%) translateY(-100px);
   z-index: 1000;
@@ -168,105 +170,6 @@ onUnmounted(() => {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
   pointer-events: all;
-}
-
-.nav__container {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  padding: 0.75rem 2rem;
-  border-radius: 100px;
-
-  /* Glassmorphism matching portfolio cards */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 12px 30px rgba(0, 0, 0, 0.6),
-    0 0 60px rgba(147, 51, 234, 0.15);
-}
-
-.nav__logo {
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  color: var(--color-primary);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.nav__logo:hover {
-  color: #a78bfa;
-  text-shadow: 0 0 20px rgba(167, 139, 250, 0.5);
-}
-
-.nav__links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.nav__link {
-  position: relative;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--color-secondary);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.nav__link:hover {
-  color: var(--color-primary);
-  transform: scale(1.05);
-}
-
-.nav__link.active {
-  color: #a78bfa;
-  text-shadow: 0 0 20px rgba(167, 139, 250, 0.5);
-}
-
-.nav__link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, #a78bfa, transparent);
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-.nav__cta {
-  height: 44px !important;
-  width: 140px !important;
-  font-size: 0.95rem !important;
-  padding: 6px 16px !important;
-}
-
-.nav__hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-}
-
-.nav__hamburger span {
-  width: 24px;
-  height: 2px;
-  background: var(--color-primary);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.nav__hamburger:hover span {
-  background: #a78bfa;
 }
 
 /* Mobile Menu Overlay */
@@ -285,7 +188,7 @@ onUnmounted(() => {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s ease;
-  z-index: 999;
+  z-index: 1001;
 }
 
 .nav__mobile--open {
@@ -344,6 +247,123 @@ onUnmounted(() => {
   width: 280px !important;
 }
 
+@media (max-width: 768px) {
+  .nav {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    transform: translateX(0) translateY(-100px);
+    width: calc(100% - 2rem);
+  }
+  .nav--visible {
+    transform: translateX(0) translateY(0);
+  }
+  .nav__mobile-link {
+    font-size: 1.75rem;
+  }
+}
+@media (max-width: 640px) {
+  .nav__mobile-link {
+    font-size: 1.5rem;
+  }
+
+  .nav__mobile-cta {
+    width: 100% !important;
+  }
+}
+</style>
+
+<style scoped lang="scss">
+.nav__container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.nav__logo {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav__logo:hover {
+  color: #a78bfa;
+  text-shadow: 0 0 20px rgba(167, 139, 250, 0.5);
+}
+
+.nav__links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav__link {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-secondary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav__link:hover {
+  color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+.nav__link.active {
+  color: #a78bfa;
+  text-shadow: 0 0 20px rgba(167, 139, 250, 0.5);
+}
+
+.nav__link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #a78bfa, transparent);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.nav__cta {
+  height: 36px !important;
+  width: 140px !important;
+  font-size: 0.95rem !important;
+  padding: 6px 16px !important;
+
+}
+
+.nav__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav__hamburger span {
+  width: 24px;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav__hamburger:hover span {
+  background: #a78bfa;
+}
+
 @keyframes glow-pulse {
   0%, 100% {
     opacity: 0.5;
@@ -373,18 +393,6 @@ onUnmounted(() => {
 
 /* Mobile */
 @media (max-width: 768px) {
-  .nav {
-    top: 10rem;
-    left: 1rem;
-    right: 1rem;
-    transform: translateX(0) translateY(-100px);
-    width: calc(100% - 2rem);
-  }
-
-  .nav--visible {
-    transform: translateX(0) translateY(0);
-  }
-
   .nav__container {
     gap: 1rem;
     padding: 0.75rem 1rem;
@@ -401,20 +409,6 @@ onUnmounted(() => {
 
   .nav__hamburger {
     display: flex;
-  }
-
-  .nav__mobile-link {
-    font-size: 1.75rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .nav__mobile-link {
-    font-size: 1.5rem;
-  }
-
-  .nav__mobile-cta {
-    width: 100% !important;
   }
 }
 </style>

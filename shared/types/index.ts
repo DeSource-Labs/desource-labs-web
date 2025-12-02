@@ -14,6 +14,12 @@ export type TeamMember = {
   socials: { type: SocialMediaKey; href: string }[];
 };
 
+export type NavLink = {
+  id: string;
+  name: string;
+  target: string;
+}
+
 export type Product = {
   title: string;
   desc: string;
