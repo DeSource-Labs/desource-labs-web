@@ -1,6 +1,6 @@
 <template>
   <section class="main">
-    <Video class="main__visual" name="cubic" />
+    <Video class="main__visual" name="cubic" @timeupdate="handleCubicTimeUpdate" />
     <p class="main__title h4">Innovation, Engineered for Scale</p>
     <p class="main__desc1 description p1">
       We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
@@ -41,11 +41,27 @@
 </template>
 
 <script setup lang="ts">
+const blurDuration = 1.5; // Duration in seconds
+
 const scrollToPortfolio = () => {
   const element = document.getElementById('portfolio');
   if (element) {
     const targetPosition = element.getBoundingClientRect().top + window.scrollY - 100;
     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  }
+};
+
+const handleCubicTimeUpdate = (event: VideoEvent) => {
+  const video = event.target;
+  if (video) {
+    const remainingTime = video.duration - video.currentTime;
+    if (remainingTime < blurDuration) {
+      video.style.opacity = '0.3';
+      video.style.filter = `blur(60px)`;
+    } else {
+      video.style.opacity = '1';
+      video.style.filter = `blur(0)`;
+    }
   }
 };
 </script>
@@ -70,6 +86,7 @@ const scrollToPortfolio = () => {
     width: 100%;
     min-height: 30svh;
     object-fit: cover;
+    transition: opacity 1.5s ease, filter 1.5s ease;
   }
 
   &__title {

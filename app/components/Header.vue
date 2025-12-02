@@ -20,9 +20,10 @@
 </template>
 
 <script setup lang="ts">
+const blurDuration = 2; // Duration in seconds
+
 const handleTimeUpdate = (event: VideoEvent) => {
   const video = event.target;
-  const blurDuration = 2; // Duration in seconds
   if (video) {
     const remainingTime = video.duration - video.currentTime;
     if (remainingTime < blurDuration) {
