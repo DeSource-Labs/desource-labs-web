@@ -1,6 +1,11 @@
 <template>
   <section class="header">
-    <Video class="header__background" name="world-planet" @timeupdate="handleTimeUpdate" />
+    <Video
+      class="header__background"
+      :style="{ '--parallax-y': parallaxY }"
+      name="world-planet"
+      @timeupdate="handleTimeUpdate"
+    />
     <NuxtImg
       src="/img/ds_bg_shadow.png"
       alt="DeSource Labs Shadow"
@@ -35,6 +40,23 @@ const handleTimeUpdate = (event: VideoEvent) => {
     }
   }
 };
+
+const parallaxY = ref(0);
+
+const handleScroll = () => {
+  const newParallaxY = window.scrollY * 0.5;
+  if (newParallaxY !== parallaxY.value && newParallaxY <= 180) {
+    parallaxY.value = newParallaxY;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style scoped lang="scss">
@@ -61,6 +83,8 @@ const handleTimeUpdate = (event: VideoEvent) => {
     opacity: 0.5;
     filter: blur(0);
     transition: opacity 2s ease, filter 8s ease;
+    transform: translateY(calc(var(--parallax-y) * 1px));
+    will-change: transform;
   }
 
   &__shadow {
