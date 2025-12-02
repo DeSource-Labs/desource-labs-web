@@ -23,7 +23,7 @@
 const socials = socialMediaArray;
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .footer {
   background-color: #000;
   padding: 1.5rem 2rem;
@@ -31,14 +31,16 @@ const socials = socialMediaArray;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-}
-.footer__socials {
-  display: flex;
-  gap: 0.5rem;
-}
-.footer__legal {
-  display: flex;
-  gap: 1rem;
+
+  &__socials {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__legal {
+    display: flex;
+    gap: 1rem;
+  }
 }
 .p4 {
   color: var(--color-secondary);

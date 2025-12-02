@@ -181,6 +181,7 @@ onBeforeUnmount(() => {
     color: var(--color-tertiary);
     opacity: 0.5;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    text-wrap-style: balance;
   }
 }
 

@@ -4,10 +4,11 @@
     :class="[{ 'product--reversed': isReversed }, product.shadowColor]"
   >
     <div class="product__info">
-      <LazyNuxtImg
+      <NuxtImg
         class="product__logo"
         format="webp"
         quality="80"
+        loading="lazy"
         :src="logo"
         :alt="product.title + ' logo'"
         :height="product.logoHeight"
@@ -43,12 +44,13 @@
       </div>
     </div>
     <div class="product__image">
-      <LazyNuxtImg
-        :src="image"
-        :alt="product.title"
+      <NuxtImg
         width="340"
         format="webp"
         quality="90"
+        loading="lazy"
+        :src="image"
+        :alt="product.title"
       />
       <div v-if="product.status" class="product__status">
         <span class="status-badge" :class="`status-badge--${product.status}`">
@@ -89,7 +91,6 @@ const statusLabel = computed(() => {
 <style scoped lang="scss">
 .product {
   position: relative;
-  // height: 300px;
   height: 370px;
   width: 800px;
   display: flex;
