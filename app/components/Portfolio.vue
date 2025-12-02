@@ -201,6 +201,7 @@ onBeforeUnmount(() => {
 
     &__header {
       margin-bottom: 1rem;
+      text-wrap-style: balance;
     }
 
     &__nav {

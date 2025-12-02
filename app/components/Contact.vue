@@ -25,89 +25,148 @@
         <br />
         Let’s create technology that transforms your business.
       </p>
+    </div>
+    <div class="contact__actions">
       <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
       <p class="contact__meta p4" aria-label="response time">Under 24h response • NDA on request</p>
-      <button class="contact__peek p3" @click="toggleCalendar" :aria-expanded="showCalendar">
-        <span v-if="!showCalendar">Preview calendar</span>
-        <span v-else>Hide calendar</span>
-      </button>
       <ClientOnly>
-        <div v-show="showCalendar" class="contact__calendar">
-          <div class="calendly-inline-widget" data-url="https://calendly.com/hello-desource-labs/30min" style="min-width:320px;height:520px;"></div>
-        </div>
+        <CalendlyPopupWidget
+          tabindex="0"
+          class="contact__calendar"
+          v-bind="options"
+          @click="onOpenCalendar"
+          @close="onCloseCalendar"
+        />
       </ClientOnly>
-    </div>
+      </div>
   </section>
 </template>
 
 <script setup lang="ts">
-const showCalendar = ref(false);
+import type { CalendlyPopupWidget } from '#components';
 
-const toggleCalendar = () => {
-  showCalendar.value = !showCalendar.value;
-  if (showCalendar.value && typeof window !== 'undefined') {
-    const existing = document.querySelector('script[data-calendly]');
-    if (!existing) {
-      const s = document.createElement('script');
-      s.src = 'https://assets.calendly.com/assets/external/widget.js';
-      s.async = true;
-      s.setAttribute('data-calendly', 'true');
-      document.body.appendChild(s);
-    }
+type CalendlyProps = InstanceType<typeof CalendlyPopupWidget>['$props'];
+
+const options = computed<CalendlyProps>(() => {
+  if (!document?.body) {
+    return {} as CalendlyProps;
   }
+  return {
+    url: 'https://calendly.com/hello-desource-labs/30min',
+    rootElement: document.body,
+    branding: false,
+    text: 'Preview calendar',
+    textColor: 'var(--color-secondary)',
+    color: 'transparent',
+    iframeTitle: 'Desource Labs Calendly Scheduling',
+    pageSettings: {
+      hideEventTypeDetails: false,
+      hideLandingPageDetails: false,
+    },
+  };
+});
+
+const onOpenCalendar = () => {
+  document.documentElement.style.overflow = 'hidden';
+};
+
+const onCloseCalendar = () => {
+  document.documentElement.style.overflow = '';
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+.calendly {
+  &-overlay {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  &-badge-widget &-badge-content {
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.005em;
+    border-radius: 100vw;
+    font-family: "Nunito";
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+</style>
+
+<style scoped lang="scss">
 .contact {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.contact__background,
-.contact__shadow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-.contact__content {
-  position: relative;
-  z-index: 2;
-  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--color-primary);
+  justify-content: space-evenly;
   gap: 2rem;
-}
 
-.contact__meta {
-  color: var(--color-tertiary);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
+  &__background,
+  &__shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 
-.contact__peek {
-  appearance: none;
-  background: transparent;
-  border: none;
-  color: var(--color-secondary);
-  cursor: pointer;
-}
+  &__content {
+    margin-top: 4rem;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-primary);
+    gap: 2rem;
+  }
 
-.contact__calendar {
-  width: min(980px, 92vw);
-  border-radius: 1rem;
-  overflow: hidden;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(8px);
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__meta {
+    color: var(--color-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  &__calendar {
+    position: relative;
+    border-radius: 100vw;
+    right: 0;
+    bottom: 0;
+  }
+}
+@media (max-width: 768px) {
+  .contact {
+    justify-content: center;
+
+    &__content {
+      margin-top: 10rem;
+      text-wrap-style: balance;
+    }
+
+    &__meta {
+      text-align: center;
+      text-wrap-style: balance;
+    }
+  }
+}
+@media (max-width: 640px) {
+  .contact {
+    gap: 4rem;
+  }
 }
 </style>

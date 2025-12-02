@@ -914,6 +914,33 @@
     unimport "^5.4.1"
     untyped "^2.0.0"
 
+"@nuxt/kit@^3.9.3":
+  version "3.20.1"
+  resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.20.1.tgz#0cf6d00b1fda03408d9e2ab3048b8cad73abb2e9"
+  integrity sha512-TIslaylfI5kd3AxX5qts0qyrIQ9Uq3HAA1bgIIJ+c+zpDfK338YS+YrCWxBBzDMECRCbAS58mqAd2MtJfG1ENA==
+  dependencies:
+    c12 "^3.3.1"
+    consola "^3.4.2"
+    defu "^6.1.4"
+    destr "^2.0.5"
+    errx "^0.1.0"
+    exsolve "^1.0.7"
+    ignore "^7.0.5"
+    jiti "^2.6.1"
+    klona "^2.0.6"
+    knitwork "^1.2.0"
+    mlly "^1.8.0"
+    ohash "^2.0.11"
+    pathe "^2.0.3"
+    pkg-types "^2.3.0"
+    rc9 "^2.1.2"
+    scule "^1.3.0"
+    semver "^7.7.3"
+    tinyglobby "^0.2.15"
+    ufo "^1.6.1"
+    unctx "^2.4.1"
+    untyped "^2.0.0"
+
 "@nuxt/nitro-server@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@nuxt/nitro-server/-/nitro-server-4.2.1.tgz#71b79e258b26422ec7c5f6b25a1c212dd21ce161"
@@ -2854,6 +2881,11 @@ graceful-fs@^4.2.0, graceful-fs@^4.2.9:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.11.tgz#4183e4e8bf08bb6e05bbb2f7d2e0c8f712ca40e3"
   integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
 
+gsap@^3.13.0:
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.13.0.tgz#597d4e019a2bb487785387d91296adebf92db9dd"
+  integrity sha512-QL7MJ2WMjm1PHWsoFrAQH/J8wUeqZvMtHO58qdekHpCfhvhSL4gSiz6vJf5EeMP0LOn3ZCprL2ki/gjED8ghVw==
+
 gzip-size@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-7.0.0.tgz#9f9644251f15bc78460fccef4055ae5a5562ac60"
@@ -3618,6 +3650,14 @@ nth-check@^2.0.1:
   integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
   dependencies:
     boolbase "^1.0.0"
+
+nuxt-calendly@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/nuxt-calendly/-/nuxt-calendly-0.1.21.tgz#8eb331e1b0c1f0ad563fd12e3dd3d4d55e126adc"
+  integrity sha512-2ZJzRJNmfHfR5R+jsXndSXS+jzKSkaHT0CGOr6ez7BtOypnlJWzUKTQCNisKF7JlkfjNd0Gb8LL2YhathZPCtA==
+  dependencies:
+    "@nuxt/kit" "^3.9.3"
+    defu "^6.1.4"
 
 nuxt-site-config-kit@3.2.9:
   version "3.2.9"

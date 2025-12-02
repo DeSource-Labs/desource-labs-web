@@ -18,7 +18,9 @@
     "@egjs/vue3-flicking": "^4.15.0",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/sitemap": "^7.4.7",
+    "gsap": "^3.13.0",
     "nuxt": "^4.2.1",
+    "nuxt-calendly": "^0.1.21",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
