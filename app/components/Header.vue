@@ -82,9 +82,8 @@ onBeforeUnmount(() => {
     z-index: 0;
     opacity: 0.5;
     filter: blur(0);
-    transition: opacity 2s ease, filter 8s ease;
+    transition: opacity 2s ease, filter 8s ease, transform 0.1s ease;
     transform: translateY(calc(var(--parallax-y) * 1px));
-    will-change: transform;
   }
 
   &__shadow {

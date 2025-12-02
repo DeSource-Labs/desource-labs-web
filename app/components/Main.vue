@@ -23,17 +23,17 @@
     </div>
     <div class="main__metrics">
       <div class="metric">
-        <span class="metric__number">50+</span>
+        <span class="metric__number">{{ Math.floor(projectCount) }}+</span>
         <span class="metric__label">Projects</span>
       </div>
       <div class="metric__divider"></div>
       <div class="metric">
-        <span class="metric__number">10+</span>
+        <span class="metric__number">{{ Math.floor(blockchainCount) }}+</span>
         <span class="metric__label">Blockchain Networks</span>
       </div>
       <div class="metric__divider"></div>
       <div class="metric">
-        <span class="metric__number">5+</span>
+        <span class="metric__number">{{ Math.floor(yearCount) }}+</span>
         <span class="metric__label">Years</span>
       </div>
     </div>
@@ -42,6 +42,11 @@
 
 <script setup lang="ts">
 const blurDuration = 1.5; // Duration in seconds
+let observer: IntersectionObserver | null = null; // To observe metrics visibility
+
+const projectCount = ref(0);
+const blockchainCount = ref(0);
+const yearCount = ref(0);
 
 const scrollToPortfolio = () => {
   const element = document.getElementById('portfolio');
@@ -64,6 +69,40 @@ const handleCubicTimeUpdate = (event: VideoEvent) => {
     }
   }
 };
+
+const animateCounter = (target: Ref<number>, end: number, duration: number) => {
+  const increment = end / (duration / 16);
+  const timer = setInterval(() => {
+    target.value += increment;
+    if (target.value >= end) {
+      target.value = end;
+      clearInterval(timer);
+    }
+  }, 16);
+};
+
+onMounted(async () => {
+  await nextTick();
+  const metricsEl = document.querySelector('.main__metrics');
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(projectCount, 50, 1500);
+        animateCounter(blockchainCount, 10, 1200);
+        animateCounter(yearCount, 5, 900);
+      } else {
+        projectCount.value = 0;
+        blockchainCount.value = 0;
+        yearCount.value = 0;
+      }
+    });
+  }, { threshold: 0.5 });
+  if (metricsEl) observer.observe(metricsEl);
+});
+
+onBeforeUnmount(() => {
+  observer?.disconnect();
+});
 </script>
 
 <style scoped lang="scss">
