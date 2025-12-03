@@ -67,7 +67,7 @@ const styles = computed(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .social {
   display: inline-flex;
   cursor: pointer;
@@ -76,9 +76,9 @@ const styles = computed(() => {
 svg {
   transition: transform 0.3s ease, fill 0.3s ease;
   border-radius: 4px;
-}
 
-svg:hover {
-  transform: scale(1.1);
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 </style>

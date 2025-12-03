@@ -14,17 +14,18 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
+    "@egjs/vue3-flicking": "^4.15.0",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/sitemap": "^7.4.7",
-    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
-    "@splidejs/splide-extension-intersection": "^0.2.0",
-    "@splidejs/vue-splide": "^0.6.12",
+    "gsap": "^3.13.0",
     "nuxt": "^4.2.1",
-    "vue": "^3.5.24",
+    "nuxt-calendly": "^0.1.21",
+    "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
   "packageManager": "yarn@1.22.22",
   "devDependencies": {
-    "sass": "^1.94.0"
+    "sass": "^1.94.2"
   }
 }

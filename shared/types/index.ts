@@ -14,6 +14,12 @@ export type TeamMember = {
   socials: { type: SocialMediaKey; href: string }[];
 };
 
+export type NavLink = {
+  id: string;
+  name: string;
+  target: string;
+}
+
 export type Product = {
   title: string;
   desc: string;
@@ -22,8 +28,8 @@ export type Product = {
   logoId?: number;
   logoHeight?: number;
   shadowColor?: string;
+  status?: 'live' | 'delivered';
+  impact?: string;
+  url?: string;
+  client?: string;
 };
-
-export interface VideoEvent extends Event {
-  target: HTMLVideoElement | null;
-}

@@ -5,7 +5,7 @@
       <p class="title__description p1">Expertise that powers your next big move.</p>
       <hr />
     </div>
-    <div class="stack__container">
+    <div class="stack__container" :class="{ 'stack__container--visible': itemsVisible }">
       <div class="stack__item">
         <span class="stack__title p2">AI-based Solutions</span>
         <p class="stack__description secondary p3">
@@ -37,11 +37,40 @@
         </p>
       </div>
     </div>
-    <Video class="stack__visual" name="chips" />
+    <SeamlessVideo class="stack__visual" name="chips" />
   </section>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+let observer: IntersectionObserver | null = null; // To observe stack items visibility
+
+const itemsVisible = ref(false);
+
+onMounted(async () => {
+  await nextTick();
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          itemsVisible.value = true;
+        } else {
+          itemsVisible.value = false;
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  const container = document.querySelector('.stack__container');
+  if (container) observer.observe(container);
+});
+
+onBeforeUnmount(() => {
+  observer?.disconnect();
+});
+</script>
+
+<style scoped lang="scss">
 .stack {
   display: grid;
   grid-template-areas: 
@@ -85,6 +114,19 @@ hr {
   gap: 1rem;
   align-items: baseline;
   margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:nth-child(1) { transition-delay: 0.1s; }
+  &:nth-child(2) { transition-delay: 0.2s; }
+  &:nth-child(3) { transition-delay: 0.3s; }
+  &:nth-child(4) { transition-delay: 0.4s; }
+  &:nth-child(5) { transition-delay: 0.5s; }
+}
+.stack__container--visible .stack__item {
+  opacity: 1;
+  transform: translateX(0);
 }
 .stack__title,
 .stack__description {
@@ -95,7 +137,8 @@ span {
 }
 .stack__visual {
   grid-area: visual;
-  max-width: 100%;
+  position: relative;
+  width: 100%;
   height: 30vw;
   object-fit: cover;
   object-position: right bottom;
