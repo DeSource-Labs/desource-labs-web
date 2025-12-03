@@ -43,6 +43,7 @@
 <script setup lang="ts">
 let observer: IntersectionObserver | null = null; // To observe metrics visibility
 
+const timers = ref<number[]>([]);
 const projectCount = ref(0);
 const blockchainCount = ref(0);
 const yearCount = ref(0);
@@ -62,8 +63,10 @@ const animateCounter = (target: Ref<number>, end: number, duration: number) => {
     if (target.value >= end) {
       target.value = end;
       clearInterval(timer);
+      timers.value = timers.value.filter(t => t !== timer);
     }
   }, 16);
+  timers.value.push(timer);
 };
 
 onMounted(async () => {
@@ -86,6 +89,7 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+  timers.value.forEach(clearInterval);
   observer?.disconnect();
 });
 </script>
