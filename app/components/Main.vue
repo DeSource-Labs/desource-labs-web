@@ -156,7 +156,6 @@ onBeforeUnmount(() => {
   &__metrics {
     grid-area: metrics;
     display: flex;
-    align-items: center;
     gap: 2rem;
     margin-top: 1rem;
     padding-top: 2rem;

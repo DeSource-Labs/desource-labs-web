@@ -148,6 +148,7 @@ const onCloseCalendar = () => {
     border-radius: 100vw;
     right: 0;
     bottom: 0;
+    z-index: 2;
   }
 }
 @media (max-width: 768px) {

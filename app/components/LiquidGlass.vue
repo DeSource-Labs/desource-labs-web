@@ -67,23 +67,23 @@
 <script setup lang="ts">
 import { type CSSProperties } from 'vue';
 
-interface GlassSurfaceProps {
-  tag?: string;
-  borderRadius?: number;
-  borderWidth?: number;
-  brightness?: number;
-  opacity?: number;
-  blur?: number;
-  displace?: number;
-  backgroundOpacity?: number;
-  saturation?: number;
-  distortionScale?: number;
-  redOffset?: number;
-  greenOffset?: number;
-  blueOffset?: number;
-  xChannel?: 'R' | 'G' | 'B';
-  yChannel?: 'R' | 'G' | 'B';
-  mixBlendMode?:
+interface LiquidGlassConfig {
+  darkMode: boolean;
+  borderRadius: number;
+  borderWidth: number;
+  brightness: number;
+  opacity: number;
+  blur: number;
+  displace: number;
+  backgroundOpacity: number;
+  saturation: number;
+  distortionScale: number;
+  redOffset: number;
+  greenOffset: number;
+  blueOffset: number;
+  xChannel: 'R' | 'G' | 'B';
+  yChannel: 'R' | 'G' | 'B';
+  mixBlendMode:
     | 'normal'
     | 'multiply'
     | 'screen'
@@ -102,11 +102,15 @@ interface GlassSurfaceProps {
     | 'luminosity'
     | 'plus-darker'
     | 'plus-lighter';
+}
+
+interface LiquidGlassProps {
+  tag?: string;
   style?: CSSProperties;
 }
 
-const props = withDefaults(defineProps<GlassSurfaceProps>(), {
-  tag: 'div',
+const config: LiquidGlassConfig = {
+  darkMode: true,
   borderRadius: 100,
   borderWidth: 0.07,
   brightness: 70,
@@ -122,16 +126,19 @@ const props = withDefaults(defineProps<GlassSurfaceProps>(), {
   xChannel: 'R',
   yChannel: 'G',
   mixBlendMode: 'difference',
+};
+
+const props = withDefaults(defineProps<LiquidGlassProps>(), {
+  tag: 'div',
   style: () => ({})
 });
 
-const isDarkMode = ref(true);
 const uniqueId = useId();
 const filterId = `glass-filter-${uniqueId}`;
 const redGradId = `red-grad-${uniqueId}`;
 const blueGradId = `blue-grad-${uniqueId}`;
 
-const containerRef = useTemplateRef<HTMLDivElement>('containerRef');
+const containerRef = useTemplateRef<HTMLElement>('containerRef');
 const feImageRef = useTemplateRef('feImageRef');
 const redChannelRef = useTemplateRef('redChannelRef');
 const greenChannelRef = useTemplateRef('greenChannelRef');
@@ -144,7 +151,7 @@ const generateDisplacementMap = () => {
   const rect = containerRef.value?.getBoundingClientRect();
   const actualWidth = rect?.width || 400;
   const actualHeight = rect?.height || 200;
-  const edgeSize = Math.min(actualWidth, actualHeight) * (props.borderWidth * 0.5);
+  const edgeSize = Math.min(actualWidth, actualHeight) * (config.borderWidth * 0.5);
 
   const svgContent = `
       <svg viewBox="0 0 ${actualWidth} ${actualHeight}" xmlns="http://www.w3.org/2000/svg">
@@ -159,9 +166,9 @@ const generateDisplacementMap = () => {
           </linearGradient>
         </defs>
         <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" fill="black"></rect>
-        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${props.borderRadius}" fill="url(#${redGradId})" />
-        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${props.borderRadius}" fill="url(#${blueGradId})" style="mix-blend-mode: ${props.mixBlendMode}" />
-        <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${props.borderRadius}" fill="hsl(0 0% ${props.brightness}% / ${props.opacity})" style="filter:blur(${props.blur}px)" />
+        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${config.borderRadius}" fill="url(#${redGradId})" />
+        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${config.borderRadius}" fill="url(#${blueGradId})" style="mix-blend-mode: ${config.mixBlendMode}" />
+        <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${config.borderRadius}" fill="hsl(0 0% ${config.brightness}% / ${config.opacity})" style="filter:blur(${config.blur}px)" />
       </svg>
     `;
 
@@ -197,9 +204,9 @@ const supportsBackdropFilter = () => {
 const containerStyles = computed(() => {
   const baseStyles: Record<string, string | number> = {
     ...props.style,
-    borderRadius: `${props.borderRadius}px`,
-    '--glass-frost': props.backgroundOpacity,
-    '--glass-saturation': props.saturation
+    borderRadius: `${config.borderRadius}px`,
+    '--glass-frost': config.backgroundOpacity,
+    '--glass-saturation': config.saturation
   };
 
   const svgSupported = supportsSVGFilters();
@@ -208,11 +215,11 @@ const containerStyles = computed(() => {
   if (svgSupported) {
     return {
       ...baseStyles,
-      background: isDarkMode.value
-        ? `hsl(0 0% 0% / ${props.backgroundOpacity})`
-        : `hsl(0 0% 100% / ${props.backgroundOpacity})`,
-      backdropFilter: `url(#${filterId}) saturate(${props.saturation})`,
-      boxShadow: isDarkMode.value
+      background: config.darkMode
+        ? `hsl(0 0% 0% / ${config.backgroundOpacity})`
+        : `hsl(0 0% 100% / ${config.backgroundOpacity})`,
+      backdropFilter: `url(#${filterId}) saturate(${config.saturation})`,
+      boxShadow: config.darkMode
         ? `0 0 2px 1px color-mix(in oklch, white, transparent 65%) inset,
            0 0 10px 4px color-mix(in oklch, white, transparent 85%) inset,
            0px 4px 16px rgba(17, 17, 26, 0.05),
@@ -231,7 +238,7 @@ const containerStyles = computed(() => {
            0px 16px 56px rgba(17, 17, 26, 0.05) inset`
     };
   } else {
-    if (isDarkMode.value) {
+    if (config.darkMode) {
       if (!backdropFilterSupported) {
         return {
           ...baseStyles,
@@ -279,21 +286,21 @@ const containerStyles = computed(() => {
 
 const updateFilterElements = () => {
   const elements = [
-    { ref: redChannelRef, offset: props.redOffset },
-    { ref: greenChannelRef, offset: props.greenOffset },
-    { ref: blueChannelRef, offset: props.blueOffset }
+    { ref: redChannelRef, offset: config.redOffset },
+    { ref: greenChannelRef, offset: config.greenOffset },
+    { ref: blueChannelRef, offset: config.blueOffset }
   ];
 
   elements.forEach(({ ref, offset }) => {
     if (ref.value) {
-      ref.value.setAttribute('scale', (props.distortionScale + offset).toString());
-      ref.value.setAttribute('xChannelSelector', props.xChannel);
-      ref.value.setAttribute('yChannelSelector', props.yChannel);
+      ref.value.setAttribute('scale', (config.distortionScale + offset).toString());
+      ref.value.setAttribute('xChannelSelector', config.xChannel);
+      ref.value.setAttribute('yChannelSelector', config.yChannel);
     }
   });
 
   if (gaussianBlurRef.value) {
-    gaussianBlurRef.value.setAttribute('stdDeviation', props.displace.toString());
+    gaussianBlurRef.value.setAttribute('stdDeviation', config.displace.toString());
   }
 };
 
@@ -306,28 +313,6 @@ const setupResizeObserver = () => {
 
   resizeObserver.observe(containerRef.value);
 };
-
-watch(
-  [
-    () => props.borderRadius,
-    () => props.borderWidth,
-    () => props.brightness,
-    () => props.opacity,
-    () => props.blur,
-    () => props.displace,
-    () => props.distortionScale,
-    () => props.redOffset,
-    () => props.greenOffset,
-    () => props.blueOffset,
-    () => props.xChannel,
-    () => props.yChannel,
-    () => props.mixBlendMode
-  ],
-  () => {
-    updateDisplacementMap();
-    updateFilterElements();
-  }
-);
 
 onMounted(async () => {
   await nextTick();
@@ -350,29 +335,29 @@ onUnmounted(() => {
   justify-content: center;
   overflow: hidden;
   transition: opacity 260ms ease-out;
-}
 
-.glass-surface__svg {
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  z-index: -10;
-}
+  &__svg {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -10;
+  }
 
-.glass-surface__content {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: inherit;
-  position: relative;
-  z-index: 1000;
+  &__content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    position: relative;
+    z-index: 1000;
+  }
 }
 </style>
