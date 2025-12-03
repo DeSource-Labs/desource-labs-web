@@ -140,7 +140,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
 });
 </script>
 
