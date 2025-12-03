@@ -1,10 +1,11 @@
 <template>
   <section class="header">
-    <Video
+    <SeamlessVideo
       class="header__background"
       :style="{ '--parallax-y': parallaxY }"
       name="world-planet"
-      @timeupdate="handleTimeUpdate"
+      :fade-window="2"
+      :opacity="0.5"
     />
     <NuxtImg
       src="/img/ds_bg_shadow.png"
@@ -25,22 +26,6 @@
 </template>
 
 <script setup lang="ts">
-const blurDuration = 2; // Duration in seconds
-
-const handleTimeUpdate = (event: VideoEvent) => {
-  const video = event.target;
-  if (video) {
-    const remainingTime = video.duration - video.currentTime;
-    if (remainingTime < blurDuration) {
-      video.style.opacity = '0.1';
-      video.style.filter = `blur(100px)`;
-    } else {
-      video.style.opacity = '0.5';
-      video.style.filter = `blur(0)`;
-    }
-  }
-};
-
 const parallaxY = ref(0);
 
 const handleScroll = () => {
@@ -70,8 +55,7 @@ onBeforeUnmount(() => {
   &__background,
   &__shadow {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -80,9 +64,7 @@ onBeforeUnmount(() => {
 
   &__background {
     z-index: 0;
-    opacity: 0.5;
-    filter: blur(0);
-    transition: opacity 2s ease, filter 8s ease, transform 0.1s ease;
+    transition: transform 0.1s ease;
     transform: translateY(calc(var(--parallax-y) * 1px));
   }
 

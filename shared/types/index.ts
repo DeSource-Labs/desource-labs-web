@@ -33,7 +33,3 @@ export type Product = {
   url?: string;
   client?: string;
 };
-
-export interface VideoEvent extends Event {
-  target: HTMLVideoElement | null;
-}

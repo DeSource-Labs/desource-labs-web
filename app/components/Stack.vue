@@ -37,29 +37,14 @@
         </p>
       </div>
     </div>
-    <Video class="stack__visual" name="chips" @timeupdate="handleChipsTimeUpdate" />
+    <SeamlessVideo class="stack__visual" name="chips" />
   </section>
 </template>
 
 <script setup lang="ts">
-const blurDuration = 1.5; // Duration in seconds
 let observer: IntersectionObserver | null = null; // To observe stack items visibility
 
 const itemsVisible = ref(false);
-
-const handleChipsTimeUpdate = (event: VideoEvent) => {
-  const video = event.target;
-  if (video) {
-    const remainingTime = video.duration - video.currentTime;
-    if (remainingTime < blurDuration) {
-      video.style.opacity = '0.3';
-      video.style.filter = `blur(60px)`;
-    } else {
-      video.style.opacity = '1';
-      video.style.filter = `blur(0px)`;
-    }
-  }
-};
 
 onMounted(async () => {
   await nextTick();
@@ -152,11 +137,11 @@ span {
 }
 .stack__visual {
   grid-area: visual;
-  max-width: 100%;
+  position: relative;
+  width: 100%;
   height: 30vw;
   object-fit: cover;
   object-position: right bottom;
-  transition: opacity 1.5s ease, filter 1.5s ease;
 }
 @media (max-width: 1024px) {
   .stack {

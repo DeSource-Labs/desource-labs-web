@@ -1,6 +1,6 @@
 <template>
   <section class="main">
-    <Video class="main__visual" name="cubic" @timeupdate="handleCubicTimeUpdate" />
+    <SeamlessVideo class="main__visual" name="cubic" />
     <p class="main__title h4">Innovation, Engineered for Scale</p>
     <p class="main__desc1 description p1">
       We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
@@ -41,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-const blurDuration = 1.5; // Duration in seconds
 let observer: IntersectionObserver | null = null; // To observe metrics visibility
 
 const projectCount = ref(0);
@@ -53,20 +52,6 @@ const scrollToPortfolio = () => {
   if (element) {
     const targetPosition = element.getBoundingClientRect().top + window.scrollY - 100;
     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  }
-};
-
-const handleCubicTimeUpdate = (event: VideoEvent) => {
-  const video = event.target;
-  if (video) {
-    const remainingTime = video.duration - video.currentTime;
-    if (remainingTime < blurDuration) {
-      video.style.opacity = '0.3';
-      video.style.filter = `blur(60px)`;
-    } else {
-      video.style.opacity = '1';
-      video.style.filter = `blur(0)`;
-    }
   }
 };
 
@@ -122,10 +107,12 @@ onBeforeUnmount(() => {
 
   &__visual {
     grid-area: visual;
+    position: relative;
     width: 100%;
     min-height: 30svh;
-    object-fit: cover;
-    transition: opacity 1.5s ease, filter 1.5s ease;
+    object-fit: contain;
+    object-position: center 90px; // footer with metrics
+    height: 100%;
   }
 
   &__title {
@@ -218,6 +205,8 @@ onBeforeUnmount(() => {
     &__visual {
       order: 3;
       max-width: 60vw;
+      min-height: 60vw;
+      object-position: unset;
     }
 
     &__title {
@@ -271,6 +260,7 @@ onBeforeUnmount(() => {
   .main {
     &__visual {
       max-width: 80vw;
+      min-height: 80vw;
     }
 
     &__metrics {
