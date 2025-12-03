@@ -2,7 +2,7 @@
   <section class="header">
     <SeamlessVideo
       class="header__background"
-      :style="{ '--parallax-y': parallaxY }"
+      :style="{ transform: `translateY(${parallaxY}px)` }"
       name="world-planet"
       :fade-window="2"
       :opacity="0.5"
@@ -64,8 +64,8 @@ onBeforeUnmount(() => {
 
   &__background {
     z-index: 0;
-    transition: transform 0.1s ease;
-    transform: translateY(calc(var(--parallax-y) * 1px));
+    transition: transform 0.08s ease-out;
+    will-change: transform;
   }
 
   &__shadow {
