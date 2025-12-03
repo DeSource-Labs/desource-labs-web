@@ -58,7 +58,7 @@ const resources = [
   },
   {
     title: 'Launch Architecture Outline',
-    badge: 'Field Guide',
+    badge: 'v1.0',
     desc: 'From prototype to production: domains, handover, and SLAs.',
     mailto: 'mailto:hello@desource-labs.org?subject=Request%20Launch%20Architecture%20Outline'
   }
@@ -67,7 +67,7 @@ const resources = [
 const faqs = [
   {
     q: 'How we engage & timeline',
-    a: 'We begin with a focused architecture session. Typical builds ship in 3–8 weeks depending on scope. We price by milestone with clear deliverables.'
+    a: 'We begin with a focused architecture session. Small deliverables (e.g., a landing page with final mockups) ship fast — typically within 1 day. Production builds ship in 3–8 weeks depending on scope. We deliver by milestone with clear acceptance criteria and weekly demos.'
   },
   {
     q: 'Pricing model',
