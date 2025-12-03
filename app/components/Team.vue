@@ -39,7 +39,7 @@ const members: TeamMember[] = [
     title: 'Design team',
     desc: 'Interface & Brand',
     socials: [
-      { type: 'telegram', href: 'https://t.me/desource_design' },
+      { type: 'telegram', href: 'https://t.me/desource_ux' },
     ],
     photo: '/img/team/2.png'
   },
