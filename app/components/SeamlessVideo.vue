@@ -44,7 +44,20 @@ const props = withDefaults(defineProps<{
 const videoA = useTemplateRef('videoA');
 const videoB = useTemplateRef('videoB');
 const isFirstActive = ref(true);
+const nearEnd = ref(false); // Flag to activate RAF only when needed
 let rafId: number | null = null;
+
+// Low-frequency check via timeupdate (~4x/sec)
+const handleTimeUpdate = (event: Event) => {
+  const video = event.target as HTMLVideoElement;
+  const remaining = (video.duration || 0) - video.currentTime;
+  
+  // Activate RAF precision mode when approaching crossfade window
+  if (remaining <= props.fadeWindow + 0.5 && !nearEnd.value) {
+    nearEnd.value = true;
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+};
 
 const startCrossfadeIfNeeded = (video: HTMLVideoElement) => {
   const remaining = (video.duration || 0) - video.currentTime;
@@ -55,6 +68,7 @@ const startCrossfadeIfNeeded = (video: HTMLVideoElement) => {
       videoB.value.play().catch(() => {});
     }
     isFirstActive.value = false;
+    nearEnd.value = false; // Reset flag for next loop
   } else if (remaining <= props.fadeWindow && !isFirstActive.value) {
     // Prepare A
     if (videoA.value) {
@@ -62,10 +76,16 @@ const startCrossfadeIfNeeded = (video: HTMLVideoElement) => {
       videoA.value.play().catch(() => {});
     }
     isFirstActive.value = true;
+    nearEnd.value = false; // Reset flag for next loop
   }
 };
 
+// High-frequency precision check (only runs when nearEnd = true)
 const tick = () => {
+  if (!nearEnd.value) {
+    rafId = null;
+    return; // Stop RAF when not needed
+  }
   const current = isFirstActive.value ? videoA.value : videoB.value;
   if (current) {
     startCrossfadeIfNeeded(current);
@@ -74,16 +94,21 @@ const tick = () => {
 };
 
 onMounted(() => {
-  // Start A
+  // Attach timeupdate listeners for low-freq monitoring
   if (videoA.value) {
+    videoA.value.addEventListener('timeupdate', handleTimeUpdate);
     videoA.value.currentTime = 0;
     videoA.value.play().catch(() => {});
   }
-  rafId = requestAnimationFrame(tick);
+  if (videoB.value) {
+    videoB.value.addEventListener('timeupdate', handleTimeUpdate);
+  }
 });
 
 onBeforeUnmount(() => {
   if (rafId) cancelAnimationFrame(rafId);
+  if (videoA.value) videoA.value.removeEventListener('timeupdate', handleTimeUpdate);
+  if (videoB.value) videoB.value.removeEventListener('timeupdate', handleTimeUpdate);
 });
 </script>
 
