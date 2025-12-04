@@ -4,13 +4,13 @@
       ref="videoA"
       class="seamless-video__layer"
       :class="{ 'is-active': isFirstActive }"
+      :src="videoBlob"
+      preload="metadata"
       autoplay
       muted
       playsinline
       :loop="false"
     >
-      <source :src="`/video/${name}.webm`" type="video/webm" />
-      <source :src="`/video/${name}.mp4`" type="video/mp4" />
       <track :src="`/video/${name}.vtt`" kind="subtitles" srclang="en" label="English subtitles">
       Your browser does not support the video tag.
     </video>
@@ -18,13 +18,13 @@
       ref="videoB"
       class="seamless-video__layer"
       :class="{ 'is-active': !isFirstActive }"
+      :src="videoBlob"
+      preload="metadata"
       autoplay
       muted
       playsinline
       :loop="false"
     >
-      <source :src="`/video/${name}.webm`" type="video/webm" />
-      <source :src="`/video/${name}.mp4`" type="video/mp4" />
       <track :src="`/video/${name}.vtt`" kind="subtitles" srclang="en" label="English subtitles">
       Your browser does not support the video tag.
     </video>
@@ -41,6 +41,8 @@ const props = withDefaults(defineProps<{
   opacity: 1,
 });
 
+const videoBlob = ref<string>('');
+
 const videoA = useTemplateRef('videoA');
 const videoB = useTemplateRef('videoB');
 const isFirstActive = ref(true);
@@ -51,7 +53,6 @@ let rafId: number | null = null;
 const handleTimeUpdate = (event: Event) => {
   const video = event.target as HTMLVideoElement;
   const remaining = (video.duration || 0) - video.currentTime;
-  
   // Activate RAF precision mode when approaching crossfade window
   if (remaining <= props.fadeWindow + 0.5 && !nearEnd.value) {
     nearEnd.value = true;
@@ -93,8 +94,28 @@ const tick = () => {
   rafId = requestAnimationFrame(tick);
 };
 
-onMounted(() => {
-  // Attach timeupdate listeners for low-freq monitoring
+onMounted(async () => {
+  // Detect supported format client-side
+  const tester = document.createElement('video');
+  const canWebm = tester.canPlayType('video/webm; codecs="vp9,vorbis"') || tester.canPlayType('video/webm');
+  tester.remove();
+  let resolvedPath = `/video/${props.name}.mp4`;
+  if (canWebm) {
+    resolvedPath = `/video/${props.name}.webm`;
+  }
+  // Fetch video as blob using Nuxt's $fetch with caching
+  try {
+    const blob = await $fetch<Blob>(resolvedPath, { responseType: 'blob' });
+    videoBlob.value = URL.createObjectURL(blob);
+    console.log(videoBlob.value);
+  } catch {
+    // noop
+  }
+  // Fallback to direct URL if fetch fails
+  if (!videoBlob.value) {
+    videoBlob.value = resolvedPath;
+  }
+  // Attach timeupdate listeners and play
   if (videoA.value) {
     videoA.value.addEventListener('timeupdate', handleTimeUpdate);
     videoA.value.currentTime = 0;
@@ -109,6 +130,10 @@ onBeforeUnmount(() => {
   if (rafId) cancelAnimationFrame(rafId);
   if (videoA.value) videoA.value.removeEventListener('timeupdate', handleTimeUpdate);
   if (videoB.value) videoB.value.removeEventListener('timeupdate', handleTimeUpdate);
+  // Revoke object URL to free memory (revoke to avoid leaks)
+  if (videoBlob.value && videoBlob.value.startsWith('blob:')) {
+    URL.revokeObjectURL(videoBlob.value);
+  }
 });
 </script>
 

@@ -7,6 +7,23 @@ export default defineNuxtConfig({
   css: ['~/assets/styles/index.css', '@egjs/vue3-flicking/dist/flicking.css'],
   modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly'],
 
+  nitro: {
+    compressPublicAssets: true,
+    publicAssets: [
+      {
+        dir: 'public/video',
+        maxAge: 31536000,
+      },
+    ],
+    routeRules: {
+      '/video/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        }
+      }
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: {
