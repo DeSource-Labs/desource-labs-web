@@ -1,6 +1,6 @@
 <template>
   <section class="main">
-    <SeamlessVideo class="main__visual" name="cubic" />
+    <SeamlessVideo class="main__visual" name="cubic" :is-visible="isVisible" />
     <p class="main__title h4">Innovation, Engineered for Scale</p>
     <p class="main__desc1 description p1">
       We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
@@ -49,28 +49,30 @@ const blockchainCount = ref(0);
 const yearCount = ref(0);
 
 const scrollToPortfolio = () => {
-  const element = document.getElementById('portfolio');
-  if (element) {
-    const targetPosition = element.getBoundingClientRect().top + window.scrollY - 100;
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  }
+  configStore.navigateTo('portfolio');
 };
 
 const animateCounter = (target: Ref<number>, end: number, duration: number) => {
-  const increment = end / (duration / 16);
-  const timer = setInterval(() => {
-    target.value += increment;
-    if (target.value >= end) {
+  let startTime: number | null = null;
+  let animationFrameId: number | null = null;
+
+  const animate = (currentTime: number) => {
+    if (startTime === null) startTime = currentTime;
+    const progress = (currentTime - startTime) / duration;
+
+    if (progress < 1) {
+      target.value = end * progress;
+      animationFrameId = requestAnimationFrame(animate);
+    } else {
       target.value = end;
-      clearInterval(timer);
-      timers.value = timers.value.filter(t => t !== timer);
     }
-  }, 16);
-  timers.value.push(timer);
+  };
+
+  animationFrameId = requestAnimationFrame(animate);
+  timers.value.push(animationFrameId);
 };
 
-onMounted(async () => {
-  await nextTick();
+const onVisible = () => {
   const metricsEl = document.querySelector('.main__metrics');
   observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -86,11 +88,22 @@ onMounted(async () => {
     });
   }, { threshold: 0.5 });
   if (metricsEl) observer.observe(metricsEl);
-});
+};
 
-onBeforeUnmount(() => {
-  timers.value.forEach(clearInterval);
+const onHidden = () => {
   observer?.disconnect();
+  projectCount.value = 0;
+  blockchainCount.value = 0;
+  yearCount.value = 0;
+  timers.value.forEach(id => {
+    cancelAnimationFrame(id);
+  });
+  timers.value = [];
+};
+
+const { isVisible, configStore } = useSection('main', {
+  onVisible,
+  onHidden,
 });
 </script>
 
@@ -115,7 +128,7 @@ onBeforeUnmount(() => {
     width: 100%;
     min-height: 30svh;
     object-fit: contain;
-    object-position: center 90px; // footer with metrics
+    object-position: center calc(var(--vh, 1svh) * 20); // footer with metrics
     height: 100%;
   }
 

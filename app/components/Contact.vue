@@ -94,6 +94,9 @@ const onCloseCalendar = () => {
 </style>
 
 <style scoped lang="scss">
+$footer-height: 72px;
+$footer-height-mobile: 163px;
+
 .contact {
   position: relative;
   display: flex;
@@ -101,7 +104,7 @@ const onCloseCalendar = () => {
   align-items: center;
   justify-content: space-evenly;
   gap: 2rem;
-  min-height: calc(100svh - 72px);
+  min-height: calc(var(--vh-100, 100svh) - $footer-height);
 
   &__background,
   &__shadow {
@@ -154,7 +157,7 @@ const onCloseCalendar = () => {
 @media (max-width: 768px) {
   .contact {
     justify-content: center;
-    min-height: calc(100svh - 163px);
+    min-height: calc(var(--vh-100, 100svh) - $footer-height-mobile);
 
     &__content {
       margin-top: 10rem;

@@ -45,7 +45,7 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-  min-height: 100svh;
+  min-height: var(--vh-100, 100svh);
   text-rendering: optimizeSpeed;
   line-height: 1.25;
 }
@@ -100,11 +100,12 @@ table {
 }
 
 /* Prevent text selection */
-img {
+img, video {
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Firefox */
   pointer-events: none; /* Prevents interaction like dragging */
+  -webkit-touch-callout: none; /* Prevents callout on long press in iOS Safari */
   -webkit-user-drag: none; /* Prevents dragging in WebKit browsers */
 }

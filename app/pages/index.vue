@@ -1,9 +1,9 @@
 <template>
-  <Main />
-  <Stack id="stack" />
-  <Tech id="tech" />
-  <Portfolio id="portfolio" />
-  <Team id="team" />
-  <Insights />
-  <Contact id="contact" />
+  <Main id="main" />
+  <LazyStack id="stack" />
+  <LazyTech id="tech" />
+  <LazyPortfolio id="portfolio" />
+  <LazyTeam id="team" />
+  <LazyInsights id="insights" />
+  <LazyContact id="contact" />
 </template>

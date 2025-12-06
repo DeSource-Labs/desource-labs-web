@@ -6,6 +6,7 @@
       name="world-planet"
       :fade-window="2"
       :opacity="0.5"
+      :is-visible="isVisible"
     />
     <NuxtImg
       src="/img/ds_bg_shadow.png"
@@ -14,7 +15,8 @@
       quality="75"
       sizes="100vw md:1100px"
       format="webp"
-      loading="lazy"
+      loading="eager"
+      fetchpriority="high"
     />
     <div class="header__content">
       <h3 class="h3">DESOURCE LABS</h3>
@@ -27,21 +29,40 @@
 
 <script setup lang="ts">
 const parallaxY = ref(0);
+const rafId = ref<number | null>(null);
 
-const handleScroll = () => {
+const updateParallax = () => {
   const newParallaxY = window.scrollY * 0.5;
   if (newParallaxY !== parallaxY.value && newParallaxY <= 180) {
     parallaxY.value = newParallaxY;
+  } else if (configStore.isReversedScroll) {
+    parallaxY.value = 180;
   }
 };
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true });
-});
+const handleScroll = () => {
+  rafId.value = requestAnimationFrame(updateParallax);
+};
 
-onBeforeUnmount(() => {
+const onVisible = () => {
+  if (isNativeMobile.value || prefersReducedMotion.value) return;
+  window.addEventListener('scroll', handleScroll, { passive: true });
+};
+
+const onHidden = () => {
   window.removeEventListener('scroll', handleScroll);
+  parallaxY.value = 0;
+  if (rafId.value) {
+    cancelAnimationFrame(rafId.value);
+    rafId.value = null;
+  }
+};
+
+const { isVisible, configStore } = useSection('hero', {
+  onVisible,
+  onHidden,
 });
+const { isNativeMobile, prefersReducedMotion } = storeToRefs(configStore);
 </script>
 
 <style scoped lang="scss">
@@ -65,7 +86,6 @@ onBeforeUnmount(() => {
   &__background {
     z-index: 0;
     transition: transform 0.08s ease-out;
-    will-change: transform;
   }
 
   &__shadow {
@@ -90,5 +110,24 @@ h3 {
 }
 p {
   margin-bottom: 1rem;
+}
+@media (max-height: 600px) {
+  // Adjust for short viewports, e.g., landscape mobile
+  .header {
+    &__content {
+      padding: 2rem;
+      gap: 1rem;
+    }
+    &__background {
+      height: 120%;
+      object-position: center calc(var(--vh, 1svh) * -10);
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    .p1 {
+      font-size: 1rem;
+    }
+  }
 }
 </style>
