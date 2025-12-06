@@ -1,5 +1,5 @@
 <template>
-  <div class="seamless-video" :style="{ '--fade-window': `${fadeWindow}s`, '--base-opacity': opacity }">
+  <div class="seamless-video" :style="{ '--fade-window': `${computedFadeWindow}s`, '--base-opacity': opacity }">
     <video
       ref="videoA"
       class="seamless-video__layer"
@@ -35,13 +35,22 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   name: string;
-  fadeWindow?: number; // seconds before end to start crossfade
-  opacity?: number; // base opacity of the video
-  isVisible?: boolean; // section visibility
+  /** Seconds before end to start crossfade */
+  fadeWindow?: number;
+  /** Base opacity of the video layer */
+  opacity?: number;
+  /** Section visibility */
+  isVisible?: boolean;
+  /** Preferred video format */
+  format?: 'webm' | 'mp4';
+  /** Set if the video has 2x playback speed */
+  x2?: boolean;
 }>(), {
   fadeWindow: 4,
   opacity: 1,
   isVisible: false,
+  format: 'mp4',
+  x2: false,
 });
 
 const videoSrc = ref<string>('');
@@ -54,14 +63,15 @@ const isFirstActive = ref(true);
 const nearEnd = ref(false); // Flag to activate RAF only when needed
 const rafId = ref<number | null>(null);
 
-const poster = computed(() => `/video/${props.name}.webp`);
+const poster = computed(() => `/video/${props.name}.avif`);
+const computedFadeWindow = computed(() => props.format === 'webm' && props.x2 ? props.fadeWindow / 2 : props.fadeWindow);
 
 // Low-frequency check via timeupdate (~4x/sec)
 const handleTimeUpdate = (event: Event) => {
   const video = event.target as HTMLVideoElement;
   const remaining = (video.duration || 0) - video.currentTime;
   // Activate RAF precision mode when approaching crossfade window
-  if (remaining <= props.fadeWindow + 0.5 && !nearEnd.value) {
+  if (remaining <= computedFadeWindow.value + 0.5 && !nearEnd.value) {
     nearEnd.value = true;
     if (!rafId.value) {
       rafId.value = requestAnimationFrame(tick);
@@ -71,7 +81,7 @@ const handleTimeUpdate = (event: Event) => {
 
 const startCrossfadeIfNeeded = (video: HTMLVideoElement) => {
   const remaining = (video.duration || 0) - video.currentTime;
-  if (remaining <= props.fadeWindow && isFirstActive.value) {
+  if (remaining <= computedFadeWindow.value && isFirstActive.value) {
     // Prepare B
     if (videoB.value) {
       videoB.value.currentTime = 0;
@@ -79,7 +89,7 @@ const startCrossfadeIfNeeded = (video: HTMLVideoElement) => {
     }
     isFirstActive.value = false;
     nearEnd.value = false; // Reset flag for next loop
-  } else if (remaining <= props.fadeWindow && !isFirstActive.value) {
+  } else if (remaining <= computedFadeWindow.value && !isFirstActive.value) {
     // Prepare A
     if (videoA.value) {
       videoA.value.currentTime = 0;
@@ -111,7 +121,7 @@ const loadVideo = async () => {
   const canWebm = tester.canPlayType('video/webm; codecs="vp9,vorbis"') || tester.canPlayType('video/webm');
   tester.remove();
   let resolvedPath = `/video/${props.name}.mp4`;
-  if (canWebm) {
+  if (canWebm && props.format === 'webm') {
     resolvedPath = `/video/${props.name}.webm`;
   }
   // Fetch video as blob using Nuxt's $fetch with caching
@@ -129,14 +139,17 @@ const loadVideo = async () => {
 const loadAndPlayVideo = async () => {
   await loadVideo();
   await nextTick();
+  const playbackRate = (props.x2 && props.format === 'webm') ? 0.5 : 1;
   if (videoA.value) {
     isFirstActive.value = true;
     nearEnd.value = false;
     videoA.value.addEventListener('timeupdate', handleTimeUpdate);
     videoA.value.currentTime = 0;
+    videoA.value.playbackRate = playbackRate;
     videoA.value.play().catch(() => {});
   }
   if (videoB.value) {
+    videoB.value.playbackRate = playbackRate;
     videoB.value.addEventListener('timeupdate', handleTimeUpdate);
   }
 };

@@ -4,6 +4,8 @@
       class="header__background"
       :style="{ transform: `translateY(${parallaxY}px)` }"
       name="world-planet"
+      x2
+      format="webm"
       :fade-window="2"
       :opacity="0.5"
       :is-visible="isVisible"
