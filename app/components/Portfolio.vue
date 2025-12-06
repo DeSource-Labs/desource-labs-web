@@ -16,7 +16,7 @@
         @will-change="onSlideChange"
       >
         <Card
-          v-for="(project, index) in allProjects"
+          v-for="(project, index) in Projects"
           :key="`portfolio-card-${project.id}`"
           :product="project"
           :is-reversed="index % 2 !== 0"
@@ -26,7 +26,7 @@
 
       <div class="portfolio__nav">
         <button
-          v-for="(project, index) in allProjects"
+          v-for="(project, index) in Projects"
           :key="`nav-${project.id}`"
           class="portfolio__nav-dot"
           :class="{ 'is-active': index === activeIndex }"
@@ -50,16 +50,15 @@ import VueFlicking, { type FlickingOptions, type WillChangeEvent } from '@egjs/v
 import { Perspective, AutoPlay } from '@egjs/flicking-plugins';
 import type Flicking from '@egjs/flicking';
 
-const perspectivePlugin = new Perspective({ perspective: 2000, rotate: 0.5 });
+const totalCards = Projects.length;
 
-const plugins = shallowRef<Array<Perspective | AutoPlay>>([
-  new AutoPlay({
-    duration: 4000,
-    stopOnHover: true,
-    direction: 'NEXT',
-    animationDuration: 1000
-  }),
-]);
+const perspectivePlugin = new Perspective({ perspective: 2000, rotate: 0.5 });
+const autoPlayPlugin = new AutoPlay({
+  duration: 4000,
+  stopOnHover: true,
+  direction: 'NEXT',
+  animationDuration: 1000
+});
 
 const options: Partial<FlickingOptions> = {
   circular: true,
@@ -71,8 +70,12 @@ const options: Partial<FlickingOptions> = {
 const flicking = useTemplateRef<Flicking>('flicking');
 
 const activeIndex = ref(0);
-const allProjects = computed(() => Projects);
-const totalCards = computed(() => allProjects.value.length);
+
+const plugins = computed(() => {
+  return isNativeMobile.value
+    ? [autoPlayPlugin]
+    : [autoPlayPlugin, perspectivePlugin];
+});
 
 const onSlideChange = (e: WillChangeEvent<Flicking>) => {
   activeIndex.value = e.index;
@@ -106,13 +109,6 @@ const { configStore } = useSection('portfolio', {
   onHidden,
 });
 const { isNativeMobile } = storeToRefs(configStore);
-
-onMounted(async () => {
-  await nextTick();
-  if (!isNativeMobile.value) {
-    plugins.value.push(perspectivePlugin);
-  }
-});
 </script>
 
 <style scoped lang="scss">
