@@ -173,7 +173,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   pauseVideos();
-  // Revoke object URL to free memory (revoke to avoid leaks)
+  // Revoke object URL to free memory
   if (videoSrc.value && videoSrc.value.startsWith('blob:')) {
     URL.revokeObjectURL(videoSrc.value);
   }
