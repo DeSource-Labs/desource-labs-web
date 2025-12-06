@@ -14,6 +14,7 @@
             quality="75"
             format="webp"
             loading="lazy"
+            fetchpriority="low"
           />
         </div>
       </div>
@@ -30,6 +31,7 @@
             quality="75"
             format="webp"
             loading="lazy"
+            fetchpriority="low"
           />
         </div>
       </div>
