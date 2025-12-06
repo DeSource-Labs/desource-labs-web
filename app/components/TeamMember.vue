@@ -39,9 +39,11 @@ defineProps<{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  contain: layout style;
 }
 .team__photo {
   border-radius: 1rem;
+  aspect-ratio: 1;
 }
 .bolder {
   font-weight: 500;
