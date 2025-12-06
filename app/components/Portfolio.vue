@@ -66,6 +66,8 @@ const options: Partial<FlickingOptions> = {
   moveType: 'snap',
   preventClickOnDrag: true,
   easing: (x: number) => 1 - Math.pow(1 - x, 3),
+  renderOnlyVisible: true,
+  resizeOnContentsReady: true,
 };
 
 const flicking = useTemplateRef<Flicking>('flicking');
@@ -97,6 +99,10 @@ const handleKeyboard = async (e: KeyboardEvent) => {
 
 const onVisible = () => {
   window.addEventListener('keydown', handleKeyboard);
+  // Reset to first slide when section becomes visible
+  if (flicking.value && activeIndex.value !== 0) {
+    flicking.value.moveTo(0);
+  }
   flicking.value?.activePlugins.find(plugin => plugin instanceof AutoPlay)?.play();
 };
 
