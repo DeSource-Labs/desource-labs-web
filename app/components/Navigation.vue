@@ -235,7 +235,7 @@ $text-shadow-active: 0 0 30px rgba(167, 139, 250, 0.6);
     &__content {
       gap: 0.5rem;
     }
-     &__link {
+    &__link {
       font-size: 1.4rem;
     }
     &__cta.button {
