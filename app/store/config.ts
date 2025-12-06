@@ -25,7 +25,7 @@ export const useConfigStore = defineStore('config', () => {
       case '3g':
         return 'medium';
       default:
-      return 'fast';
+        return 'fast';
     }
   });
 
