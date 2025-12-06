@@ -4,11 +4,12 @@ import { useNetwork } from '@vueuse/core';
 const sectionVisibilityDistance = 400; // in pixels
 
 export const useConfigStore = defineStore('config', () => {
-  const { effectiveType } = useNetwork();
+  const { effectiveType, saveData } = useNetwork();
 
   const isNativeMobile = ref(false);
   const isTouch = ref(false);
   const prefersReducedMotion = ref(false);
+  const isSlow = ref(false);
 
   const activeSection = ref<Section>('hero');
   const visibleSections = ref<Section[]>(['hero']);
@@ -87,7 +88,42 @@ export const useConfigStore = defineStore('config', () => {
     }
   };
 
-  const init = () => {
+  const detectLowFPS = (): Promise<boolean> => {
+    return new Promise(res => {
+      let frames = 0;
+      const start = performance.now();
+
+      function tick() {
+        frames++;
+        const now = performance.now();
+        if (now - start < 500) {
+          requestAnimationFrame(tick);
+        } else {
+          const fps = frames / ((now - start) / 1000);
+          res(fps < 40);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    });
+  };
+
+  const detectSlowDevice = async () => {
+    // memory check
+    const lowMemory = ('deviceMemory' in navigator) ? (navigator as any).deviceMemory <= 2 : false;
+    // cpu cores
+    const weakCpu = (navigator.hardwareConcurrency || 2) <= 4;
+    // micro CPU benchmark
+    const start = performance.now();
+    for (let i = 0; i < 1e6; i++) {}
+    const cpuElapsed = performance.now() - start;
+    const slowCpu = cpuElapsed > 40; // arbitrary threshold
+    // FPS estimation
+    const lowFps = await detectLowFPS();
+    return saveData.value || lowMemory || weakCpu || slowCpu || lowFps;
+  };
+
+  const init = async () => {
     // Mobile detection
     const userAgent = navigator.userAgent.toLowerCase();
     isNativeMobile.value = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
@@ -110,6 +146,9 @@ export const useConfigStore = defineStore('config', () => {
     // Detect sections & navbar visibility on scroll
     detectSectionsVisibility();
     window.addEventListener('scroll', detectSectionsVisibility, { passive: true });
+    // Detect slow device
+    const slowDeviceDetected = await detectSlowDevice();
+    isSlow.value = prefersReducedMotion.value || slowDeviceDetected;
   };
 
   const destroy = () => {
@@ -120,6 +159,7 @@ export const useConfigStore = defineStore('config', () => {
   return {
     isNativeMobile,
     isTouch,
+    isSlow,
     prefersReducedMotion,
     connectionSpeed,
     activeSection,

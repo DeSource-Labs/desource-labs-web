@@ -1,5 +1,5 @@
 <template>
-  <LiquidGlass tag="nav" class="nav" :class="{ 'nav--visible': showNav }">
+  <LiquidGlass tag="nav" class="nav" :class="{ 'nav--visible': showNav }" :is-slow-device="isSlow">
     <div class="nav__container">
       <a href="#" class="nav__logo" @click.prevent="scrollToTop">DESOURCE LABS</a>
       <div class="nav__links">
@@ -70,7 +70,7 @@
 import { useConfigStore } from '~/store/config';
 
 const configStore = useConfigStore();
-const { showNav, activeSection } = storeToRefs(configStore);
+const { showNav, activeSection, isSlow } = storeToRefs(configStore);
 const mobileMenuOpen = ref(false);
 
 const scrollToTop = () => {

@@ -107,6 +107,7 @@ interface LiquidGlassConfig {
 interface LiquidGlassProps {
   tag?: string;
   style?: CSSProperties;
+  isSlowDevice?: boolean;
 }
 
 const config: LiquidGlassConfig = {
@@ -128,8 +129,22 @@ const config: LiquidGlassConfig = {
   mixBlendMode: 'difference',
 };
 
+const optimizedConfig = computed(() => {
+  if (!props.isSlowDevice) return config;
+  // Reduce distortion on slow devices for better performance
+  return {
+    ...config,
+    displace: 0.25,
+    blur: 8,
+    greenOffset: 5,
+    blueOffset: 10,
+    distortionScale: -120,
+  };
+});
+
 const props = withDefaults(defineProps<LiquidGlassProps>(), {
   tag: 'div',
+  isSlowDevice: false,
   style: () => ({})
 });
 
@@ -146,12 +161,25 @@ const blueChannelRef = useTemplateRef('blueChannelRef');
 const gaussianBlurRef = useTemplateRef('gaussianBlurRef');
 
 let resizeObserver: ResizeObserver | null = null;
+let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+let lastWidth = 0;
+let lastHeight = 0;
 
 const generateDisplacementMap = () => {
   const rect = containerRef.value?.getBoundingClientRect();
   const actualWidth = rect?.width || 400;
   const actualHeight = rect?.height || 200;
-  const edgeSize = Math.min(actualWidth, actualHeight) * (config.borderWidth * 0.5);
+
+  // Skip update if dimensions haven't changed significantly (> 10px threshold)
+  if (Math.abs(lastWidth - actualWidth) < 10 && Math.abs(lastHeight - actualHeight) < 10) {
+    return;
+  }
+
+  lastWidth = actualWidth;
+  lastHeight = actualHeight;
+
+  const cfg = optimizedConfig.value;
+  const edgeSize = Math.min(actualWidth, actualHeight) * (cfg.borderWidth * 0.5);
 
   const svgContent = `
       <svg viewBox="0 0 ${actualWidth} ${actualHeight}" xmlns="http://www.w3.org/2000/svg">
@@ -166,9 +194,9 @@ const generateDisplacementMap = () => {
           </linearGradient>
         </defs>
         <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" fill="black"></rect>
-        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${config.borderRadius}" fill="url(#${redGradId})" />
-        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${config.borderRadius}" fill="url(#${blueGradId})" style="mix-blend-mode: ${config.mixBlendMode}" />
-        <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${config.borderRadius}" fill="hsl(0 0% ${config.brightness}% / ${config.opacity})" style="filter:blur(${config.blur}px)" />
+        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${cfg.borderRadius}" fill="url(#${redGradId})" />
+        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${cfg.borderRadius}" fill="url(#${blueGradId})" style="mix-blend-mode: ${cfg.mixBlendMode}" />
+        <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${cfg.borderRadius}" fill="hsl(0 0% ${cfg.brightness}% / ${cfg.opacity})" style="filter:blur(${cfg.blur}px)" />
       </svg>
     `;
 
@@ -176,8 +204,9 @@ const generateDisplacementMap = () => {
 };
 
 const updateDisplacementMap = () => {
-  if (feImageRef.value) {
-    feImageRef.value.setAttribute('href', generateDisplacementMap());
+  const href = generateDisplacementMap();
+  if (href && feImageRef.value) {
+    feImageRef.value.setAttribute('href', href);
   }
 };
 
@@ -193,7 +222,9 @@ const supportsSVGFilters = () => {
 
   const div = document.createElement('div');
   div.style.backdropFilter = `url(#${filterId})`;
-  return div.style.backdropFilter !== '';
+  const isSupported = div.style.backdropFilter !== '';
+  div.remove();
+  return isSupported;
 };
 
 const supportsBackdropFilter = () => {
@@ -285,22 +316,23 @@ const containerStyles = computed(() => {
 });
 
 const updateFilterElements = () => {
+  const cfg = optimizedConfig.value;
   const elements = [
-    { ref: redChannelRef, offset: config.redOffset },
-    { ref: greenChannelRef, offset: config.greenOffset },
-    { ref: blueChannelRef, offset: config.blueOffset }
+    { ref: redChannelRef, offset: cfg.redOffset },
+    { ref: greenChannelRef, offset: cfg.greenOffset },
+    { ref: blueChannelRef, offset: cfg.blueOffset }
   ];
 
   elements.forEach(({ ref, offset }) => {
     if (ref.value) {
-      ref.value.setAttribute('scale', (config.distortionScale + offset).toString());
-      ref.value.setAttribute('xChannelSelector', config.xChannel);
-      ref.value.setAttribute('yChannelSelector', config.yChannel);
+      ref.value.setAttribute('scale', (cfg.distortionScale + offset).toString());
+      ref.value.setAttribute('xChannelSelector', cfg.xChannel);
+      ref.value.setAttribute('yChannelSelector', cfg.yChannel);
     }
   });
 
   if (gaussianBlurRef.value) {
-    gaussianBlurRef.value.setAttribute('stdDeviation', config.displace.toString());
+    gaussianBlurRef.value.setAttribute('stdDeviation', cfg.displace.toString());
   }
 };
 
@@ -308,7 +340,12 @@ const setupResizeObserver = () => {
   if (!containerRef.value || typeof ResizeObserver === 'undefined') return;
 
   resizeObserver = new ResizeObserver(() => {
-    setTimeout(updateDisplacementMap, 0);
+    // Throttle updates to prevent excessive redraws
+    if (resizeTimeout) clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      updateDisplacementMap();
+      resizeTimeout = null;
+    }, 200);
   });
 
   resizeObserver.observe(containerRef.value);
@@ -324,6 +361,9 @@ onMounted(async () => {
 onUnmounted(() => {
   if (resizeObserver) {
     resizeObserver.disconnect();
+  }
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout);
   }
 });
 </script>

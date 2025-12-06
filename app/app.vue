@@ -10,8 +10,8 @@ import { useConfigStore } from '~/store/config';
 
 const configStore = useConfigStore();
 
-onBeforeMount(() => {
-  configStore.init();
+onBeforeMount(async () => {
+  await configStore.init();
 });
 
 onBeforeUnmount(() => {

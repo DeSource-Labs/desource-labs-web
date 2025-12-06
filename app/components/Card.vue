@@ -114,6 +114,7 @@ onMounted(() => {
     0 12px 30px rgba(0, 0, 0, 0.6),          /* depth */
     0 0 40px rgba(255, 255, 255, 0.05);      /* ambient on dark bg */
   contain: layout style paint;
+  will-change: transform;
   transition: transform 0.18s ease, box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   --glow: rgba(255, 255, 255, 0.22);
@@ -184,11 +185,10 @@ onMounted(() => {
   }
 
   &--mobile {
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 12px 30px rgba(0, 0, 0, 0.6),
-      0 0 40px rgba(255, 255, 255, 0.05);
+      0 8px 20px rgba(0, 0, 0, 0.5);
   }
 
   &__content {
