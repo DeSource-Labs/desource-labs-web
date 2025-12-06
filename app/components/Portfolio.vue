@@ -24,14 +24,15 @@
         />
       </VueFlicking>
 
-      <div class="portfolio__nav">
+      <div class="portfolio__nav" role="presentation">
         <button
           v-for="(project, index) in Projects"
           :key="`nav-${project.id}`"
           class="portfolio__nav-dot"
           :class="{ 'is-active': index === activeIndex }"
-          @click="goToSlide(index)"
           :aria-label="`View ${project.title}`"
+          tabindex="-1"
+          @click="goToSlide(index)"
         />
       </div>
 
