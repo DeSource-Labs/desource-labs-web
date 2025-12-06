@@ -1,7 +1,7 @@
 <template>
   <div
     class="product"
-    :class="[{ 'product--reversed': isReversed }, product.shadowColor]"
+    :class="[{ 'product--reversed': isReversed, 'product--mobile': isMobile && ready }, product.shadowColor]"
   >
     <div class="product__info">
       <NuxtImg
@@ -68,12 +68,15 @@ const props = withDefaults(
   defineProps<{
   product: Product;
   isReversed?: boolean;
+  isMobile?: boolean;
   }>()
   , {
     isReversed: false,
+    isMobile: false,
   }
 );
 
+const ready = ref(false);
 const logo = computed(() => `/img/products/${props.product.logoId ?? props.product.id}-logo.png`);
 const image = computed(() => `/img/products/${props.product.id}.png`);
 const statusLabel = computed(() => {
@@ -86,6 +89,10 @@ const statusLabel = computed(() => {
       return '';
   }
 });
+
+onMounted(() => {
+  ready.value = true;
+});
 </script>
 
 <style scoped lang="scss">
@@ -93,6 +100,7 @@ const statusLabel = computed(() => {
   position: relative;
   height: 370px;
   width: 800px;
+  margin: 0 1rem;
   display: flex;
   align-items: stretch;
   gap: 0;
@@ -101,13 +109,13 @@ const statusLabel = computed(() => {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06), /* rim light */
     0 12px 30px rgba(0, 0, 0, 0.6),          /* depth */
     0 0 40px rgba(255, 255, 255, 0.05);      /* ambient on dark bg */
+  contain: layout style paint;
   transition: transform 0.18s ease, box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  isolation: isolate;
+
   --glow: rgba(255, 255, 255, 0.22);
   &.orange {
     --glow: rgba(255, 165, 0, 0.26);
@@ -173,6 +181,14 @@ const statusLabel = computed(() => {
         border-bottom-right-radius: 0;
       }
     }
+  }
+
+  &--mobile {
+    backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 12px 30px rgba(0, 0, 0, 0.6),
+      0 0 40px rgba(255, 255, 255, 0.05);
   }
 
   &__content {
@@ -303,6 +319,7 @@ const statusLabel = computed(() => {
     z-index: 2;
   }
 }
+
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -343,6 +360,7 @@ const statusLabel = computed(() => {
     }
   }
 }
+
 @media (max-width: 840px) {
   .product {
     height: 500px;
@@ -381,9 +399,51 @@ const statusLabel = computed(() => {
     }
   }
 }
+
+@media (max-width: 640px) {
+  .product__logo {
+    max-height: 32px;
+  }
+}
+
 @media (max-width: 380px) {
   .product {
     width: 90vw;
+  }
+}
+
+// Landscape mobile
+@media (max-height: 600px) {
+  .product {
+    height: 250px;
+    width: 90vw;
+    flex-direction: row;
+
+    & &__image {
+      > img {
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    &--reversed {
+      flex-direction: row-reverse;
+
+      .product__image {
+        > img {
+          border-top-left-radius: 1rem;
+          border-bottom-left-radius: 1rem;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+
+    &__logo {
+      display: none;
+    }
   }
 }
 </style>
