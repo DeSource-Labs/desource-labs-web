@@ -4,13 +4,13 @@
       ref="videoA"
       class="seamless-video__layer"
       :class="{ 'is-active': isFirstActive }"
-      :src="isVisible ? videoSrc : ''"
+      :src="videoSrc"
       :poster="poster"
-      :preload="isVisible ? 'metadata' : 'none'"
       autoplay
       muted
       playsinline
       :loop="false"
+      @contextmenu.prevent
     >
       <track :src="`/video/${name}.vtt`" kind="subtitles" srclang="en" label="English subtitles">
       Your browser does not support the video tag.
@@ -19,12 +19,12 @@
       ref="videoB"
       class="seamless-video__layer"
       :class="{ 'is-active': !isFirstActive }"
-      :src="isVisible ? videoSrc : ''"
-      :preload="isVisible ? 'metadata' : 'none'"
+      :src="videoSrc"
       autoplay
       muted
       playsinline
       :loop="false"
+      @contextmenu.prevent
     >
       <track :src="`/video/${name}.vtt`" kind="subtitles" srclang="en" label="English subtitles">
       Your browser does not support the video tag.
@@ -52,7 +52,7 @@ const loaded = ref(false);
 const loading = ref(false);
 const isFirstActive = ref(true);
 const nearEnd = ref(false); // Flag to activate RAF only when needed
-let rafId: number | null = null;
+const rafId = ref<number | null>(null);
 
 const poster = computed(() => `/video/${props.name}.webp`);
 
@@ -63,7 +63,9 @@ const handleTimeUpdate = (event: Event) => {
   // Activate RAF precision mode when approaching crossfade window
   if (remaining <= props.fadeWindow + 0.5 && !nearEnd.value) {
     nearEnd.value = true;
-    if (!rafId) rafId = requestAnimationFrame(tick);
+    if (!rafId.value) {
+      rafId.value = requestAnimationFrame(tick);
+    }
   }
 };
 
@@ -91,14 +93,14 @@ const startCrossfadeIfNeeded = (video: HTMLVideoElement) => {
 // High-frequency precision check (only runs when nearEnd = true)
 const tick = () => {
   if (!nearEnd.value) {
-    rafId = null;
+    rafId.value = null;
     return; // Stop RAF when not needed
   }
   const current = isFirstActive.value ? videoA.value : videoB.value;
   if (current) {
     startCrossfadeIfNeeded(current);
   }
-  rafId = requestAnimationFrame(tick);
+  rafId.value = requestAnimationFrame(tick);
 };
 
 const loadVideo = async () => {
@@ -128,6 +130,8 @@ const loadAndPlayVideo = async () => {
   await loadVideo();
   await nextTick();
   if (videoA.value) {
+    isFirstActive.value = true;
+    nearEnd.value = false;
     videoA.value.addEventListener('timeupdate', handleTimeUpdate);
     videoA.value.currentTime = 0;
     videoA.value.play().catch(() => {});
@@ -146,7 +150,10 @@ const pauseVideos = () => {
     videoB.value.removeEventListener('timeupdate', handleTimeUpdate);
     videoB.value.pause();
   }
-  if (rafId) cancelAnimationFrame(rafId);
+  if (rafId.value) {
+    cancelAnimationFrame(rafId.value);
+    rafId.value = null;
+  }
 };
 
 watch(() => props.isVisible, (visible) => {
