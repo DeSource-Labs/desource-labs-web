@@ -4,8 +4,9 @@
       ref="videoA"
       class="seamless-video__layer"
       :class="{ 'is-active': isFirstActive }"
-      :src="videoBlob"
-      preload="metadata"
+      :src="isVisible ? videoSrc : ''"
+      :poster="poster"
+      :preload="isVisible ? 'metadata' : 'none'"
       autoplay
       muted
       playsinline
@@ -18,8 +19,8 @@
       ref="videoB"
       class="seamless-video__layer"
       :class="{ 'is-active': !isFirstActive }"
-      :src="videoBlob"
-      preload="metadata"
+      :src="isVisible ? videoSrc : ''"
+      :preload="isVisible ? 'metadata' : 'none'"
       autoplay
       muted
       playsinline
@@ -36,18 +37,24 @@ const props = withDefaults(defineProps<{
   name: string;
   fadeWindow?: number; // seconds before end to start crossfade
   opacity?: number; // base opacity of the video
+  isVisible?: boolean; // section visibility
 }>(), {
   fadeWindow: 4,
   opacity: 1,
+  isVisible: false,
 });
 
-const videoBlob = ref<string>('');
+const videoSrc = ref<string>('');
 
 const videoA = useTemplateRef('videoA');
 const videoB = useTemplateRef('videoB');
+const loaded = ref(false);
+const loading = ref(false);
 const isFirstActive = ref(true);
 const nearEnd = ref(false); // Flag to activate RAF only when needed
 let rafId: number | null = null;
+
+const poster = computed(() => `/video/${props.name}.webp`);
 
 // Low-frequency check via timeupdate (~4x/sec)
 const handleTimeUpdate = (event: Event) => {
@@ -94,8 +101,10 @@ const tick = () => {
   rafId = requestAnimationFrame(tick);
 };
 
-onMounted(async () => {
-  // Detect supported format client-side
+const loadVideo = async () => {
+  if (loaded.value || loading.value) return;
+  loading.value = true;
+  // Detect supported format
   const tester = document.createElement('video');
   const canWebm = tester.canPlayType('video/webm; codecs="vp9,vorbis"') || tester.canPlayType('video/webm');
   tester.remove();
@@ -106,16 +115,18 @@ onMounted(async () => {
   // Fetch video as blob using Nuxt's $fetch with caching
   try {
     const blob = await $fetch<Blob>(resolvedPath, { responseType: 'blob' });
-    videoBlob.value = URL.createObjectURL(blob);
-    console.log(videoBlob.value);
+    videoSrc.value = URL.createObjectURL(blob);
   } catch {
-    // noop
+    // Fallback to direct URL if fetch fails
+    videoSrc.value = resolvedPath;
   }
-  // Fallback to direct URL if fetch fails
-  if (!videoBlob.value) {
-    videoBlob.value = resolvedPath;
-  }
-  // Attach timeupdate listeners and play
+  loaded.value = true;
+  loading.value = false;
+};
+
+const loadAndPlayVideo = async () => {
+  await loadVideo();
+  await nextTick();
   if (videoA.value) {
     videoA.value.addEventListener('timeupdate', handleTimeUpdate);
     videoA.value.currentTime = 0;
@@ -124,15 +135,40 @@ onMounted(async () => {
   if (videoB.value) {
     videoB.value.addEventListener('timeupdate', handleTimeUpdate);
   }
+};
+
+const pauseVideos = () => {
+  if (videoA.value) {
+    videoA.value.removeEventListener('timeupdate', handleTimeUpdate);
+    videoA.value.pause();
+  }
+  if (videoB.value) {
+    videoB.value.removeEventListener('timeupdate', handleTimeUpdate);
+    videoB.value.pause();
+  }
+  if (rafId) cancelAnimationFrame(rafId);
+};
+
+watch(() => props.isVisible, (visible) => {
+  if (!visible) {
+    pauseVideos();
+  } else {
+    loadAndPlayVideo();
+  }
+});
+
+onMounted(async () => {
+  await nextTick();
+  if (props.isVisible) {
+    loadAndPlayVideo();
+  }
 });
 
 onBeforeUnmount(() => {
-  if (rafId) cancelAnimationFrame(rafId);
-  if (videoA.value) videoA.value.removeEventListener('timeupdate', handleTimeUpdate);
-  if (videoB.value) videoB.value.removeEventListener('timeupdate', handleTimeUpdate);
+  pauseVideos();
   // Revoke object URL to free memory (revoke to avoid leaks)
-  if (videoBlob.value && videoBlob.value.startsWith('blob:')) {
-    URL.revokeObjectURL(videoBlob.value);
+  if (videoSrc.value && videoSrc.value.startsWith('blob:')) {
+    URL.revokeObjectURL(videoSrc.value);
   }
 });
 </script>
