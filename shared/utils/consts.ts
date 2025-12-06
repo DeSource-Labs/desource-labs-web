@@ -1,4 +1,4 @@
-import type { SocialMediaItem, SocialMediaKey, Product, NavLink } from '../types';
+import type { SocialMediaItem, SocialMediaKey, Product, NavLink, Section } from '../types';
 
 export const socialMedia = {
   email: 'mailto:hello@desource-labs.org',
@@ -155,3 +155,5 @@ export const Projects: Product[] = [
     impact: 'Ultra-lightweight solution',
   }
 ];
+
+export const Sections: Section[] = ['hero', 'main', 'stack', 'tech', 'portfolio', 'team', 'insights', 'contact'];

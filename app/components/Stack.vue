@@ -37,7 +37,7 @@
         </p>
       </div>
     </div>
-    <SeamlessVideo class="stack__visual" name="chips" />
+    <SeamlessVideo class="stack__visual" name="chips" :is-visible="isVisible" />
   </section>
 </template>
 
@@ -46,8 +46,7 @@ let observer: IntersectionObserver | null = null; // To observe stack items visi
 
 const itemsVisible = ref(false);
 
-onMounted(async () => {
-  await nextTick();
+const onVisible = () => {
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
@@ -63,10 +62,16 @@ onMounted(async () => {
 
   const container = document.querySelector('.stack__container');
   if (container) observer.observe(container);
-});
+};
 
-onBeforeUnmount(() => {
+const onHidden = () => {
   observer?.disconnect();
+  itemsVisible.value = false;
+};
+
+const { isVisible } = useSection('stack', {
+  onVisible,
+  onHidden,
 });
 </script>
 

@@ -15,7 +15,7 @@ export type TeamMember = {
 };
 
 export type NavLink = {
-  id: string;
+  id: Section;
   name: string;
   target: string;
 }
@@ -33,3 +33,5 @@ export type Product = {
   url?: string;
   client?: string;
 };
+
+export type Section = 'hero' | 'main' | 'stack' | 'tech' | 'portfolio' | 'team' | 'insights' | 'contact';

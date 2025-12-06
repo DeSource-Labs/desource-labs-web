@@ -10,7 +10,7 @@
           rel="nofollow noopener"
           :class="{ active: activeSection === item.id }"
           :href="item.target"
-          @click.prevent="smoothScroll(item.target)"
+          @click.prevent="navigateTo(item.id)"
         >
           {{ item.name }}
         </a>
@@ -49,7 +49,7 @@
             :class="{ active: activeSection === item.id }"
             rel="nofollow noopener"
             :href="item.target"
-            @click.stop="handleMobileClick(item.target)"
+            @click.stop="handleMobileClick(item.id)"
           >
             {{ item.name }}
           </a>
@@ -67,53 +67,18 @@
 </template>
 
 <script setup lang="ts">
-const showNav = ref(false);
-const activeSection = ref('');
+import { useConfigStore } from '~/store/config';
+
+const configStore = useConfigStore();
+const { showNav, activeSection } = storeToRefs(configStore);
 const mobileMenuOpen = ref(false);
-const scrollThrottle = ref<number | null>(null);
-
-const handleScroll = () => {
-  if (scrollThrottle.value) return;
-
-  scrollThrottle.value = setTimeout(() => {
-    // Show nav after scrolling past 80% of viewport height
-    showNav.value = window.scrollY > window.innerHeight * 0.8;
-
-    // Detect active section based on scroll position
-    const sections = ['stack', 'portfolio', 'tech', 'team', 'contact'];
-    let found = false;
-
-    for (const section of sections) {
-      const element = document.getElementById(section);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        // Section is active if it's in the upper third of viewport
-        if (rect.top <= 150 && rect.bottom >= 150) {
-          activeSection.value = section;
-          found = true;
-          break;
-        }
-      }
-    }
-
-    if (!found && window.scrollY < window.innerHeight) {
-      activeSection.value = '';
-    }
-
-    scrollThrottle.value = null;
-  }, 100);
-};
-
-const smoothScroll = (target: string) => {
-  const element = document.querySelector(target);
-  if (element) {
-    const targetPosition = element.getBoundingClientRect().top + window.scrollY - 70;
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  }
-};
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+const navigateTo = (id: Section) => {
+  configStore.navigateTo(id);
 };
 
 const toggleMobileMenu = () => {
@@ -126,22 +91,12 @@ const toggleMobileMenu = () => {
   }
 };
 
-const handleMobileClick = (target: string) => {
+const handleMobileClick = (id: Section) => {
   toggleMobileMenu();
   setTimeout(() => {
-    smoothScroll(target);
+    navigateTo(id);
   }, 300);
 };
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Check initial position
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-  document.documentElement.style.overflow = '';
-});
 </script>
 
 <style lang="scss">
@@ -171,7 +126,7 @@ $text-shadow-active: 0 0 30px rgba(167, 139, 250, 0.6);
   top: 0;
   left: 0;
   width: 100%;
-  height: 100svh;
+  height: var(--vh-100, 100svh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,6 +225,21 @@ $text-shadow-active: 0 0 30px rgba(167, 139, 250, 0.6);
     }
     &__cta.button {
       width: 100%;
+    }
+  }
+}
+
+@media (max-height: 600px) {
+  // Adjust for short viewports, e.g., landscape mobile
+  .nav-mobile {
+    &__content {
+      gap: 0.5rem;
+    }
+     &__link {
+      font-size: 1.4rem;
+    }
+    &__cta.button {
+      margin-top: 0.5rem;
     }
   }
 }

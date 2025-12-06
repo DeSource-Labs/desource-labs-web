@@ -5,7 +5,19 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
   css: ['~/assets/styles/index.css', '@egjs/vue3-flicking/dist/flicking.css'],
-  modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly'],
+  modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly', '@pinia/nuxt'],
+
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'flicking': ['@egjs/vue3-flicking', '@egjs/flicking-plugins'],
+          }
+        }
+      }
+    }
+  },
 
   nitro: {
     compressPublicAssets: true,
@@ -38,6 +50,11 @@ export default defineNuxtConfig({
         { rel: 'icon', href: '/logo/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
         { rel: 'apple-touch-icon', href: '/logo/apple-touch-icon.png', sizes: '180x180' },
         { rel: 'manifest', href: '/site.webmanifest' },
+        // Font preloading for performance
+        { rel: 'preload', href: '/fonts/nunito.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        // Preconnect to external services
+        { rel: 'preconnect', href: 'https://calendly.com' },
+        { rel: 'dns-prefetch', href: 'https://calendly.com' },
       ],
       // TODO: Add analytics later
       // script: [
