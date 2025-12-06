@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { useNetwork } from '@vueuse/core';
 
-const navBarPadding = 70; // in pixels
 const sectionVisibilityDistance = 400; // in pixels
 
 export const useConfigStore = defineStore('config', () => {
@@ -80,7 +79,7 @@ export const useConfigStore = defineStore('config', () => {
   const navigateTo = (section: Section, behavior: ScrollBehavior = 'smooth') => {
     const element = document.getElementById(section);
     if (element) {
-      const targetPosition = element.getBoundingClientRect().top + window.scrollY - navBarPadding;
+      const targetPosition = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: targetPosition,
         behavior,
