@@ -417,6 +417,7 @@ onMounted(() => {
   .product {
     height: 250px;
     width: 90vw;
+    max-width: 640px;
     flex-direction: row;
 
     & &__image {
