@@ -417,7 +417,7 @@ onMounted(() => {
   .product {
     height: 250px;
     width: 90vw;
-    max-width: 640px;
+    max-width: 740px;
     flex-direction: row;
 
     & &__image {
@@ -440,6 +440,28 @@ onMounted(() => {
           border-bottom-right-radius: 0;
         }
       }
+    }
+
+    &__info {
+      padding: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    &__content {
+      gap: 0.5rem;
+    }
+
+    &__title {
+      font-size: 1rem;
+    }
+
+    &__desc {
+      font-size: 0.9rem;
+    }
+
+    &__impact,
+    &__tags {
+      font-size: 0.7rem;
     }
 
     &__logo {
