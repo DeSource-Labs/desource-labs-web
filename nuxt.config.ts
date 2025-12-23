@@ -1,11 +1,20 @@
+import type { NuxtConfig } from 'nuxt/schema';
 import { meta } from './shared/utils/meta';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
+const config: NuxtConfig = defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
   css: ['~/assets/styles/index.css', '@egjs/vue3-flicking/dist/flicking.css'],
   modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly', '@pinia/nuxt'],
+
+  runtimeConfig: {
+    public: {
+      posthogPublicKey: 'phc_w9qoJwpIwZxxNtwMgiUQGXbFk7o6PaYyCpgtTjpQbr4',
+      posthogHost: 'https://eu.i.posthog.com',
+      posthogDefaults: '2025-11-30'
+    }
+  },
 
   vite: {
     build: {
@@ -143,3 +152,5 @@ export default defineNuxtConfig({
     },
   },
 });
+
+export default config;

@@ -25,6 +25,7 @@
     "nuxt": "^4.2.2",
     "nuxt-calendly": "^0.1.21",
     "pinia": "^3.0.4",
+    "posthog-js": "^1.310.1",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
