@@ -65,15 +65,6 @@ const config: NuxtConfig = defineNuxtConfig({
         { rel: 'preconnect', href: 'https://calendly.com' },
         { rel: 'dns-prefetch', href: 'https://calendly.com' },
       ],
-      // TODO: Add analytics later
-      // script: [
-      //   {
-      //     key: 'plausible',
-      //     defer: true,
-      //     src: 'https://plausible.io/js/script.js',
-      //     'data-domain': meta.domain,
-      //   },
-      // ],
       meta: [
         // TODO: Uncomment fields below when ready
         {
