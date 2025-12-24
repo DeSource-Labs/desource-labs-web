@@ -45,9 +45,6 @@ defineProps<{
   border-radius: 1rem;
   aspect-ratio: 1;
 }
-.bolder {
-  font-weight: 500;
-}
 .team__socials {
   align-items: center;
   display: inline-flex;

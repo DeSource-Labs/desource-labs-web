@@ -1,18 +1,20 @@
 <template>
   <section class="main">
     <SeamlessVideo class="main__visual" name="cubic" :is-visible="isVisible" />
-    <p class="main__title h4">Innovation, Engineered for Scale</p>
-    <p class="main__desc1 description p1">
-      We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities.
-    </p>
-    <p class="main__desc2 description p1">
-      Our team
-      <strong>merges deep technical expertise with design precision</strong>,
-      delivering systems that inspire. From blockchain ecosystems to enterprise-grade infrastructure, every line of code, every pixel, and every strategy is built with purpose — and proven in production.
-    </p>
-    <p class="main__trust description p1">
-      Trusted by innovative teams building the future of Web3, AI, and decentralized infrastructure.
-    </p>
+    <Text class="main__title h4" text="Innovation, Engineered for Scale" />
+    <Text
+      class="main__desc1 description p1"
+      text="We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities."
+    />
+    <Text
+      class="main__desc2 description p1"
+      text="Our team merges deep technical expertise with design precision, delivering systems that inspire. From blockchain ecosystems to enterprise-grade infrastructure, every line of code, every pixel, and every strategy is built with purpose — and proven in production."
+      :bold="[[2, 8]]"
+    />
+    <Text
+      class="main__trust description p1"
+      text="Trusted by innovative teams building the future of Web3, AI, and decentralized infrastructure."
+    />
     <div class="main__actions">
       <Button type="secondary" href="https://calendly.com/hello-desource-labs/30min">
         Schedule a call
@@ -201,16 +203,14 @@ const { isVisible, configStore } = useSection('main', {
 .description {
   line-height: 1.5;
   color: var(--color-secondary);
-
-  > strong {
-    color: var(--color-primary);
-  }
 }
+
 @media (max-width: 1024px) {
   .main {
     padding: 3rem 2rem;
   }
 }
+
 @media (max-width: 768px) {
   .main {
     display: flex;
@@ -273,6 +273,7 @@ const { isVisible, configStore } = useSection('main', {
     }
   }
 }
+
 @media (max-width: 640px) {
   .main {
     &__visual {
@@ -299,6 +300,7 @@ const { isVisible, configStore } = useSection('main', {
     }
   }
 }
+
 @media (max-width: 320px) {
   .main {
     padding: 2rem 1.4rem;

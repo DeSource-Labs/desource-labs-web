@@ -14,6 +14,7 @@ export const useConfigStore = defineStore('config', () => {
   const activeSection = ref<Section>('hero');
   const visibleSections = ref<Section[]>(['hero']);
   const showNav = ref(false);
+  const scrollY = ref(0);
   const isReversedScroll = ref(false);
   const scrollThrottle = ref<number | null>(null);
   const orientationThrottle = ref<number | null>(null);
@@ -49,7 +50,8 @@ export const useConfigStore = defineStore('config', () => {
       // Show nav after scrolling past 80% of viewport height
       showNav.value = window.scrollY > window.innerHeight * 0.8;
       // Check if scroll is from bottom to top
-      isReversedScroll.value = (window.scrollY + window.innerHeight) < (document.documentElement.scrollHeight - 1);
+      isReversedScroll.value = window.scrollY > 0 && window.scrollY < scrollY.value;
+      scrollY.value = window.scrollY;
       for (const section of Sections) {
         const element = document.getElementById(section);
         if (!element) continue;

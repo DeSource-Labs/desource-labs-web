@@ -32,6 +32,10 @@ section {
   color: var(--color-secondary);
 }
 
+.bolder {
+  font-weight: 500;
+}
+
 /* #region NuxtImg */
 .image {
   opacity: 1;

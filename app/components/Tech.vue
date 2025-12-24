@@ -1,9 +1,9 @@
 <template>
   <section class="tech">
-    <h1>OUR TECH STACK</h1>
+    <Text text="OUR TECH STACK" tag="h1" />
     <div class="tech__container">
       <div class="tech__direction">
-        <p class="p3">Front-end</p>
+        <Text class="p3" text="Front-end" />
         <div class="tech__items">
           <NuxtImg
             v-for="item in frontend"
@@ -20,7 +20,7 @@
       </div>
       <hr />
       <div class="tech__direction">
-        <p class="p3">Blockchain / Back-end</p>
+        <Text class="p3" text="Blockchain / Back-end" />
         <div class="tech__items">
           <NuxtImg
             v-for="item in backend"

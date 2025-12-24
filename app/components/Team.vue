@@ -4,18 +4,23 @@
       <TeamMember v-for="member in members" :key="member.title" :member="member" />
     </div>
     <div class="team__main-content">
-      <p class="team__title h4">The Team Behind the Craft</p>
-      <p class="team__description p1">
-        A collective of <strong>14+ engineers, designers, and strategists</strong> with deep expertise across blockchain, AI, and modern web architecture.
-      </p>
+      <Text class="team__title h4" text="The Team Behind the Craft" />
+      <Text
+        class="team__description p1"
+        text="A collective of 14+ engineers, designers, and strategists with deep expertise across blockchain, AI, and modern web architecture."
+        :bold="[[3, 7]]"
+      />
     </div>
     <div class="team__additional-content">
-      <p class="team__description p1">
-        We've built production systems for ambitious projects — from NFT marketplaces to voice AI launchpads to cross-chain infrastructure. Real solutions, deployed and trusted.
-      </p>
-      <p class="team__description p1">
-        Every project benefits from this collective experience, paired with an <strong>obsessive attention to detail</strong> that defines our work.
-      </p>
+      <Text
+        class="team__description p1"
+        text="We've built production systems for ambitious projects — from NFT marketplaces to voice AI launchpads to cross-chain infrastructure. Real solutions, deployed and trusted."
+      />
+      <Text
+        class="team__description p1"
+        text="Every project benefits from this collective experience, paired with an obsessive attention to detail that defines our work."
+        :bold="[[10, 13]]"
+      />
       <Button class="team__button" type="ghost" :href="telegram">
         Stay in the loop
       </Button>

@@ -21,9 +21,9 @@
       fetchpriority="high"
     />
     <div class="header__content">
-      <h3 class="h3">DESOURCE LABS</h3>
-      <h1>ENGINEERING BEYOND LIMITS.</h1>
-      <p class="secondary p1">Precision-built solutions tailored to your vision.</p>
+      <Text class="h3" text="DESOURCE LABS" tag="h3" />
+      <Text text="ENGINEERING BEYOND LIMITS." tag="h1" />
+      <Text class="secondary p1" text="Precision-built solutions tailored to your vision." />
       <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
     </div>
   </section>

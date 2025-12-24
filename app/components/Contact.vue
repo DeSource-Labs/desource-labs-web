@@ -19,16 +19,18 @@
       loading="lazy"
     />
     <div class="contact__content">
-      <h1>LET’S BUILD SOMETHING EXCEPTIONAL</h1>
-      <p class="secondary p1">
-        Your vision deserves more than off-the-shelf solutions.
-        <br />
-        Let’s create technology that transforms your business.
-      </p>
+      <Text text="LET’S BUILD SOMETHING EXCEPTIONAL" tag="h1" />
+      <Text
+        class="secondary p1"
+        text="Your vision deserves more than off-the-shelf solutions. <br/> Let’s create technology that transforms your business."
+      />
     </div>
     <div class="contact__actions">
       <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
-      <p class="contact__meta p4" aria-label="response time">Under 24h response • NDA on request</p>
+      <Text
+        class="contact__meta p4"
+        text="Under 24h response • NDA on request"
+      />
       <ClientOnly>
         <CalendlyPopupWidget
           tabindex="0"

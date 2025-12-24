@@ -1,8 +1,8 @@
 <template>
   <section class="portfolio">
     <div class="portfolio__header">
-      <h1>OUR WORK IN ACTION</h1>
-      <p class="portfolio__hint p4">Selected builds, deployed and trusted</p>
+      <Text text="OUR WORK IN ACTION" tag="h1" />
+      <Text class="portfolio__hint p4" text="Selected builds, deployed and trusted" />
     </div>
 
     <div class="portfolio__slider">
@@ -40,7 +40,11 @@
         <div class="portfolio__counter">
           {{ activeIndex + 1 }} / {{ totalCards }}
         </div>
-        <span class="portfolio__controls-hint">Drag to rotate • Click dots to jump • Arrow keys to navigate</span>
+        <Text
+          class="portfolio__controls-hint"
+          text="Drag to rotate • Click dots to jump • Arrow keys to navigate"
+          tag="span"
+        />
       </div>
     </div>
   </section>

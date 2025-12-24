@@ -2,8 +2,8 @@
   <section class="insights">
     <div class="insights__wrapper">
       <div class="insights__header">
-        <h2 class="h4">Resources & Answers</h2>
-        <p class="p2 secondary">Field guides and common questions.</p>
+        <Text class="h4" text="Resources & Answers" tag="h2" />
+        <Text class="p2 secondary" text="Field guides and common questions." />
       </div>
 
       <div class="insights__content">
@@ -20,10 +20,10 @@
             </div>
             <div class="resource-card__content">
               <div class="resource-card__head">
-                <p class="p2 bolder">{{ resource.title }}</p>
+                <Text class="p2 bolder" :text="resource.title" />
                 <span class="badge p4">{{ resource.badge }}</span>
               </div>
-              <p class="p3 secondary">{{ resource.desc }}</p>
+              <Text class="p3 secondary" :text="resource.desc" />
             </div>
             <div class="resource-card__actions">
               <Button type="ghost" :href="resource.mailto">Request</Button>
@@ -35,12 +35,12 @@
         <div class="insights__faq">
           <details class="faq-item" v-for="item in faqs" :key="item.q">
             <summary class="faq-item__q p2">
-              <span>{{ item.q }}</span>
+              <Text tag="span" :text="item.q" />
               <svg class="faq-item__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </summary>
-            <p class="faq-item__a p3 secondary">{{ item.a }}</p>
+            <Text class="faq-item__a p3 secondary" :text="item.a" />
           </details>
         </div>
       </div>
@@ -105,13 +105,9 @@ const faqs = [
   &__header {
     text-align: center;
     margin-bottom: 3rem;
-    
-    h2 {
+
+    .h4 {
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
   }
 
@@ -162,7 +158,7 @@ const faqs = [
   &:hover {
     border-color: rgba(255,255,255,0.2);
     transform: translateY(-2px);
-    
+
     &::before {
       opacity: 1;
     }
@@ -213,7 +209,6 @@ const faqs = [
   background: rgba(255,255,255,0.02);
   backdrop-filter: blur(8px);
   border-radius: 0.75rem;
-  padding: 1rem 1.25rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
@@ -231,6 +226,7 @@ const faqs = [
   }
 
   &__q {
+    padding: 1rem 1.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -252,8 +248,7 @@ const faqs = [
   }
 
   &__a {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
+    padding: 1rem 1.25rem;
     border-top: 1px solid rgba(255,255,255,0.06);
     line-height: 1.6;
   }

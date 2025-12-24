@@ -1,40 +1,30 @@
 <template>
   <section class="stack">
     <div class="title__container">
-      <p class="title h4">Precision in Every Detail</p>
-      <p class="title__description p1">Expertise that powers your next big move.</p>
+      <Text class="title h4" text="Precision in Every Detail" />
+      <Text class="title__description p1" text="Expertise that powers your next big move." />
       <hr />
     </div>
-    <div class="stack__container" :class="{ 'stack__container--visible': itemsVisible }">
+    <div class="stack__container">
       <div class="stack__item">
-        <span class="stack__title p2">AI-based Solutions</span>
-        <p class="stack__description secondary p3">
-          MCP development, AI integrations, custom solutions
-        </p>
+        <Text class="stack__title p2" text="AI-based Solutions" tag="span" />
+        <Text class="stack__description secondary p3" text="MCP development, AI integrations, custom solutions" />
       </div>
       <div class="stack__item">
-        <span class="stack__title p2">Blockchain Ecosystems</span>
-        <p class="stack__description secondary p3">
-          Smart contracts, dApps, DEXes, cross-chain integrations
-        </p>
+        <Text class="stack__title p2" text="Blockchain Ecosystems" tag="span" />
+        <Text class="stack__description secondary p3" text="Smart contracts, dApps, DEXes, cross-chain integrations" />
       </div>
       <div class="stack__item">
-        <span class="stack__title p2">Back-End Architecture</span>
-        <p class="stack__description secondary p3">
-          High-performance systems built with Rust and Node.js
-        </p>
+        <Text class="stack__title p2" text="Back-End Architecture" tag="span" />
+        <Text class="stack__description secondary p3" text="High-performance systems built with Rust and Node.js" />
       </div>
       <div class="stack__item">
-        <span class="stack__title p2">Modern Interfaces</span>
-        <p class="stack__description secondary p3">
-          Intuitive, pixel-perfect designs, built with top-notch frontend
-        </p>
+        <Text class="stack__title p2" text="Modern Interfaces" tag="span" />
+        <Text class="stack__description secondary p3" text="Intuitive, pixel-perfect designs, built with top-notch frontend" />
       </div>
       <div class="stack__item">
-        <span class="stack__title p2">Scalable Infrastructure</span>
-        <p class="stack__description secondary p3">
-          DevOps workflows that evolve with your business.
-        </p>
+        <Text class="stack__title p2" text="Scalable Infrastructure" tag="span" />
+        <Text class="stack__description secondary p3" text="DevOps workflows that evolve with your business." />
       </div>
     </div>
     <SeamlessVideo class="stack__visual" name="chips" :is-visible="isVisible" />
@@ -42,37 +32,7 @@
 </template>
 
 <script setup lang="ts">
-let observer: IntersectionObserver | null = null; // To observe stack items visibility
-
-const itemsVisible = ref(false);
-
-const onVisible = () => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          itemsVisible.value = true;
-        } else {
-          itemsVisible.value = false;
-        }
-      });
-    },
-    { threshold: 0.3 }
-  );
-
-  const container = document.querySelector('.stack__container');
-  if (container) observer.observe(container);
-};
-
-const onHidden = () => {
-  observer?.disconnect();
-  itemsVisible.value = false;
-};
-
-const { isVisible } = useSection('stack', {
-  onVisible,
-  onHidden,
-});
+const { isVisible } = useSection('stack');
 </script>
 
 <style scoped lang="scss">
@@ -119,19 +79,6 @@ hr {
   gap: 1rem;
   align-items: baseline;
   margin-bottom: 1rem;
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-
-  &:nth-child(1) { transition-delay: 0.1s; }
-  &:nth-child(2) { transition-delay: 0.2s; }
-  &:nth-child(3) { transition-delay: 0.3s; }
-  &:nth-child(4) { transition-delay: 0.4s; }
-  &:nth-child(5) { transition-delay: 0.5s; }
-}
-.stack__container--visible .stack__item {
-  opacity: 1;
-  transform: translateX(0);
 }
 .stack__title,
 .stack__description {
