@@ -1,5 +1,5 @@
 <template>
-  <a class="social" :href="href" :target="target" rel="noopener noreferrer">
+  <a class="soc-item" :href="href" :target="target" rel="noopener noreferrer">
     <svg
       stroke-width="2"
       stroke-linecap="round"
@@ -68,7 +68,7 @@ const styles = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.social {
+.soc-item {
   display: inline-flex;
   cursor: pointer;
 }

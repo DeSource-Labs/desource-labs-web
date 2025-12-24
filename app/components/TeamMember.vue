@@ -12,7 +12,7 @@
     />
     <p class="bolder p3">{{ member.title }}</p>
     <p class="team__role bolder secondary">{{ member.desc }}</p>
-    <div v-once class="team__socials secondary">
+    <div v-once class="team__socs secondary">
       <Social
         v-for="social in member.socials"
         size="1.2rem"
@@ -45,7 +45,7 @@ defineProps<{
   border-radius: 1rem;
   aspect-ratio: 1;
 }
-.team__socials {
+.team__socs {
   align-items: center;
   display: inline-flex;
   gap: 0.5rem;

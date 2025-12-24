@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <p class="h3">DESOURCE LABS</p>
-    <div v-once class="footer__socials">
+    <div v-once class="footer__socs">
       <Social
         v-for="social in socials"
         size="1.2rem"
@@ -32,7 +32,7 @@ const socials = socialMediaArray;
   justify-content: space-between;
   gap: 1rem;
 
-  &__socials {
+  &__socs {
     display: flex;
     gap: 0.5rem;
   }
