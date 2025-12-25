@@ -8,14 +8,6 @@ const config: NuxtConfig = defineNuxtConfig({
   css: ['~/assets/styles/index.css', '@egjs/vue3-flicking/dist/flicking.css'],
   modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly', '@pinia/nuxt'],
 
-  runtimeConfig: {
-    public: {
-      posthogPublicKey: 'phc_w9qoJwpIwZxxNtwMgiUQGXbFk7o6PaYyCpgtTjpQbr4',
-      posthogHost: 'https://eu.i.posthog.com',
-      posthogDefaults: '2025-11-30'
-    }
-  },
-
   vite: {
     build: {
       rollupOptions: {

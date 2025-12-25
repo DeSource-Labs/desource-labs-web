@@ -29,6 +29,7 @@ pnpm-debug.log*
 .fleet
 .idea
 
-# Local env files
+# env files
 .env.local
 .env.*.local
+.env
