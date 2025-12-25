@@ -1,5 +1,5 @@
-const SkippedHeaders = ['host', 'content-length', 'content-encoding', 'connection'];
-const SkippedHeadersResponse = ['content-encoding', 'content-length'];
+const SKIPPED_HEADERS = ['host', 'content-length', 'content-encoding', 'connection'];
+const SKIPPED_HEADERS_RESPONSE = ['content-encoding', 'content-length'];
 
 export default defineEventHandler(async (event) => {
   const path = event.context.params?.path;
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   const headers: Record<string, string> = {};
   for (const [key, value] of Object.entries(incomingHeaders)) {
     const k = key.toLowerCase();
-    if (SkippedHeaders.includes(k)) {
+    if (SKIPPED_HEADERS.includes(k)) {
       continue;
     }
     if (typeof value === 'string') {
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
   setResponseStatus(event, res.status);
 
   res.headers.forEach((value, key) => {
-    if (!SkippedHeadersResponse.includes(key.toLowerCase())) {
+    if (!SKIPPED_HEADERS_RESPONSE.includes(key.toLowerCase())) {
       setHeader(event, key, value);
     }
   });
