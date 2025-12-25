@@ -11,7 +11,7 @@ const config: NuxtConfig = defineNuxtConfig({
   runtimeConfig: {
     public: {
       posthogPublicKey: 'phc_w9qoJwpIwZxxNtwMgiUQGXbFk7o6PaYyCpgtTjpQbr4',
-      posthogHost: 'https://eu.i.posthog.com',
+      posthogHost: '/api/_ph',
       posthogDefaults: '2025-11-30'
     }
   },

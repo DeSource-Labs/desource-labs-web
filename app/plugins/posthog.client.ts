@@ -5,6 +5,7 @@ export default defineNuxtPlugin(nuxtApp => {
   const posthogClient = posthog.init(runtimeConfig.public.posthogPublicKey, {
     api_host: runtimeConfig.public.posthogHost,
     defaults: runtimeConfig.public.posthogDefaults as ConfigDefaults,
+    disable_compression: true,
     person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
     loaded: (posthog) => {
       if (import.meta.env.MODE === 'development') posthog.debug();
