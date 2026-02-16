@@ -26,8 +26,7 @@
     "nuxt-calendly": "^0.1.21",
     "pinia": "^3.0.4",
     "posthog-js": "^1.347.2",
-    "vue": "^3.5.28",
-    "vue-router": "^5.0.2"
+    "vue": "^3.5.28"
   },
   "devDependencies": {
     "@egjs/flicking": "^4.15.0",
