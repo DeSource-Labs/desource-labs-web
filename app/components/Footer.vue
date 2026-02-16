@@ -15,7 +15,7 @@
       <a class="animated-link p4" href="#" rel="nofollow noopener">Privacy Policy</a>
       <a class="animated-link p4" href="#" rel="nofollow noopener">Terms of Service</a>
     </div>
-    <p class="p4">2025, DESOURCE LABS LTD</p>
+    <p class="p4">2026, DESOURCE LABS LTD</p>
   </footer>
 </template>
 
