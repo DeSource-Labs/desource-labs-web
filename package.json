@@ -32,8 +32,8 @@
     "nuxt": "^4.3.1",
     "nuxt-calendly": "^0.1.21",
     "pinia": "^3.0.4",
-    "posthog-js": "^1.352.0",
-    "vue": "^3.5.28"
+    "posthog-js": "^1.356.1",
+    "vue": "^3.5.29"
   },
   "devDependencies": {
     "@egjs/flicking": "^4.15.0",
