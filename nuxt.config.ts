@@ -9,6 +9,14 @@ const config: NuxtConfig = defineNuxtConfig({
   modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly', '@pinia/nuxt'],
 
   vite: {
+    optimizeDeps: {
+      include: [
+        '@egjs/vue3-flicking',
+        'posthog-js',
+        '@vueuse/core',
+        '@egjs/flicking-plugins',
+      ],
+    },
     build: {
       rollupOptions: {
         output: {
