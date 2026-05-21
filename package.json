@@ -24,14 +24,14 @@
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/vue3-flicking": "^4.15.0",
     "@nuxt/image": "^2.0.0",
-    "@nuxtjs/sitemap": "^7.6.0",
+    "@nuxtjs/sitemap": "^8.0.15",
     "@pinia/nuxt": "0.11.3",
     "@vueuse/core": "^14.3.0",
     "gsap": "^3.15.0",
-    "nuxt": "^4.4.4",
+    "nuxt": "^4.4.6",
     "nuxt-calendly": "^0.1.21",
     "pinia": "^3.0.4",
-    "posthog-js": "^1.372.10",
+    "posthog-js": "^1.374.4",
     "vue": "^3.5.34"
   },
   "devDependencies": {
