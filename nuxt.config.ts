@@ -1,4 +1,4 @@
-import type { NuxtConfig } from 'nuxt/schema';
+import { defineNuxtConfig, type NuxtConfig } from 'nuxt/config';
 import { meta } from './shared/utils/meta';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
