@@ -4,11 +4,6 @@
   "description": "Desource Labs Web",
   "private": true,
   "type": "module",
-  "pnpm": {
-    "overrides": {
-      "glob": "^13.0.6"
-    }
-  },
   "author": "Desource Labs",
   "license": "Apache-2.0",
   "scripts": {
@@ -23,19 +18,19 @@
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/vue3-flicking": "^4.15.0",
     "@nuxt/image": "^2.0.0",
-    "@nuxtjs/sitemap": "^8.0.15",
+    "@nuxtjs/sitemap": "^8.2.1",
     "@pinia/nuxt": "0.11.3",
     "@vueuse/core": "^14.3.0",
     "gsap": "^3.15.0",
-    "nuxt": "^4.4.7",
+    "nuxt": "^4.4.8",
     "nuxt-calendly": "^0.1.21",
     "pinia": "^3.0.4",
-    "posthog-js": "^1.381.0",
-    "vue": "^3.5.35"
+    "posthog-js": "^1.386.6",
+    "vue": "^3.5.38"
   },
   "devDependencies": {
     "@egjs/flicking": "^4.15.0",
-    "sass": "^1.100.0"
+    "sass": "^1.101.0"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@11.6.0"
 }
