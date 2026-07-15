@@ -52,8 +52,13 @@
 
 <script setup lang="ts">
 import VueFlicking, { type FlickingOptions, type WillChangeEvent } from '@egjs/vue3-flicking';
-import { Perspective, AutoPlay } from '@egjs/flicking-plugins';
+import * as FlickingPluginsModule from '@egjs/flicking-plugins';
 import type Flicking from '@egjs/flicking';
+
+const FlickingPlugins = (
+  Reflect.get(FlickingPluginsModule, 'default') ?? FlickingPluginsModule
+) as typeof import('@egjs/flicking-plugins');
+const { Perspective, AutoPlay } = FlickingPlugins;
 
 const totalCards = Projects.length;
 
