@@ -260,6 +260,17 @@ const faqs = [
   }
 }
 
+@media (min-width: 769px) and (min-height: 900px) {
+  .insights {
+    display: flex;
+    align-items: center;
+
+    &__wrapper {
+      width: 100%;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .insights {
     padding: 3rem 6vw;
