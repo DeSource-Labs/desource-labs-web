@@ -4,7 +4,7 @@
       <TeamMember v-for="member in members" :key="member.title" :member="member" />
     </div>
     <div class="team__main-content">
-      <Text class="team__title h4" text="The Team Behind the Craft" />
+      <Text class="team__title h4" text="The Team Behind the Craft" tag="h2" />
       <Text
         class="team__description p1"
         text="A collective of 14+ engineers, designers, and strategists with deep expertise across blockchain, AI, and modern web architecture."
@@ -117,6 +117,12 @@ const telegram = socialMedia.telegram;
 @media (max-width: 1024px) {
   .team {
     padding: 6rem 2rem;
+  }
+}
+@media (min-width: 769px) and (min-height: 900px) {
+  .team {
+    align-content: center;
+    row-gap: clamp(1.5rem, 3vh, 3rem);
   }
 }
 @media (max-width: 768px) {
