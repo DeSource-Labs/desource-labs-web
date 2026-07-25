@@ -5,6 +5,7 @@ export const socialMedia = {
   github: 'https://github.com/DeSource-Labs',
   linkedin: 'https://www.linkedin.com/company/desource-labs',
   telegram: 'https://t.me/desource_labs',
+  x: 'https://x.com/desourcelabs',
 };
 
 export const socialMediaArray: SocialMediaItem[] = Object.entries(socialMedia).map(([type, href]) => ({ type: type as SocialMediaKey, href }));
