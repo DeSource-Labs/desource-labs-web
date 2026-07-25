@@ -13,7 +13,7 @@
     />
     <NuxtImg
       src="/img/ds_bg_shadow.png"
-      alt="Header section shadow"
+      alt=""
       aria-hidden="true"
       class="header__shadow image"
       quality="75"

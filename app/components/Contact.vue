@@ -2,7 +2,7 @@
   <section class="contact">
     <NuxtImg
       src="/img/ds_bg_bottom.png"
-      alt="Contact section background"
+      alt=""
       aria-hidden="true"
       class="contact__background image"
       quality="75"
@@ -12,7 +12,7 @@
     />
     <NuxtImg
       src="/img/ds_bg_bottom_shadow.png"
-      alt="Contact section shadow"
+      alt=""
       aria-hidden="true"
       class="contact__shadow image"
       quality="75"
