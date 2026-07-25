@@ -2,7 +2,7 @@
   <a class="skip-link" href="#main-content">Skip to content</a>
   <Header id="hero" />
   <Navigation />
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <NuxtPage />
   </main>
   <Footer />
