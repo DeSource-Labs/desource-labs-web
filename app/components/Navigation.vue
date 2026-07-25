@@ -1,5 +1,11 @@
 <template>
-  <LiquidGlass tag="nav" class="nav" :class="{ 'nav--visible': showNav }" :is-slow-device="isSlow">
+  <LiquidGlass
+    tag="nav"
+    class="nav"
+    :class="{ 'nav--visible': showNav }"
+    :is-slow-device="isSlow"
+    aria-label="Primary navigation"
+  >
     <div class="nav__container">
       <a href="#" class="nav__logo" @click.prevent="scrollToTop">DESOURCE LABS</a>
       <div class="nav__links">
@@ -7,7 +13,6 @@
           v-for="item in NavLinks"
           :key="item.id"
           class="nav__link"
-          rel="nofollow noopener"
           :class="{ active: activeSection === item.id }"
           :href="item.target"
           @click.prevent="navigateTo(item.id)"
@@ -22,7 +27,15 @@
       >
         Let's Talk
       </Button>
-      <button class="nav__hamburger" @click="toggleMobileMenu" aria-label="Toggle menu">
+      <button
+        ref="hamburger"
+        class="nav__hamburger"
+        type="button"
+        aria-controls="mobile-navigation"
+        :aria-expanded="mobileMenuOpen"
+        :aria-label="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+        @click="toggleMobileMenu"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -32,10 +45,24 @@
     <!-- Mobile Menu Overlay -->
     <Teleport to="body">
       <div
-        class="nav-mobile" :class="{ 'nav-mobile--open': mobileMenuOpen }"
-        @click="toggleMobileMenu"
+        id="mobile-navigation"
+        ref="mobileMenu"
+        class="nav-mobile"
+        :class="{ 'nav-mobile--open': mobileMenuOpen }"
+        :aria-hidden="!mobileMenuOpen"
+        :inert="!mobileMenuOpen"
+        role="dialog"
+        :aria-modal="mobileMenuOpen ? 'true' : undefined"
+        aria-label="Site navigation"
+        @click.self="closeMobileMenu"
       >
-        <button class="nav-mobile__close" aria-label="Close menu">
+        <button
+          ref="closeButton"
+          class="nav-mobile__close"
+          type="button"
+          aria-label="Close menu"
+          @click="closeMobileMenu"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -47,7 +74,6 @@
             :key="index"
             class="nav-mobile__link"
             :class="{ active: activeSection === item.id }"
-            rel="nofollow noopener"
             :href="item.target"
             @click.stop="handleMobileClick(item.id)"
           >
@@ -57,6 +83,7 @@
             class="nav-mobile__cta"
             type="primary"
             href="https://calendly.com/hello-desource-labs/30min"
+            @click="closeMobileMenu"
           >
             Schedule a call
           </Button>
@@ -72,6 +99,9 @@ import { useConfigStore } from '~/store/config';
 const configStore = useConfigStore();
 const { showNav, activeSection, isSlow } = storeToRefs(configStore);
 const mobileMenuOpen = ref(false);
+const hamburger = useTemplateRef('hamburger');
+const closeButton = useTemplateRef('closeButton');
+const mobileMenu = useTemplateRef('mobileMenu');
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -81,13 +111,39 @@ const navigateTo = (id: Section) => {
   configStore.navigateTo(id);
 };
 
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false;
+};
+
 const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value;
-  // Prevent body scroll when menu is open
   if (mobileMenuOpen.value) {
-    document.documentElement.style.overflow = 'hidden';
+    closeMobileMenu();
   } else {
-    document.documentElement.style.overflow = '';
+    mobileMenuOpen.value = true;
+  }
+};
+
+const handleMenuKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    closeMobileMenu();
+    return;
+  }
+
+  if (event.key !== 'Tab' || !mobileMenu.value) return;
+
+  const focusable = Array.from(
+    mobileMenu.value.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+  );
+  const first = focusable.at(0);
+  const last = focusable.at(-1);
+
+  if (!first || !last) return;
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
   }
 };
 
@@ -97,6 +153,26 @@ const handleMobileClick = (id: Section) => {
     navigateTo(id);
   }, 300);
 };
+
+watch(mobileMenuOpen, async (isOpen, wasOpen) => {
+  document.documentElement.style.overflow = isOpen ? 'hidden' : '';
+
+  if (isOpen) {
+    window.addEventListener('keydown', handleMenuKeydown);
+    await nextTick();
+    closeButton.value?.focus();
+  } else {
+    window.removeEventListener('keydown', handleMenuKeydown);
+    if (wasOpen) {
+      hamburger.value?.focus();
+    }
+  }
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleMenuKeydown);
+  document.documentElement.style.overflow = '';
+});
 </script>
 
 <style lang="scss">
