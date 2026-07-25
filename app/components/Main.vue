@@ -1,7 +1,7 @@
 <template>
   <section class="main">
     <SeamlessVideo class="main__visual" name="cubic" :is-visible="isVisible" />
-    <Text class="main__title h4" text="Innovation, Engineered for Scale" />
+    <Text class="main__title h4" text="Innovation, Engineered for Scale" tag="h2" />
     <Text
       class="main__desc1 description p1"
       text="We partner with forward-thinking companies to craft custom technology that drives growth and redefines possibilities."
@@ -43,12 +43,13 @@
 </template>
 
 <script setup lang="ts">
-let observer: IntersectionObserver | null = null; // To observe metrics visibility
+let observer: IntersectionObserver | null = null;
+let hasAnimated = false;
 
-const timers = ref<number[]>([]);
-const projectCount = ref(0);
-const blockchainCount = ref(0);
-const yearCount = ref(0);
+const animationFrameIds = new Set<number>();
+const projectCount = ref(50);
+const blockchainCount = ref(10);
+const yearCount = ref(5);
 
 const scrollToPortfolio = () => {
   configStore.navigateTo('portfolio');
@@ -56,36 +57,38 @@ const scrollToPortfolio = () => {
 
 const animateCounter = (target: Ref<number>, end: number, duration: number) => {
   let startTime: number | null = null;
-  let animationFrameId: number | null = null;
+  let animationFrameId = 0;
 
   const animate = (currentTime: number) => {
+    animationFrameIds.delete(animationFrameId);
     if (startTime === null) startTime = currentTime;
     const progress = (currentTime - startTime) / duration;
 
     if (progress < 1) {
       target.value = end * progress;
       animationFrameId = requestAnimationFrame(animate);
+      animationFrameIds.add(animationFrameId);
     } else {
       target.value = end;
     }
   };
 
   animationFrameId = requestAnimationFrame(animate);
-  timers.value.push(animationFrameId);
+  animationFrameIds.add(animationFrameId);
 };
 
 const onVisible = () => {
   const metricsEl = document.querySelector('.main__metrics');
   observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounter(projectCount, 50, 1500);
-        animateCounter(blockchainCount, 10, 1200);
-        animateCounter(yearCount, 5, 900);
-      } else {
+      if (entry.isIntersecting && !hasAnimated) {
+        hasAnimated = true;
         projectCount.value = 0;
         blockchainCount.value = 0;
         yearCount.value = 0;
+        animateCounter(projectCount, 50, 1500);
+        animateCounter(blockchainCount, 10, 1200);
+        animateCounter(yearCount, 5, 900);
       }
     });
   }, { threshold: 0.5 });
@@ -94,13 +97,13 @@ const onVisible = () => {
 
 const onHidden = () => {
   observer?.disconnect();
-  projectCount.value = 0;
-  blockchainCount.value = 0;
-  yearCount.value = 0;
-  timers.value.forEach(id => {
-    cancelAnimationFrame(id);
-  });
-  timers.value = [];
+  animationFrameIds.forEach(id => cancelAnimationFrame(id));
+  animationFrameIds.clear();
+  if (hasAnimated) {
+    projectCount.value = 50;
+    blockchainCount.value = 10;
+    yearCount.value = 5;
+  }
 };
 
 const { isVisible, configStore } = useSection('main', {
@@ -208,6 +211,17 @@ const { isVisible, configStore } = useSection('main', {
 @media (max-width: 1024px) {
   .main {
     padding: 3rem 2rem;
+  }
+}
+
+@media (min-width: 769px) and (min-height: 900px) {
+  .main {
+    align-content: center;
+    row-gap: clamp(1rem, 2vh, 2rem);
+
+    &__visual {
+      object-position: center;
+    }
   }
 }
 
