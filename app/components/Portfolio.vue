@@ -86,6 +86,8 @@ const options: Partial<FlickingOptions> = {
 const flicking = useTemplateRef<Flicking>('flicking');
 
 const activeIndex = ref(0);
+let sectionVisible = false;
+let autoplayGeneration = 0;
 
 const plugins = computed(() => {
   return isNativeMobile.value
@@ -101,6 +103,7 @@ const moveCarousel = async (move: (instance: Flicking) => Promise<void>) => {
   const instance = flicking.value;
   if (!instance) return;
 
+  const generation = ++autoplayGeneration;
   const autoPlay = instance.activePlugins.find(plugin => plugin instanceof AutoPlay);
   autoPlay?.stop();
   instance.stopAnimation();
@@ -108,7 +111,9 @@ const moveCarousel = async (move: (instance: Flicking) => Promise<void>) => {
   try {
     await move(instance);
   } finally {
-    autoPlay?.play();
+    if (sectionVisible && generation === autoplayGeneration) {
+      autoPlay?.play();
+    }
   }
 };
 
@@ -128,6 +133,8 @@ const handleKeyboard = async (e: KeyboardEvent) => {
 };
 
 const onVisible = async () => {
+  sectionVisible = true;
+  const generation = ++autoplayGeneration;
   window.addEventListener('keydown', handleKeyboard);
 
   const instance = flicking.value;
@@ -142,15 +149,19 @@ const onVisible = async () => {
     // moveTo(0, 0) breaks the position of the first slide, so we use moveTo(0) instead
     await instance.moveTo(0);
   }
-  autoPlay?.play();
+  if (sectionVisible && generation === autoplayGeneration) {
+    autoPlay?.play();
+  }
 };
 
 const onHidden = () => {
+  sectionVisible = false;
+  autoplayGeneration++;
   window.removeEventListener('keydown', handleKeyboard);
 
   const instance = flicking.value;
-  instance?.activePlugins.find(plugin => plugin instanceof AutoPlay)?.stop();
   instance?.stopAnimation();
+  instance?.activePlugins.find(plugin => plugin instanceof AutoPlay)?.stop();
 };
 
 const { configStore } = useSection('portfolio', {
