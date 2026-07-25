@@ -1,7 +1,7 @@
 <template>
   <section class="stack">
     <div class="title__container">
-      <Text class="title h4" text="Precision in Every Detail" />
+      <Text class="title h4" text="Precision in Every Detail" tag="h2" />
       <Text class="title__description p1" text="Expertise that powers your next big move." />
       <hr />
     </div>
@@ -104,6 +104,12 @@ span {
   .stack__visual {
     height: 40vw;
     object-position: center;
+  }
+}
+@media (min-width: 769px) and (min-height: 900px) {
+  .stack {
+    align-content: center;
+    row-gap: clamp(1.5rem, 3vh, 3rem);
   }
 }
 @media (max-width: 768px) {

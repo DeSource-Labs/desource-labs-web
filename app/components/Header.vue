@@ -9,10 +9,12 @@
       :fade-window="2"
       :opacity="0.5"
       :is-visible="isVisible"
+      aria-hidden="true"
     />
     <NuxtImg
       src="/img/ds_bg_shadow.png"
-      alt="DeSource Labs Shadow"
+      alt=""
+      aria-hidden="true"
       class="header__shadow image"
       quality="75"
       sizes="100vw md:1100px"
@@ -21,9 +23,9 @@
       fetchpriority="high"
     />
     <div class="header__content">
-      <Text class="h3" text="DESOURCE LABS" tag="h3" />
-      <Text text="ENGINEERING BEYOND LIMITS." tag="h1" />
-      <Text class="secondary p1" text="Precision-built solutions tailored to your vision." />
+      <Text class="h3" text="DESOURCE LABS" tag="h3" eager />
+      <Text text="ENGINEERING BEYOND LIMITS." tag="h1" eager />
+      <Text class="secondary p1" text="Precision-built solutions tailored to your vision." eager />
       <Button type="primary" href="https://calendly.com/hello-desource-labs/30min">Schedule a call</Button>
     </div>
   </section>
@@ -40,9 +42,11 @@ const updateParallax = () => {
   } else if (configStore.isReversedScroll) {
     parallaxY.value = 180;
   }
+  rafId.value = null;
 };
 
 const handleScroll = () => {
+  if (rafId.value !== null) return;
   rafId.value = requestAnimationFrame(updateParallax);
 };
 
@@ -54,7 +58,7 @@ const onVisible = () => {
 const onHidden = () => {
   window.removeEventListener('scroll', handleScroll);
   parallaxY.value = 0;
-  if (rafId.value) {
+  if (rafId.value !== null) {
     cancelAnimationFrame(rafId.value);
     rafId.value = null;
   }

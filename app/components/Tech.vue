@@ -1,6 +1,6 @@
 <template>
   <section class="tech">
-    <Text text="OUR TECH STACK" tag="h1" />
+    <Text class="tech__title section-heading" text="OUR TECH STACK" tag="h2" />
     <div class="tech__container">
       <div class="tech__direction">
         <Text class="p3" text="Front-end" />
@@ -74,7 +74,7 @@ const backend = [
   justify-content: center;
   padding: 5rem 10vw;
 }
-h1 {
+.tech__title {
   text-align: center;
 }
 hr {

@@ -1,5 +1,10 @@
 <template>
-  <component :is="props.tag" class="observer" v-viewport>
+  <component
+    :is="props.tag"
+    class="observer"
+    :class="{ 'observer--eager': eager }"
+    v-viewport
+  >
     <template v-for="word, i in words">
       <br v-if="isBr(word)" />
       <component
@@ -19,8 +24,8 @@ const INITIAL_DELAY = 0.15;
 const DELAY_POWER = 0.01;
 
 const props = withDefaults(
-  defineProps<{ text: string, tag?: string, bold?: [number, number][] }>(),
-  { tag: 'p' }
+  defineProps<{ text: string, tag?: string, bold?: [number, number][], eager?: boolean }>(),
+  { tag: 'p', eager: false }
 );
 
 const words = computed(() => props.text.split(' '));
@@ -49,5 +54,19 @@ strong {
 .entered .word {
   opacity: 1;
   transition: opacity 0.6s var(--delay) ease;
+}
+
+.observer--eager .word {
+  animation: word-reveal 0.6s var(--delay) ease both;
+}
+
+@keyframes word-reveal {
+  from {
+    opacity: 0.01;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 </style>

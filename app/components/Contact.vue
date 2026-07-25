@@ -2,7 +2,8 @@
   <section class="contact">
     <NuxtImg
       src="/img/ds_bg_bottom.png"
-      alt="Contact Background"
+      alt=""
+      aria-hidden="true"
       class="contact__background image"
       quality="75"
       sizes="100vw md:1100px"
@@ -11,7 +12,8 @@
     />
     <NuxtImg
       src="/img/ds_bg_bottom_shadow.png"
-      alt="Contact Shadow"
+      alt=""
+      aria-hidden="true"
       class="contact__shadow image"
       quality="75"
       sizes="100vw md:1100px"
@@ -19,7 +21,7 @@
       loading="lazy"
     />
     <div class="contact__content">
-      <Text text="LET’S BUILD SOMETHING EXCEPTIONAL" tag="h1" />
+      <Text class="section-heading" text="LET’S BUILD SOMETHING EXCEPTIONAL" tag="h2" />
       <Text
         class="secondary p1"
         text="Your vision deserves more than off-the-shelf solutions. <br/> Let’s create technology that transforms your business."
@@ -169,6 +171,16 @@ $footer-height-mobile: 163px;
     &__meta {
       text-align: center;
       text-wrap-style: balance;
+    }
+  }
+}
+@media (min-width: 769px) and (min-height: 900px) {
+  .contact {
+    justify-content: center;
+    gap: clamp(3rem, 8vh, 7rem);
+
+    &__content {
+      margin-top: 0;
     }
   }
 }

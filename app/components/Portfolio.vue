@@ -1,7 +1,7 @@
 <template>
   <section class="portfolio">
     <div class="portfolio__header">
-      <Text text="OUR WORK IN ACTION" tag="h1" />
+      <Text class="section-heading" text="OUR WORK IN ACTION" tag="h2" />
       <Text class="portfolio__hint p4" text="Selected builds, deployed and trusted" />
     </div>
 
@@ -11,6 +11,8 @@
         viewportTag="div"
         cameraTag="div"
         tabindex="-1"
+        role="region"
+        aria-label="Selected project carousel"
         :options="options"
         :plugins="plugins"
         @will-change="onSlideChange"
@@ -21,6 +23,7 @@
           :product="project"
           :is-reversed="index % 2 !== 0"
           :is-mobile="isNativeMobile"
+          :is-active="index === activeIndex"
         />
       </VueFlicking>
 
@@ -31,6 +34,7 @@
           class="portfolio__nav-dot"
           :class="{ 'is-active': index === activeIndex }"
           :aria-label="`View ${project.title}`"
+          :aria-current="index === activeIndex ? 'true' : undefined"
           tabindex="-1"
           @click="goToSlide(index)"
         />
@@ -82,6 +86,8 @@ const options: Partial<FlickingOptions> = {
 const flicking = useTemplateRef<Flicking>('flicking');
 
 const activeIndex = ref(0);
+let sectionVisible = false;
+let autoplayGeneration = 0;
 
 const plugins = computed(() => {
   return isNativeMobile.value
@@ -93,31 +99,69 @@ const onSlideChange = (e: WillChangeEvent<Flicking>) => {
   activeIndex.value = e.index;
 };
 
-const goToSlide = (index: number) => {
+const moveCarousel = async (move: (instance: Flicking) => Promise<void>) => {
+  const instance = flicking.value;
+  if (!instance) return;
+
+  const generation = ++autoplayGeneration;
+  const autoPlay = instance.activePlugins.find(plugin => plugin instanceof AutoPlay);
+  autoPlay?.stop();
+  instance.stopAnimation();
+
+  try {
+    await move(instance);
+  } finally {
+    if (sectionVisible && generation === autoplayGeneration) {
+      autoPlay?.play();
+    }
+  }
+};
+
+const goToSlide = async (index: number) => {
   if (activeIndex.value === index) return;
-  flicking.value?.moveTo(index);
+  await moveCarousel(instance => instance.moveTo(index));
 };
 
 const handleKeyboard = async (e: KeyboardEvent) => {
   if (e.key === 'ArrowRight') {
-    await flicking.value?.next();
+    e.preventDefault();
+    await moveCarousel(instance => instance.next());
   } else if (e.key === 'ArrowLeft') {
-    await flicking.value?.prev();
+    e.preventDefault();
+    await moveCarousel(instance => instance.prev());
   }
 };
 
-const onVisible = () => {
+const onVisible = async () => {
+  sectionVisible = true;
+  const generation = ++autoplayGeneration;
   window.addEventListener('keydown', handleKeyboard);
+
+  const instance = flicking.value;
+  if (!instance) return;
+
+  const autoPlay = instance.activePlugins.find(plugin => plugin instanceof AutoPlay);
+  autoPlay?.stop();
+  instance.stopAnimation();
+
   // Reset to first slide when section becomes visible
-  if (flicking.value && activeIndex.value !== 0) {
-    flicking.value.moveTo(0);
+  if (activeIndex.value !== 0) {
+    // moveTo(0, 0) breaks the position of the first slide, so we use moveTo(0) instead
+    await instance.moveTo(0);
   }
-  flicking.value?.activePlugins.find(plugin => plugin instanceof AutoPlay)?.play();
+  if (sectionVisible && generation === autoplayGeneration) {
+    autoPlay?.play();
+  }
 };
 
 const onHidden = () => {
+  sectionVisible = false;
+  autoplayGeneration++;
   window.removeEventListener('keydown', handleKeyboard);
-  flicking.value?.activePlugins.find(plugin => plugin instanceof AutoPlay)?.stop();
+
+  const instance = flicking.value;
+  instance?.stopAnimation();
+  instance?.activePlugins.find(plugin => plugin instanceof AutoPlay)?.stop();
 };
 
 const { configStore } = useSection('portfolio', {
@@ -145,7 +189,7 @@ const { isNativeMobile } = storeToRefs(configStore);
     margin-bottom: 2rem;
   }
 
-  h1 {
+  .section-heading {
     text-align: center;
   }
 

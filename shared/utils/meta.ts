@@ -7,5 +7,5 @@ export const meta = {
   ogImage: 'https://desource-labs.org/og.jpg',
   ogImageWidth: '1200',
   ogImageHeight: '630',
-  x: '@desource-labs',
+  x: '@desourcelabs',
 };

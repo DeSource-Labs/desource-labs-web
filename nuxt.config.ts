@@ -7,6 +7,13 @@ const config: NuxtConfig = defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/styles/index.css', '@egjs/vue3-flicking/dist/flicking.css'],
   modules: ['@nuxt/image', '@nuxtjs/sitemap', 'nuxt-calendly', '@pinia/nuxt'],
+  site: {
+    url: meta.url,
+    name: 'DeSource Labs',
+  },
+  sitemap: {
+    zeroRuntime: true,
+  },
 
   vite: {
     optimizeDeps: {
@@ -54,6 +61,7 @@ const config: NuxtConfig = defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
       title: meta.title,
       link: [
+        { rel: 'canonical', href: meta.url },
         { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
         { rel: 'icon', href: '/logo/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
         { rel: 'icon', href: '/logo/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
@@ -66,7 +74,6 @@ const config: NuxtConfig = defineNuxtConfig({
         { rel: 'dns-prefetch', href: 'https://calendly.com' },
       ],
       meta: [
-        // TODO: Uncomment fields below when ready
         {
           name: 'description',
           content: meta.description,
@@ -95,10 +102,14 @@ const config: NuxtConfig = defineNuxtConfig({
           name: 'twitter:card',
           content: 'summary_large_image',
         },
-        // {
-        //   name: 'twitter:site',
-        //   content: meta.x,
-        // },
+        {
+          name: 'twitter:site',
+          content: meta.x,
+        },
+        {
+          name: 'theme-color',
+          content: '#000000',
+        },
         {
           property: 'og:title',
           content: meta.title,
@@ -132,12 +143,35 @@ const config: NuxtConfig = defineNuxtConfig({
           content: meta.ogImageHeight,
         },
         {
-          property: 'og:url',
-          content: meta.url,
+          property: 'og:site_name',
+          content: 'DeSource Labs',
+        },
+        {
+          property: 'og:locale',
+          content: 'en_US',
         },
         {
           property: 'og:type',
           content: 'website',
+        },
+      ],
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'DeSource Labs',
+            url: meta.url,
+            logo: `${meta.url}/logo/android-chrome-512x512.png`,
+            email: 'hello@desource-labs.org',
+            description: meta.description,
+            sameAs: [
+              'https://github.com/DeSource-Labs',
+              'https://www.linkedin.com/company/desource-labs',
+              'https://t.me/desource_labs',
+            ],
+          }),
         },
       ],
     },
