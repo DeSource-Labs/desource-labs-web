@@ -31,7 +31,7 @@
         <a
           v-if="product.url"
           :href="product.url"
-          tabindex="-1"
+          :tabindex="isActive ? 0 : -1"
           target="_blank"
           rel="noopener noreferrer"
           class="product__link"
@@ -50,7 +50,7 @@
         quality="90"
         loading="lazy"
         :src="image"
-        :alt="product.title"
+        :alt="`${product.title} project screenshot`"
       />
       <div v-if="product.status" class="product__status">
         <span class="status-badge" :class="`status-badge--${product.status}`">
@@ -69,10 +69,12 @@ const props = withDefaults(
   product: Product;
   isReversed?: boolean;
   isMobile?: boolean;
+  isActive?: boolean;
   }>()
   , {
     isReversed: false,
     isMobile: false,
+    isActive: false,
   }
 );
 
