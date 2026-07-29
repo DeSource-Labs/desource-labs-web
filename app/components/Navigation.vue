@@ -7,7 +7,7 @@
     aria-label="Primary navigation"
   >
     <div class="nav__container">
-      <a href="#" class="nav__logo" @click.prevent="scrollToTop">DESOURCE LABS</a>
+      <a href="/" class="nav__logo" @click.prevent="scrollToTop">DESOURCE LABS</a>
       <div class="nav__links">
         <a
           v-for="item in NavLinks"

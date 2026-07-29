@@ -1,5 +1,6 @@
 import { defineNuxtConfig, type NuxtConfig } from 'nuxt/config';
 import { meta } from './shared/utils/meta';
+import { socialMedia } from './shared/utils/consts';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const config: NuxtConfig = defineNuxtConfig({
@@ -69,91 +70,30 @@ const config: NuxtConfig = defineNuxtConfig({
         { rel: 'manifest', href: '/site.webmanifest' },
         // Font preloading for performance
         { rel: 'preload', href: '/fonts/nunito.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
-        // Preconnect to external services
-        { rel: 'preconnect', href: 'https://calendly.com' },
+        // Lightweight warm-up for outbound Calendly links
         { rel: 'dns-prefetch', href: 'https://calendly.com' },
       ],
       meta: [
-        {
-          name: 'description',
-          content: meta.description,
-        },
-        {
-          name: 'keywords',
-          content: meta.keywords,
-        },
-        {
-          name: 'twitter:title',
-          content: meta.title,
-        },
-        {
-          name: 'twitter:description',
-          content: meta.description,
-        },
-        {
-          name: 'twitter:image',
-          content: meta.ogImage,
-        },
-        {
-          name: 'twitter:image:alt',
-          content: meta.title,
-        },
-        {
-          name: 'twitter:card',
-          content: 'summary_large_image',
-        },
-        {
-          name: 'twitter:site',
-          content: meta.x,
-        },
-        {
-          name: 'theme-color',
-          content: '#000000',
-        },
-        {
-          property: 'og:title',
-          content: meta.title,
-        },
-        {
-          property: 'og:description',
-          content: meta.description,
-        },
-        {
-          property: 'og:url',
-          content: meta.url,
-        },
-        {
-          property: 'og:image',
-          content: meta.ogImage,
-        },
-        {
-          property: 'og:image:secure_url',
-          content: meta.ogImage,
-        },
-        {
-          property: 'og:image:alt',
-          content: meta.title,
-        },
-        {
-          property: 'og:image:width',
-          content: meta.ogImageWidth,
-        },
-        {
-          property: 'og:image:height',
-          content: meta.ogImageHeight,
-        },
-        {
-          property: 'og:site_name',
-          content: 'DeSource Labs',
-        },
-        {
-          property: 'og:locale',
-          content: 'en_US',
-        },
-        {
-          property: 'og:type',
-          content: 'website',
-        },
+        { name: 'description', content: meta.description },
+        { name: 'keywords', content: meta.keywords },
+        { name: 'twitter:title', content: meta.title },
+        { name: 'twitter:description', content: meta.description },
+        { name: 'twitter:image', content: meta.ogImage },
+        { name: 'twitter:image:alt', content: meta.title },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: meta.x },
+        { name: 'theme-color', content: '#000000' },
+        { property: 'og:title', content: meta.title },
+        { property: 'og:description', content: meta.description },
+        { property: 'og:url', content: meta.url },
+        { property: 'og:image', content: meta.ogImage },
+        { property: 'og:image:secure_url', content: meta.ogImage },
+        { property: 'og:image:alt', content: meta.title },
+        { property: 'og:image:width', content: meta.ogImageWidth },
+        { property: 'og:image:height', content: meta.ogImageHeight },
+        { property: 'og:site_name', content: meta.name },
+        { property: 'og:locale', content: 'en_US' },
+        { property: 'og:type', content: 'website' },
       ],
       script: [
         {
@@ -161,15 +101,16 @@ const config: NuxtConfig = defineNuxtConfig({
           innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Organization',
-            name: 'DeSource Labs',
+            name: meta.name,
             url: meta.url,
             logo: `${meta.url}/logo/android-chrome-512x512.png`,
-            email: 'hello@desource-labs.org',
+            email: meta.email,
             description: meta.description,
             sameAs: [
-              'https://github.com/DeSource-Labs',
-              'https://www.linkedin.com/company/desource-labs',
-              'https://t.me/desource_labs',
+              socialMedia.github,
+              socialMedia.linkedin,
+              socialMedia.telegram,
+              socialMedia.x,
             ],
           }),
         },

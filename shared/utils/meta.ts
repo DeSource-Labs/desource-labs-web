@@ -1,5 +1,7 @@
 export const meta = {
+  name: 'DeSource Labs',
   url: 'https://desource-labs.org',
+  email: 'hello@desource-labs.org',
   domain: 'desource-labs.org',
   title: 'DeSource Labs — Engineering beyond limits',
   description: 'DeSource Labs is a software engineering company that specializes in building custom software solutions for businesses and startups.',
