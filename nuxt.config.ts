@@ -75,7 +75,6 @@ const config: NuxtConfig = defineNuxtConfig({
       ],
       meta: [
         { name: 'description', content: meta.description },
-        { name: 'canonical', content: meta.url },
         { name: 'keywords', content: meta.keywords },
         { name: 'twitter:title', content: meta.title },
         { name: 'twitter:description', content: meta.description },
