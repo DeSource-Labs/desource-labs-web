@@ -164,9 +164,9 @@ At DeSource Labs, we don't just ship code and disappear. Here's what handover lo
 We've launched 50+ Web3 projects across Ethereum, Solana, TON, Polkadot, and Sui. From NFT marketplaces to cross-chain DEXes, we know where things break — and how to prevent it.
 
 **DeSource Labs**  
-Email: [hello@desource-labs.org](mailto:hello@desource-labs.org)  
+Email: [hello@desourcelabs.com](mailto:hello@desourcelabs.com)  
 Telegram: [@desource_labs](https://t.me/desource_labs)  
-Web: [desource-labs.org](https://desource-labs.org)
+Web: [desourcelabs.com](https://desourcelabs.com)
 
 ---
 

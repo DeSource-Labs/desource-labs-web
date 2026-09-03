@@ -1,7 +1,7 @@
 import type { SocialMediaItem, SocialMediaKey, Product, NavLink, Section } from '../types';
 
 export const socialMedia = {
-  email: 'mailto:hello@desource-labs.org',
+  email: 'mailto:hello@desourcelabs.com',
   github: 'https://github.com/DeSource-Labs',
   linkedin: 'https://www.linkedin.com/company/desource-labs',
   telegram: 'https://t.me/desource_labs',

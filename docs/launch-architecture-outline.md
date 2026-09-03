@@ -165,9 +165,9 @@ DeSource Labs builds production systems for blockchain, AI, and modern web archi
 - 30-day warranty on everything we build  
 
 **DeSource Labs**  
-Email: [hello@desource-labs.org](mailto:hello@desource-labs.org)  
+Email: [hello@desourcelabs.com](mailto:hello@desourcelabs.com)  
 Telegram: [@desource_labs](https://t.me/desource_labs)  
-Web: [desource-labs.org](https://desource-labs.org)  
+Web: [desourcelabs.com](https://desourcelabs.com)  
 Schedule: [calendly.com/hello-desource-labs](https://calendly.com/hello-desource-labs/30min)
 
 ---

@@ -54,13 +54,13 @@ const resources = [
     title: 'Web3 Security Checklist',
     badge: 'v1.0',
     desc: 'Deployment-ready checklist for contracts, infra and ops.',
-    mailto: 'mailto:hello@desource-labs.org?subject=Request%20Web3%20Security%20Checklist'
+    mailto: 'mailto:team@desourcelabs.com?subject=Request%20Web3%20Security%20Checklist'
   },
   {
     title: 'Launch Architecture Outline',
     badge: 'v1.0',
     desc: 'From prototype to production: domains, handover, and SLAs.',
-    mailto: 'mailto:hello@desource-labs.org?subject=Request%20Launch%20Architecture%20Outline'
+    mailto: 'mailto:team@desourcelabs.com?subject=Request%20Launch%20Architecture%20Outline'
   }
 ];
 
