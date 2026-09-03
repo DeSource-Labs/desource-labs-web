@@ -36,7 +36,7 @@ const members: TeamMember[] = [
     socials: [
       { type: 'telegram', href: 'https://t.me/stefanpopov' },
       { type: 'github', href: 'https://github.com/stefashkaa' },
-      { type: 'email', href: 'mailto:stefan@desource-labs.org' },
+      { type: 'email', href: 'mailto:stefan@desourcelabs.com' },
     ],
     photo: '/img/team/1.png'
   },
