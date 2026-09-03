@@ -35,7 +35,7 @@ export const useConfigStore = defineStore('config', () => {
     if (orientationThrottle.value) {
       clearTimeout(orientationThrottle.value);
     }
-    orientationThrottle.value = setTimeout(() => {
+    orientationThrottle.value = window.setTimeout(() => {
       // Recalculate vh after orientation change
       const Vh100InPixels = window.innerHeight;
       const vhInPixels = Vh100InPixels * 0.01;
@@ -46,7 +46,7 @@ export const useConfigStore = defineStore('config', () => {
 
   const detectSectionsVisibility = () => {
     if (scrollThrottle.value) return;
-    scrollThrottle.value = setTimeout(() => {
+    scrollThrottle.value = window.setTimeout(() => {
       // Show nav after scrolling past 80% of viewport height
       showNav.value = window.scrollY > window.innerHeight * 0.8;
       // Check if scroll is from bottom to top
