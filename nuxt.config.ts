@@ -28,8 +28,10 @@ const config: NuxtConfig = defineNuxtConfig({
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            'flicking': ['@egjs/vue3-flicking', '@egjs/flicking-plugins'],
+          manualChunks(id) {
+            if (/[\\/]node_modules[\\/]@egjs[\\/](vue3-flicking|flicking-plugins)[\\/]/.test(id)) {
+              return 'flicking';
+            }
           }
         }
       }
