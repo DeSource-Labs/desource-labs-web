@@ -99,7 +99,7 @@ table {
   background: none !important;
 }
 
-/* Prevent text selection */
+/* Prevent content selection */
 img, video {
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
