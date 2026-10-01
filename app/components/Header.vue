@@ -4,7 +4,7 @@
       class="header__background"
       :style="{ transform: `translateY(${parallaxY}px)` }"
       name="world-planet"
-      x2
+      :speed-coefficient="2"
       format="webm"
       :fade-window="2"
       :opacity="0.5"
@@ -36,6 +36,10 @@ const parallaxY = ref(0);
 const rafId = ref<number | null>(null);
 
 const updateParallax = () => {
+  if (prefersReducedMotion.value) {
+    parallaxY.value = 0;
+    return;
+  }
   const newParallaxY = window.scrollY * 0.5;
   if (newParallaxY !== parallaxY.value && newParallaxY <= 180) {
     parallaxY.value = newParallaxY;

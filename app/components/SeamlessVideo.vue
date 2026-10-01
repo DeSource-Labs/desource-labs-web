@@ -43,14 +43,14 @@ const props = withDefaults(defineProps<{
   isVisible?: boolean;
   /** Preferred video format */
   format?: 'webm' | 'mp4';
-  /** Set if the video has 2x playback speed */
-  x2?: boolean;
+  /** Encoded speed multiplier; playback uses its inverse (e.g. 2 means 0.5x). */
+  speedCoefficient?: number;
 }>(), {
   fadeWindow: 4,
   opacity: 1,
   isVisible: false,
   format: 'mp4',
-  x2: false,
+  speedCoefficient: 1,
 });
 
 const videoSrc = ref<string>('');
@@ -64,7 +64,13 @@ const nearEnd = ref(false); // Flag to activate RAF only when needed
 const rafId = ref<number | null>(null);
 
 const poster = computed(() => `/video/${props.name}.avif`);
-const computedFadeWindow = computed(() => props.format === 'webm' && props.x2 ? props.fadeWindow / 2 : props.fadeWindow);
+const playbackRate = computed(() => {
+  const coefficient = Number.isFinite(props.speedCoefficient) && props.speedCoefficient > 0
+    ? props.speedCoefficient
+    : 1;
+  return 1 / coefficient;
+});
+const computedFadeWindow = computed(() => props.fadeWindow * playbackRate.value);
 
 // Low-frequency check via timeupdate (~4x/sec)
 const handleTimeUpdate = (event: Event) => {
@@ -139,17 +145,16 @@ const loadVideo = async () => {
 const loadAndPlayVideo = async () => {
   await loadVideo();
   await nextTick();
-  const playbackRate = (props.x2 && props.format === 'webm') ? 0.5 : 1;
   if (videoA.value) {
     isFirstActive.value = true;
     nearEnd.value = false;
     videoA.value.addEventListener('timeupdate', handleTimeUpdate);
     videoA.value.currentTime = 0;
-    videoA.value.playbackRate = playbackRate;
+    videoA.value.playbackRate = playbackRate.value;
     videoA.value.play().catch(() => {});
   }
   if (videoB.value) {
-    videoB.value.playbackRate = playbackRate;
+    videoB.value.playbackRate = playbackRate.value;
     videoB.value.addEventListener('timeupdate', handleTimeUpdate);
   }
 };

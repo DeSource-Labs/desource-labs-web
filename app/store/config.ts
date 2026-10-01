@@ -9,7 +9,7 @@ export const useConfigStore = defineStore('config', () => {
   const isNativeMobile = ref(false);
   const isTouch = ref(false);
   const prefersReducedMotion = ref(false);
-  const isSlow = ref(false);
+  const slowDetected = ref(false);
 
   const activeSection = ref<Section>('hero');
   const visibleSections = ref<Section[]>(['hero']);
@@ -18,6 +18,8 @@ export const useConfigStore = defineStore('config', () => {
   const isReversedScroll = ref(false);
   const scrollThrottle = ref<number | null>(null);
   const orientationThrottle = ref<number | null>(null);
+
+  const reducedMotionQuery = shallowRef<MediaQueryList>();
 
   const connectionSpeed = computed(() => {
     switch (effectiveType.value) {
@@ -30,6 +32,12 @@ export const useConfigStore = defineStore('config', () => {
         return 'fast';
     }
   });
+
+  const isSlow = computed(() => prefersReducedMotion.value || slowDetected.value);
+
+  const updateReducedMotion = () => {
+    prefersReducedMotion.value = reducedMotionQuery.value?.matches ?? false;
+  };
 
   const updateVh = () => {
     if (orientationThrottle.value) {
@@ -136,8 +144,9 @@ export const useConfigStore = defineStore('config', () => {
       isNativeMobile.value = true;
     }
     // Reduced motion preference
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    prefersReducedMotion.value = mediaQuery.matches;
+    reducedMotionQuery.value = window.matchMedia('(prefers-reduced-motion: reduce)');
+    updateReducedMotion();
+    reducedMotionQuery.value.addEventListener('change', updateReducedMotion);
     // Set vh for mobile devices
     if (isNativeMobile.value) {
       updateVh();
@@ -149,13 +158,13 @@ export const useConfigStore = defineStore('config', () => {
     detectSectionsVisibility();
     window.addEventListener('scroll', detectSectionsVisibility, { passive: true });
     // Detect slow device
-    const slowDeviceDetected = await detectSlowDevice();
-    isSlow.value = prefersReducedMotion.value || slowDeviceDetected;
+    slowDetected.value = await detectSlowDevice();
   };
 
   const destroy = () => {
     window.removeEventListener('orientationchange', updateVh);
     window.removeEventListener('scroll', detectSectionsVisibility);
+    reducedMotionQuery.value?.removeEventListener('change', updateReducedMotion);
   };
 
   return {
