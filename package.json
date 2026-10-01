@@ -20,19 +20,19 @@
     "@egjs/flicking-plugins": "^4.8.1",
     "@egjs/vue3-flicking": "^4.17.0",
     "@nuxt/image": "^2.1.0",
-    "@nuxtjs/sitemap": "^8.5.0",
+    "@nuxtjs/sitemap": "^8.6.0",
     "@pinia/nuxt": "1.0.2",
-    "@vueuse/core": "^14.4.0",
+    "@vueuse/core": "^15.0.0",
     "gsap": "^3.15.0",
     "nuxt": "^4.5.2",
     "nuxt-calendly": "^0.1.21",
     "pinia": "^4.0.3",
-    "posthog-js": "^1.427.2",
-    "vue": "^3.5.42"
+    "posthog-js": "^1.435.1",
+    "vue": "^3.5.43"
   },
   "devDependencies": {
     "@egjs/flicking": "^4.17.0",
-    "sass": "^1.104.0"
+    "sass": "^1.105.1"
   },
-  "packageManager": "pnpm@12.3.4"
+  "packageManager": "pnpm@12.8.1"
 }
