@@ -36,6 +36,10 @@ const parallaxY = ref(0);
 const rafId = ref<number | null>(null);
 
 const updateParallax = () => {
+  if (prefersReducedMotion.value) {
+    parallaxY.value = 0;
+    return;
+  }
   const newParallaxY = window.scrollY * 0.5;
   if (newParallaxY !== parallaxY.value && newParallaxY <= 180) {
     parallaxY.value = newParallaxY;
